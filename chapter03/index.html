@@ -1,0 +1,2720 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="라즈베리파이 피코 2W와 MicroPython을 활용한 15시간 피지컬 컴퓨팅 입문 과정으로, 복잡한 개념을 친근한 비유로 쉽게 배웁니다.">
+      
+      
+        <meta name="author" content="Created with Data-AI-Book Generator">
+      
+      
+      
+        <link rel="prev" href="../chapter02/">
+      
+      
+        <link rel="next" href="../chapter04/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>버튼과 대화 - 입력 받기 - 피코와 친해지기 - 피지컬 컴퓨팅 입문</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-03-" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-header__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            피코와 친해지기 - 피지컬 컴퓨팅 입문
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              버튼과 대화 - 입력 받기
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../chapter01/" class="md-tabs__link">
+          
+  
+  
+  Part 1 - 기초 다지기
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter07/" class="md-tabs__link">
+          
+  
+  
+  Part 2 - 프로젝트 도전
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter10/" class="md-tabs__link">
+          
+  
+  
+  Part 3 - 네트워크 연결
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-nav__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    피코와 친해지기 - 피지컬 컴퓨팅 입문
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 - 기초 다지기
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 - 기초 다지기
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    피코 만나기 - 첫 만남과 환경 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LED의 세계 - 빛으로 말하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    버튼과 대화 - 입력 받기
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    버튼과 대화 - 입력 받기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-digital-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: 디지털 입력 (Digital Input)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pinin-pinout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: Pin.IN과 Pin.OUT의 차이
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-pull_down-pull_up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: PULL_DOWN과 PULL_UP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 4: value() 메서드
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-grove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Grove 버튼 연결하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Grove 버튼 연결하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        준비물
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        연결 방법
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 버튼 상태 읽기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-if" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: if문으로 버튼 반응하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: 버튼으로 LED 제어하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: 버튼으로 LED 제어하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        추가 연결
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: 토글 기능 만들기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: 디바운싱 이해하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6: 디바운싱 이해하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        문제 상황
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📝 전체 코드">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-led-step2_button_ledpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        기본 버튼-LED 제어 (step2_button_led.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step4_debouncepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        토글 기능 + 디바운싱 (step4_debounce.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-pinout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: Pin.OUT으로 버튼 설정하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pull_down" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: PULL_DOWN 빼먹기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: value() 괄호 빼먹기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 4: 토글에서 이전 상태 업데이트 안 하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-gpio-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 5: GPIO 번호 vs 물리적 핀 번호 혼동
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ 스스로 점검하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-pinin-pinout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        질문 1: Pin.IN과 Pin.OUT의 차이는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pull_down-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        질문 2: PULL_DOWN을 쓰면 버튼을 안 눌렀을 때 value()는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-last_button" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        질문 3: 토글 기능에서 last_button 변수는 왜 필요해?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        질문 4: 디바운싱이 필요한 이유는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: 두 개의 버튼으로 LED 밝기 조절 (쉬움)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: 버튼 길게 누르기 감지 (중간)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: 모스 부호 입력기 ⭐ (어려움)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 다음 장으로">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        이번 장에서 배운 것 ✅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        다음 장 미리보기 👀
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    센서 입문 - 세상을 느끼다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    출력의 마법 - 세상에 표현하다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조건과 반복 - 자동화의 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 - 프로젝트 도전
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 - 프로젝트 도전
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    함수로 정리 - 코드의 레고 블록
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 설계와 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 완성과 발표
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 - 네트워크 연결
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 - 네트워크 연결
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OLED 디스플레이 - 화면에 표시하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi 연결 - 인터넷 세계로
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시간 동기화 - 정확한 시계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-digital-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: 디지털 입력 (Digital Input)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pinin-pinout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: Pin.IN과 Pin.OUT의 차이
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-pull_down-pull_up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: PULL_DOWN과 PULL_UP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 4: value() 메서드
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-grove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Grove 버튼 연결하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Grove 버튼 연결하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        준비물
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        연결 방법
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 버튼 상태 읽기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-if" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: if문으로 버튼 반응하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: 버튼으로 LED 제어하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: 버튼으로 LED 제어하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        추가 연결
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: 토글 기능 만들기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: 디바운싱 이해하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6: 디바운싱 이해하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        문제 상황
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📝 전체 코드">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#-led-step2_button_ledpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        기본 버튼-LED 제어 (step2_button_led.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step4_debouncepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        토글 기능 + 디바운싱 (step4_debounce.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-pinout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: Pin.OUT으로 버튼 설정하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pull_down" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: PULL_DOWN 빼먹기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: value() 괄호 빼먹기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 4: 토글에서 이전 상태 업데이트 안 하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-gpio-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 5: GPIO 번호 vs 물리적 핀 번호 혼동
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ 스스로 점검하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-pinin-pinout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        질문 1: Pin.IN과 Pin.OUT의 차이는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pull_down-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        질문 2: PULL_DOWN을 쓰면 버튼을 안 눌렀을 때 value()는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-last_button" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        질문 3: 토글 기능에서 last_button 변수는 왜 필요해?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        질문 4: 디바운싱이 필요한 이유는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: 두 개의 버튼으로 LED 밝기 조절 (쉬움)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: 버튼 길게 누르기 감지 (중간)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: 모스 부호 입력기 ⭐ (어려움)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 다음 장으로">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        이번 장에서 배운 것 ✅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        다음 장 미리보기 👀
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-03-">Chapter 03: 버튼과 대화 - 입력 받기<a class="headerlink" href="#chapter-03-" title="Permanent link">&para;</a></h1>
+<hr />
+<h2 id="_1">🎯 이 장에서 배우는 것<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[ ] Pin.IN과 PULL_DOWN의 개념을 설명할 수 있다</li>
+<li>[ ] Grove 버튼의 상태를 읽을 수 있다</li>
+<li>[ ] if문으로 버튼에 따른 LED 제어를 구현할 수 있다</li>
+<li>[ ] 버튼 토글 기능을 만들 수 있다</li>
+<li>[ ] 디바운싱이 왜 필요한지 이해할 수 있다</li>
+</ul>
+<hr />
+<h2 id="_2">💡 왜 이걸 배우나요?<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>지금까지 우리는 피코에게 <strong>일방적으로</strong> 명령만 내렸어. "LED 켜!", "1초 기다려!", "LED 꺼!" 이런 식으로.</p>
+<p>그런데 생각해봐. 너희가 쓰는 모든 전자기기는 <strong>사용자의 입력</strong>을 받아서 동작하잖아?</p>
+<ul>
+<li>🎮 게임 컨트롤러: 버튼을 누르면 캐릭터가 점프</li>
+<li>💡 방 스위치: 누르면 불이 켜지고, 다시 누르면 꺼짐</li>
+<li>📱 스마트폰: 터치하면 앱이 실행</li>
+</ul>
+<p><strong>입력 없이는 진정한 인터랙션이 없어!</strong></p>
+<p>이번 장에서는 피코가 "사용자가 버튼을 눌렀네? 그럼 이렇게 해야지!"라고 <strong>스스로 판단</strong>하게 만들 거야. 이게 바로 <strong>디지털 입력</strong>의 시작이야.</p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A[👆 버튼 누름] --&gt; B[🔍 피코가 감지]
+    B --&gt; C[🤔 if문으로 판단]
+    C --&gt; D[💡 LED 켜기]
+
+    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style B fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style C fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    style D fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+</code></pre></div>
+<hr />
+<h2 id="_3">📚 핵심 개념<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="1-digital-input">개념 1: 디지털 입력 (Digital Input)<a class="headerlink" href="#1-digital-input" title="Permanent link">&para;</a></h3>
+<p><strong>비유로 시작</strong>: 디지털 입력은 마치 <strong>예/아니오 질문</strong>과 같아. "버튼 눌렸어?" → "응(1)" 또는 "아니(0)". 중간은 없어!</p>
+<p><strong>정확한 정의</strong>: 디지털 입력이란 <strong>0(LOW) 또는 1(HIGH)</strong> 두 가지 상태만 읽어오는 것이야. 피코는 핀에 전압이 걸려있는지(1) 아닌지(0)를 판단해.</p>
+<p><strong>예시로 확인</strong>:
+<div class="highlight"><pre><span></span><code>버튼 안 눌림 → 전압 없음 → 0 (LOW)
+버튼 눌림    → 전압 있음 → 1 (HIGH)
+</code></pre></div></p>
+<p><strong>쉽게 말하면</strong>: 버튼이 눌렸는지 아닌지를 0과 1로 읽어오는 것!</p>
+<hr />
+<h3 id="2-pinin-pinout">개념 2: Pin.IN과 Pin.OUT의 차이<a class="headerlink" href="#2-pinin-pinout" title="Permanent link">&para;</a></h3>
+<p><strong>비유로 시작</strong>: 
+- <code>Pin.OUT</code>은 <strong>스피커</strong>야 - 피코가 바깥 세상에 말하는 것 (LED 켜기)
+- <code>Pin.IN</code>은 <strong>마이크</strong>야 - 바깥 세상의 소리를 듣는 것 (버튼 읽기)</p>
+<div class="highlight"><pre><span></span><code>flowchart TB
+    subgraph 출력[&quot;📤 출력 (Pin.OUT)&quot;]
+        A[피코] --&gt;|&quot;전기 보내기&quot;| B[💡 LED]
+    end
+
+    subgraph 입력[&quot;📥 입력 (Pin.IN)&quot;]
+        C[🔘 버튼] --&gt;|&quot;전기 받기&quot;| D[피코]
+    end
+
+    style A fill:#e3f2fd,stroke:#1976d2
+    style B fill:#fff9c4,stroke:#f9a825
+    style C fill:#f3e5f5,stroke:#7b1fa2
+    style D fill:#e3f2fd,stroke:#1976d2
+</code></pre></div>
+<p><strong>정확한 정의</strong>: 
+- <code>Pin.OUT</code>: 피코가 핀으로 전기 신호를 <strong>내보내는</strong> 모드
+- <code>Pin.IN</code>: 피코가 핀에서 전기 신호를 <strong>읽어오는</strong> 모드</p>
+<p><strong>쉽게 말하면</strong>: OUT은 말하기, IN은 듣기!</p>
+<hr />
+<h3 id="3-pull_down-pull_up">개념 3: PULL_DOWN과 PULL_UP<a class="headerlink" href="#3-pull_down-pull_up" title="Permanent link">&para;</a></h3>
+<p><strong>비유로 시작</strong>: 버튼이 안 눌렸을 때, 핀은 <strong>붕 떠있는 상태</strong>가 돼. 마치 라디오 주파수를 안 맞췄을 때 지지직거리는 것처럼, 0인지 1인지 불안정해져.</p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    subgraph 문제[&quot;❓ 문제 상황&quot;]
+        A[버튼 안 눌림] --&gt; B[&quot;핀 상태: ???&quot;]
+    end
+
+    subgraph 해결[&quot;✅ PULL_DOWN 해결&quot;]
+        C[버튼 안 눌림] --&gt; D[&quot;핀 상태: 0&quot;]
+        E[버튼 눌림] --&gt; F[&quot;핀 상태: 1&quot;]
+    end
+
+    style A fill:#ffcdd2,stroke:#c62828
+    style B fill:#ffcdd2,stroke:#c62828
+    style C fill:#e8f5e9,stroke:#388e3c
+    style D fill:#e8f5e9,stroke:#388e3c
+    style E fill:#e8f5e9,stroke:#388e3c
+    style F fill:#e8f5e9,stroke:#388e3c
+</code></pre></div>
+<p><strong>정확한 정의</strong>: 
+- <code>PULL_DOWN</code>: 버튼이 안 눌렸을 때 핀을 <strong>0(LOW)</strong>으로 고정
+- <code>PULL_UP</code>: 버튼이 안 눌렸을 때 핀을 <strong>1(HIGH)</strong>으로 고정</p>
+<p><strong>우리가 쓸 것</strong>: Grove 버튼은 <strong>PULL_DOWN</strong>을 써. 
+- 안 누름 → 0
+- 누름 → 1</p>
+<p>이게 직관적이잖아! 누르면 1, 안 누르면 0.</p>
+<p><strong>쉽게 말하면</strong>: PULL_DOWN은 "기본값을 0으로 잡아줘"라는 설정!</p>
+<hr />
+<h3 id="4-value">개념 4: value() 메서드<a class="headerlink" href="#4-value" title="Permanent link">&para;</a></h3>
+<p><strong>비유로 시작</strong>: <code>value()</code>는 <strong>온도계를 읽는 것</strong>과 같아. 온도계를 보면 "지금 25도구나"라고 알 수 있듯이, <code>value()</code>를 호출하면 "지금 버튼이 눌렸구나(1)" 또는 "안 눌렸구나(0)"를 알 수 있어.</p>
+<p><strong>정확한 정의</strong>: <code>value()</code> 메서드는 핀의 <strong>현재 상태</strong>를 읽어서 0 또는 1을 반환해.</p>
+<p><strong>예시로 확인</strong>:
+<div class="highlight"><pre><span></span><code><span class="n">button</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>  <span class="c1"># 0 또는 1 반환</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># 버튼 안 눌림: 0, 눌림: 1</span>
+</code></pre></div></p>
+<p><strong>쉽게 말하면</strong>: "지금 버튼 눌렸어?" 하고 물어보는 함수!</p>
+<hr />
+<h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="step-1-grove">Step 1: Grove 버튼 연결하기<a class="headerlink" href="#step-1-grove" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: Grove 버튼을 피코에 연결하기</p>
+<h4 id="_5">준비물<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<ul>
+<li>라즈베리파이 피코 2W + Grove Shield</li>
+<li>Grove 버튼 모듈</li>
+<li>Grove 케이블</li>
+</ul>
+<h4 id="_6">연결 방법<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    subgraph 피코[&quot;🔌 Grove Shield&quot;]
+        D20[&quot;D20 포트&quot;]
+    end
+
+    subgraph 버튼[&quot;🔘 Grove 버튼&quot;]
+        BTN[&quot;버튼 모듈&quot;]
+    end
+
+    D20 &lt;--&gt;|&quot;Grove 케이블&quot;| BTN
+
+    style D20 fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style BTN fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+</code></pre></div>
+<ol>
+<li>Grove 케이블의 한쪽을 <strong>버튼 모듈</strong>에 연결</li>
+<li>다른 쪽을 Grove Shield의 <strong>D20 포트</strong>에 연결</li>
+<li>끝! Grove 시스템이라 배선 실수가 없어서 편하지? 😊</li>
+</ol>
+<blockquote>
+<p>💡 <strong>왜 D20 포트?</strong> 
+D는 Digital의 약자야. 20번 GPIO 핀에 연결된 디지털 포트라는 뜻이야.</p>
+</blockquote>
+<hr />
+<h3 id="step-2">Step 2: 버튼 상태 읽기<a class="headerlink" href="#step-2" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 버튼이 눌렸는지 안 눌렸는지 확인하기</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 버튼의 상태를 읽어서 출력하는 코드 ===</span>
+<span class="c1"># 버튼을 누르면 1, 떼면 0이 출력돼요</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 버튼이 제대로 연결됐는지 확인하고,</span>
+<span class="c1"># 디지털 입력이 어떻게 동작하는지 이해하기 위해서예요</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>  <span class="c1"># Pin 클래스 가져오기</span>
+<span class="kn">import</span> <span class="nn">time</span>              <span class="c1"># 시간 관련 기능</span>
+
+<span class="c1"># 버튼을 입력 모드로 설정 (GP20, 입력, 풀다운)</span>
+<span class="n">button</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>
+
+<span class="c1"># 무한 반복</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>  <span class="c1"># 버튼 상태 읽기 (0 또는 1)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;버튼 상태:&quot;</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>  <span class="c1"># 상태 출력</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>  <span class="c1"># 0.3초 대기 (너무 빠르면 읽기 힘들어서)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>버튼 상태: 0
+버튼 상태: 0
+버튼 상태: 1    ← 버튼 누른 순간!
+버튼 상태: 1
+버튼 상태: 0    ← 버튼 뗀 순간
+버튼 상태: 0
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<p>코드를 자세히 보자:
+<div class="highlight"><pre><span></span><code><span class="n">button</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>
+</code></pre></div></p>
+<table>
+<thead>
+<tr>
+<th>부분</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>20</code></td>
+<td>GPIO 20번 핀 사용 (D20 포트)</td>
+</tr>
+<tr>
+<td><code>Pin.IN</code></td>
+<td>입력 모드 (버튼 읽기)</td>
+</tr>
+<tr>
+<td><code>Pin.PULL_DOWN</code></td>
+<td>기본값을 0으로 설정</td>
+</tr>
+</tbody>
+</table>
+<p><strong>실험해보기</strong>: 버튼을 <strong>꾹 누르고 있으면</strong> 계속 1이 출력되는지 확인해봐!</p>
+<hr />
+<h3 id="step-3-if">Step 3: if문으로 버튼 반응하기<a class="headerlink" href="#step-3-if" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 버튼을 누르면 "눌림!", 떼면 "안 눌림!" 출력하기</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 버튼 상태에 따라 다른 메시지를 출력하는 코드 ===</span>
+<span class="c1"># if문을 사용해서 조건에 따라 다르게 반응해요</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 0과 1만으로는 불친절하잖아?</span>
+<span class="c1"># 사람이 이해하기 쉬운 메시지로 바꿔주면 좋으니까!</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">button</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># 버튼이 눌렸으면</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔘 버튼 눌림!&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>                     <span class="c1"># 버튼이 안 눌렸으면</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚪ 버튼 안 눌림&quot;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>⚪ 버튼 안 눌림
+⚪ 버튼 안 눌림
+🔘 버튼 눌림!
+🔘 버튼 눌림!
+⚪ 버튼 안 눌림
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<p>if문의 구조를 다시 보자:
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">조건</span><span class="p">:</span>
+    <span class="c1"># 조건이 True일 때 실행</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># 조건이 False일 때 실행</span>
+</code></pre></div></p>
+<p><code>button.value() == 1</code>은 "버튼 값이 1이야?"라고 묻는 거야.
+- 맞으면(True): "눌림!" 출력
+- 틀리면(False): "안 눌림" 출력</p>
+<hr />
+<h3 id="step-4-led">Step 4: 버튼으로 LED 제어하기<a class="headerlink" href="#step-4-led" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 버튼을 누르는 동안 LED가 켜지고, 떼면 꺼지기</p>
+<h4 id="_7">추가 연결<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>flowchart TB
+    subgraph 피코[&quot;🔌 Grove Shield&quot;]
+        D20[&quot;D20 포트&lt;br/&gt;(버튼)&quot;]
+        D16[&quot;D16 포트&lt;br/&gt;(LED)&quot;]
+    end
+
+    subgraph 부품들[&quot;🔧 부품&quot;]
+        BTN[&quot;🔘 버튼&quot;]
+        LED[&quot;💡 LED&quot;]
+    end
+
+    D20 &lt;--&gt; BTN
+    D16 &lt;--&gt; LED
+
+    style D20 fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style D16 fill:#fff9c4,stroke:#f9a825,stroke-width:2px
+    style BTN fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style LED fill:#fff9c4,stroke:#f9a825,stroke-width:2px
+</code></pre></div>
+<ul>
+<li>Grove 버튼 → <strong>D20 포트</strong></li>
+<li>Grove LED → <strong>D16 포트</strong></li>
+</ul>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 버튼을 누르면 LED가 켜지는 코드 ===</span>
+<span class="c1"># 버튼을 누르고 있는 동안만 LED가 켜져요</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 입력(버튼)과 출력(LED)을 연결하는 가장 기본적인 예제예요</span>
+<span class="c1"># 이게 모든 인터랙티브 시스템의 기초야!</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># 버튼 설정 (입력)</span>
+<span class="n">button</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>
+
+<span class="c1"># LED 설정 (출력)</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># 버튼 눌림</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>              <span class="c1"># LED 켜기</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;💡 LED ON&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>                     <span class="c1"># 버튼 안 눌림</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>             <span class="c1"># LED 끄기</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⬛ LED OFF&quot;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>⬛ LED OFF
+⬛ LED OFF
+💡 LED ON     ← 버튼 누르는 순간, LED도 켜짐!
+💡 LED ON
+⬛ LED OFF    ← 버튼 떼는 순간, LED도 꺼짐!
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<p>지금 만든 건 <strong>손전등</strong> 같은 거야! 버튼 누르고 있어야 불이 켜지지.</p>
+<p>그런데 실제 방 스위치는 어때? 한 번 누르면 켜지고, 다시 누르면 꺼지잖아? 
+이걸 <strong>토글(Toggle)</strong> 기능이라고 해. 다음 단계에서 만들어보자!</p>
+<hr />
+<h3 id="step-5">Step 5: 토글 기능 만들기<a class="headerlink" href="#step-5" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 버튼을 한 번 누르면 LED가 켜지고, 다시 누르면 꺼지기</p>
+<p><strong>핵심 아이디어</strong>:
+<div class="highlight"><pre><span></span><code>flowchart TB
+    A[&quot;🔘 버튼 누름&quot;] --&gt; B{&quot;LED 상태?&quot;}
+    B --&gt;|&quot;꺼져 있음&quot;| C[&quot;💡 켜기&quot;]
+    B --&gt;|&quot;켜져 있음&quot;| D[&quot;⬛ 끄기&quot;]
+    C --&gt; E[&quot;상태 기억&quot;]
+    D --&gt; E
+    E --&gt; F[&quot;다음 버튼 누름 대기&quot;]
+
+    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style B fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style C fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style D fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style E fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style F fill:#e0f2f1,stroke:#00695c,stroke-width:2px
+</code></pre></div></p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 버튼 토글로 LED를 제어하는 코드 ===</span>
+<span class="c1"># 버튼을 누를 때마다 LED가 켜졌다 꺼졌다 해요</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 실제 스위치처럼 동작하게 만들려면</span>
+<span class="c1"># &#39;상태&#39;를 기억하고 있어야 해요</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">button</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># LED 상태를 저장할 변수 (False = 꺼짐, True = 켜짐)</span>
+<span class="n">led_on</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># 이전 버튼 상태 (버튼을 &quot;새로 눌렀는지&quot; 확인용)</span>
+<span class="n">last_button</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">current_button</span> <span class="o">=</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>  <span class="c1"># 현재 버튼 상태</span>
+
+    <span class="c1"># 버튼이 &quot;방금&quot; 눌렸을 때만 반응 (0→1로 바뀔 때)</span>
+    <span class="k">if</span> <span class="n">current_button</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">last_button</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">led_on</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">led_on</span>  <span class="c1"># 상태 뒤집기 (True↔False)</span>
+
+        <span class="k">if</span> <span class="n">led_on</span><span class="p">:</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;💡 LED 켜짐!&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⬛ LED 꺼짐!&quot;</span><span class="p">)</span>
+
+    <span class="n">last_button</span> <span class="o">=</span> <span class="n">current_button</span>  <span class="c1"># 현재 상태를 &#39;이전 상태&#39;로 저장</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>  <span class="c1"># 짧은 대기</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>💡 LED 켜짐!     ← 첫 번째 버튼 누름
+⬛ LED 꺼짐!     ← 두 번째 버튼 누름
+💡 LED 켜짐!     ← 세 번째 버튼 누름
+⬛ LED 꺼짐!     ← 네 번째 버튼 누름
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<p>이 코드의 핵심은 <strong>"버튼이 방금 눌렸는지"</strong> 감지하는 거야!</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">current_button</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">last_button</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>current_button</th>
+<th>last_button</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>계속 안 누르고 있음</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td><strong>방금 눌렸다!</strong> ✅</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>계속 누르고 있음</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>방금 뗐다</td>
+</tr>
+</tbody>
+</table>
+<p>우리가 원하는 건 "방금 눌렸을 때"만 반응하는 거니까, <code>1 and 0</code>일 때만 토글해!</p>
+<p><strong>not 연산자</strong>:
+<div class="highlight"><pre><span></span><code><span class="n">led_on</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">led_on</span>
+</code></pre></div>
+- <code>not True</code> → <code>False</code>
+- <code>not False</code> → <code>True</code></p>
+<p>즉, 상태를 뒤집어주는 거야!</p>
+<hr />
+<h3 id="step-6">Step 6: 디바운싱 이해하기<a class="headerlink" href="#step-6" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 버튼 채터링 문제를 이해하고 해결하기</p>
+<h4 id="_8">문제 상황<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
+<p>버튼을 <strong>한 번만</strong> 눌렀는데, LED가 여러 번 깜빡이는 경우가 있어. 왜 그럴까?</p>
+<div class="highlight"><pre><span></span><code>flowchart TB
+    subgraph 이상적[&quot;🎯 이상적인 경우&quot;]
+        A1[&quot;버튼 누름&quot;] --&gt; A2[&quot;1&quot;]
+        A2 --&gt; A3[&quot;버튼 뗌&quot;]
+        A3 --&gt; A4[&quot;0&quot;]
+    end
+
+    subgraph 현실[&quot;😵 현실 (채터링)&quot;]
+        B1[&quot;버튼 누름&quot;] --&gt; B2[&quot;1→0→1→0→1&quot;]
+        B2 --&gt; B3[&quot;버튼 뗌&quot;]
+        B3 --&gt; B4[&quot;0→1→0→1→0&quot;]
+    end
+
+    style A1 fill:#e8f5e9,stroke:#388e3c
+    style A2 fill:#e8f5e9,stroke:#388e3c
+    style A3 fill:#e8f5e9,stroke:#388e3c
+    style A4 fill:#e8f5e9,stroke:#388e3c
+    style B1 fill:#ffcdd2,stroke:#c62828
+    style B2 fill:#ffcdd2,stroke:#c62828
+    style B3 fill:#ffcdd2,stroke:#c62828
+    style B4 fill:#ffcdd2,stroke:#c62828
+</code></pre></div>
+<p><strong>원인</strong>: 버튼 내부의 금속 접점이 닿을 때 <strong>바운싱(튕김)</strong> 현상이 발생해. 아주 짧은 시간(수 밀리초) 동안 접촉과 분리가 여러 번 반복돼.</p>
+<p><strong>해결 방법 (디바운싱)</strong>: 버튼 상태가 바뀐 후 <strong>잠깐 대기</strong>했다가 다시 확인하면 돼!</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 디바운싱이 적용된 버튼 토글 코드 ===</span>
+<span class="c1"># 채터링 문제를 해결해서 안정적으로 동작해요</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 버튼을 눌렀을 때 한 번만 정확히 인식하려면</span>
+<span class="c1"># 디바운싱이 필수예요!</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">button</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="n">led_on</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">last_button</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">current_button</span> <span class="o">=</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">current_button</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">last_button</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>  <span class="c1"># ⭐ 50ms 대기 (디바운싱)</span>
+
+        <span class="c1"># 대기 후에도 여전히 눌려있는지 확인</span>
+        <span class="k">if</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">led_on</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">led_on</span>
+
+            <span class="k">if</span> <span class="n">led_on</span><span class="p">:</span>
+                <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;💡 LED 켜짐!&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⬛ LED 꺼짐!&quot;</span><span class="p">)</span>
+
+            <span class="c1"># 버튼을 뗄 때까지 대기</span>
+            <span class="k">while</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+    <span class="n">last_button</span> <span class="o">=</span> <span class="n">current_button</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<p>디바운싱의 핵심은:
+1. 버튼이 눌렸다고 감지되면 <strong>50ms 대기</strong>
+2. 대기 후에도 <strong>여전히 눌려있으면</strong> 진짜 눌린 거로 판단
+3. 버튼을 <strong>뗄 때까지 대기</strong>해서 중복 인식 방지</p>
+<blockquote>
+<p>💡 <strong>50ms는 어떻게 정한 거야?</strong>
+대부분의 버튼 바운싱은 10~50ms 내에 끝나. 50ms면 거의 모든 버튼에서 안정적이야!</p>
+</blockquote>
+<hr />
+<h2 id="_9">📝 전체 코드<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<h3 id="-led-step2_button_ledpy">기본 버튼-LED 제어 (step2_button_led.py)<a class="headerlink" href="#-led-step2_button_ledpy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># === 버튼으로 LED 제어하기 ===</span>
+<span class="c1"># 버튼을 누르고 있으면 LED가 켜지고, 떼면 꺼집니다.</span>
+<span class="c1"># </span>
+<span class="c1"># 연결:</span>
+<span class="c1">#   - Grove 버튼 → D20 포트</span>
+<span class="c1">#   - Grove LED  → D16 포트</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># --- 핀 설정 ---</span>
+<span class="n">button</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>  <span class="c1"># 버튼: 입력, 풀다운</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>                    <span class="c1"># LED: 출력</span>
+
+<span class="c1"># --- 메인 루프 ---</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># 버튼 눌림</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>                     <span class="c1"># 버튼 안 눌림</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="step4_debouncepy">토글 기능 + 디바운싱 (step4_debounce.py)<a class="headerlink" href="#step4_debouncepy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># === 디바운싱이 적용된 버튼 토글 ===</span>
+<span class="c1"># 버튼을 누를 때마다 LED가 켜졌다 꺼졌다 합니다.</span>
+<span class="c1"># 채터링 문제를 해결해서 안정적으로 동작합니다.</span>
+<span class="c1">#</span>
+<span class="c1"># 연결:</span>
+<span class="c1">#   - Grove 버튼 → D20 포트</span>
+<span class="c1">#   - Grove LED  → D16 포트</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># --- 핀 설정 ---</span>
+<span class="n">button</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># --- 상태 변수 ---</span>
+<span class="n">led_on</span> <span class="o">=</span> <span class="kc">False</span>      <span class="c1"># LED 상태 (False=꺼짐, True=켜짐)</span>
+<span class="n">last_button</span> <span class="o">=</span> <span class="mi">0</span>     <span class="c1"># 이전 버튼 상태</span>
+
+<span class="c1"># --- 메인 루프 ---</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">current_button</span> <span class="o">=</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+
+    <span class="c1"># 버튼이 방금 눌렸을 때 (0→1)</span>
+    <span class="k">if</span> <span class="n">current_button</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">last_button</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>  <span class="c1"># 디바운싱 대기</span>
+
+        <span class="c1"># 여전히 눌려있으면 진짜 눌린 것</span>
+        <span class="k">if</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">led_on</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">led_on</span>  <span class="c1"># 상태 토글</span>
+
+            <span class="k">if</span> <span class="n">led_on</span><span class="p">:</span>
+                <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;💡 LED 켜짐!&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⬛ LED 꺼짐!&quot;</span><span class="p">)</span>
+
+            <span class="c1"># 버튼 뗄 때까지 대기</span>
+            <span class="k">while</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+    <span class="n">last_button</span> <span class="o">=</span> <span class="n">current_button</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="_10">⚠️ 자주 하는 실수<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<h3 id="1-pinout">실수 1: Pin.OUT으로 버튼 설정하기<a class="headerlink" href="#1-pinout" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: 버튼을 눌러도 아무 반응이 없음</p>
+<p><strong>원인</strong>: 버튼은 <strong>입력</strong> 장치인데 <strong>출력</strong> 모드로 설정함</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># ❌ 잘못된 코드</span>
+<span class="n">button</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>  <span class="c1"># 출력 모드 - 틀림!</span>
+
+<span class="c1"># ✅ 올바른 코드</span>
+<span class="n">button</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>  <span class="c1"># 입력 모드 + 풀다운</span>
+</code></pre></div></p>
+<hr />
+<h3 id="2-pull_down">실수 2: PULL_DOWN 빼먹기<a class="headerlink" href="#2-pull_down" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: 버튼을 안 눌러도 값이 불안정하게 바뀜 (0과 1이 랜덤하게 출력)</p>
+<p><strong>원인</strong>: 풀업/풀다운 없이 핀이 <strong>플로팅(떠 있는)</strong> 상태</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># ❌ 잘못된 코드</span>
+<span class="n">button</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">)</span>  <span class="c1"># PULL_DOWN 없음!</span>
+
+<span class="c1"># ✅ 올바른 코드</span>
+<span class="n">button</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>  <span class="c1"># 풀다운으로 안정화</span>
+</code></pre></div></p>
+<hr />
+<h3 id="3-value">실수 3: value() 괄호 빼먹기<a class="headerlink" href="#3-value" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: <code>&lt;bound_method&gt;</code> 같은 이상한 메시지가 출력됨</p>
+<p><strong>원인</strong>: <code>value</code>는 메서드(함수)인데 괄호 없이 호출함</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># ❌ 잘못된 코드</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span>  <span class="c1"># 괄호 없음!</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># &lt;bound_method&gt; 출력됨</span>
+
+<span class="c1"># ✅ 올바른 코드</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>  <span class="c1"># 괄호 필수!</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>  <span class="c1"># 0 또는 1 출력됨</span>
+</code></pre></div></p>
+<hr />
+<h3 id="4">실수 4: 토글에서 이전 상태 업데이트 안 하기<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: 버튼을 누르고 있으면 계속 토글됨 (깜빡깜빡)</p>
+<p><strong>원인</strong>: <code>last_button</code>을 업데이트하지 않아서 매 루프마다 "새로 눌림"으로 인식</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># ❌ 잘못된 코드</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">last_button</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">led_on</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">led_on</span>
+        <span class="c1"># last_button 업데이트 빼먹음!</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+
+<span class="c1"># ✅ 올바른 코드</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">current_button</span> <span class="o">=</span> <span class="n">button</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">current_button</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">last_button</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">led_on</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">led_on</span>
+    <span class="n">last_button</span> <span class="o">=</span> <span class="n">current_button</span>  <span class="c1"># 반드시 업데이트!</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+</code></pre></div></p>
+<hr />
+<h3 id="5-gpio-vs">실수 5: GPIO 번호 vs 물리적 핀 번호 혼동<a class="headerlink" href="#5-gpio-vs" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: 연결은 제대로 했는데 동작 안 함</p>
+<p><strong>원인</strong>: Grove Shield의 D20은 <strong>GPIO 20</strong>번을 의미해. 피코 보드의 물리적 핀 번호와 다름!</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># Grove Shield D20 포트 사용 시</span>
+<span class="n">button</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>  <span class="c1"># GPIO 20</span>
+
+<span class="c1"># Grove Shield D16 포트 사용 시</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>  <span class="c1"># GPIO 16</span>
+</code></pre></div></p>
+<blockquote>
+<p>💡 <strong>기억하기</strong>: Grove Shield를 쓰면 포트 번호 = GPIO 번호야!</p>
+</blockquote>
+<hr />
+<h2 id="_11">✅ 스스로 점검하기<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<h3 id="1-pinin-pinout">질문 1: Pin.IN과 Pin.OUT의 차이는?<a class="headerlink" href="#1-pinin-pinout" title="Permanent link">&para;</a></h3>
+<details>
+<summary>정답 확인</summary>
+
+- **Pin.IN**: 외부 장치(버튼, 센서)에서 **신호를 읽어오는** 입력 모드
+- **Pin.OUT**: 외부 장치(LED, 모터)에 **신호를 보내는** 출력 모드
+
+버튼처럼 "눌렀는지 아닌지" 확인할 때는 `Pin.IN`,
+LED처럼 "켜라/꺼라" 명령할 때는 `Pin.OUT`을 써!
+</details>
+
+<h3 id="2-pull_down-value">질문 2: PULL_DOWN을 쓰면 버튼을 안 눌렀을 때 value()는?<a class="headerlink" href="#2-pull_down-value" title="Permanent link">&para;</a></h3>
+<details>
+<summary>정답 확인</summary>
+
+**0**을 반환해!
+
+PULL_DOWN은 "기본값을 0(LOW)으로 고정"하는 설정이야.
+- 버튼 안 누름 → 0
+- 버튼 누름 → 1
+
+직관적이라서 기억하기 쉽지?
+</details>
+
+<h3 id="3-last_button">질문 3: 토글 기능에서 <code>last_button</code> 변수는 왜 필요해?<a class="headerlink" href="#3-last_button" title="Permanent link">&para;</a></h3>
+<details>
+<summary>정답 확인</summary>
+
+버튼이 **"방금 눌렸는지"** 알기 위해서야!
+
+버튼을 꾹 누르고 있으면 `value()`는 계속 1을 반환해.
+만약 `last_button` 없이 "값이 1이면 토글"로 만들면, 누르고 있는 동안 계속 토글돼서 LED가 미친 듯이 깜빡여.
+
+`last_button`으로 **이전 상태**를 기억해서:
+- 이전: 0, 현재: 1 → 방금 눌렸다! ✅ 토글
+- 이전: 1, 현재: 1 → 계속 누르고 있음, 무시
+</details>
+
+<h3 id="4_1">질문 4: 디바운싱이 필요한 이유는?<a class="headerlink" href="#4_1" title="Permanent link">&para;</a></h3>
+<details>
+<summary>정답 확인</summary>
+
+버튼의 물리적인 **바운싱(채터링)** 현상 때문이야!
+
+버튼 내부의 금속 접점이 닿을 때 **미세하게 튕기면서** 아주 짧은 시간 동안 여러 번 접촉/분리가 반복돼. 이걸 피코는 "여러 번 눌렸다"고 인식할 수 있어.
+
+**해결**: 버튼이 눌렸다고 감지되면 50ms 정도 기다렸다가 다시 확인!
+</details>
+
+<hr />
+<h2 id="_12">🚀 더 해보기<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<h3 id="1-led">도전 1: 두 개의 버튼으로 LED 밝기 조절 (쉬움)<a class="headerlink" href="#1-led" title="Permanent link">&para;</a></h3>
+<p><strong>요구사항</strong>: 버튼 A를 누르면 밝아지고, 버튼 B를 누르면 어두워지는 LED
+- 힌트: PWM 사용 (2장 복습!)
+- 추가 연결: Grove 버튼 하나 더 (D18 포트)</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 힌트 코드</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">PWM</span>
+
+<span class="n">button_up</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>
+<span class="n">button_down</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>
+<span class="n">led_pwm</span> <span class="o">=</span> <span class="n">PWM</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">))</span>
+<span class="n">led_pwm</span><span class="o">.</span><span class="n">freq</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">brightness</span> <span class="o">=</span> <span class="mi">32768</span>  <span class="c1"># 중간값으로 시작</span>
+</code></pre></div>
+<hr />
+<h3 id="2">도전 2: 버튼 길게 누르기 감지 (중간)<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p><strong>요구사항</strong>: 
+- 짧게 누르면(0.5초 미만): LED 토글
+- 길게 누르면(0.5초 이상): LED 깜빡이기 모드</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 힌트 코드</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">press_start</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 버튼 누른 시각</span>
+
+<span class="c1"># 버튼 눌렸을 때 시작 시간 기록</span>
+<span class="k">if</span> <span class="n">current_button</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">last_button</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">press_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">ticks_ms</span><span class="p">()</span>
+
+<span class="c1"># 버튼 뗐을 때 얼마나 눌렸는지 계산</span>
+<span class="k">if</span> <span class="n">current_button</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">last_button</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">ticks_diff</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">ticks_ms</span><span class="p">(),</span> <span class="n">press_start</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">duration</span> <span class="o">&lt;</span> <span class="mi">500</span><span class="p">:</span>
+        <span class="c1"># 짧게 누름</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># 길게 누름</span>
+</code></pre></div>
+<hr />
+<h3 id="3">도전 3: 모스 부호 입력기 ⭐ (어려움)<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p><strong>요구사항</strong>: 버튼으로 모스 부호를 입력하면 알파벳으로 변환!
+- 짧게 누름: 점(.)
+- 길게 누름: 선(-)
+- 오래 안 누름: 문자 구분</p>
+<div class="highlight"><pre><span></span><code>모스 부호 예시:
+A = .-
+B = -...
+S = ...
+O = ---
+SOS = ... --- ...
+</code></pre></div>
+<p><strong>힌트</strong>:
+<div class="highlight"><pre><span></span><code><span class="n">morse_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;.-&#39;</span><span class="p">:</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;-...&#39;</span><span class="p">:</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;...&#39;</span><span class="p">:</span> <span class="s1">&#39;S&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;---&#39;</span><span class="p">:</span> <span class="s1">&#39;O&#39;</span><span class="p">,</span>
+    <span class="c1"># ... 더 추가</span>
+<span class="p">}</span>
+
+<span class="n">current_morse</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># 현재 입력 중인 모스 부호</span>
+</code></pre></div></p>
+<hr />
+<h2 id="_13">🔗 다음 장으로<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<h3 id="_14">이번 장에서 배운 것 ✅<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Pin.IN</strong>: 외부 신호를 읽어오는 입력 모드</li>
+<li><strong>PULL_DOWN</strong>: 기본값을 0으로 고정하는 설정</li>
+<li><strong>value()</strong>: 핀의 현재 상태(0 또는 1) 읽기</li>
+<li><strong>if문</strong>: 조건에 따라 다른 동작 실행</li>
+<li><strong>토글</strong>: 상태를 뒤집는 기능 구현</li>
+<li><strong>디바운싱</strong>: 버튼 채터링 문제 해결</li>
+</ul>
+<h3 id="_15">다음 장 미리보기 👀<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<p><strong>Chapter 04: 센서 입문 - 세상을 느끼다</strong></p>
+<p>버튼은 0 또는 1, 두 가지 상태만 있었어. 하지만 세상의 대부분은 그렇게 딱 떨어지지 않아. </p>
+<p>"지금 얼마나 밝아?" → 50? 1000? 30000?
+"온도가 몇 도야?" → 25.5도</p>
+<p>이런 <strong>연속적인 값</strong>을 읽으려면 <strong>아날로그 입력</strong>이 필요해. 다음 장에서 조도 센서와 온습도 센서로 세상을 느껴보자! 🌡️💡</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

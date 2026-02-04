@@ -1,0 +1,2182 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="라즈베리파이 피코 2W와 MicroPython을 활용한 15시간 피지컬 컴퓨팅 입문 과정으로, 복잡한 개념을 친근한 비유로 쉽게 배웁니다.">
+      
+      
+        <meta name="author" content="Created with Data-AI-Book Generator">
+      
+      
+      
+        <link rel="prev" href="../chapter09/">
+      
+      
+        <link rel="next" href="../chapter11/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>OLED 디스플레이 - 화면에 표시하기 - 피코와 친해지기 - 피지컬 컴퓨팅 입문</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#oled-" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-header__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            피코와 친해지기 - 피지컬 컴퓨팅 입문
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              OLED 디스플레이 - 화면에 표시하기
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter01/" class="md-tabs__link">
+          
+  
+  
+  Part 1 - 기초 다지기
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter07/" class="md-tabs__link">
+          
+  
+  
+  Part 2 - 프로젝트 도전
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Part 3 - 네트워크 연결
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-nav__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    피코와 친해지기 - 피지컬 컴퓨팅 입문
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 - 기초 다지기
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 - 기초 다지기
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    피코 만나기 - 첫 만남과 환경 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LED의 세계 - 빛으로 말하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    버튼과 대화 - 입력 받기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    센서 입문 - 세상을 느끼다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    출력의 마법 - 세상에 표현하다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조건과 반복 - 자동화의 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 - 프로젝트 도전
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 - 프로젝트 도전
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    함수로 정리 - 코드의 레고 블록
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 설계와 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 완성과 발표
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 - 네트워크 연결
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 - 네트워크 연결
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OLED 디스플레이 - 화면에 표시하기
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OLED 디스플레이 - 화면에 표시하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-i2c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: I2C 통신이란?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-oled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: OLED 디스플레이
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: 프레임버퍼
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 0: 라이브러리 설치하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-1-oled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: OLED 연결하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 다양한 텍스트 표시하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: 도형 그리기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: 센서 데이터 표시하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-show" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: show()를 안 부름
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: 화면을 안 지우고 덮어씀
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-i2c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: I2C 핀 번호 오류
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 4: 좌표가 화면을 벗어남
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 5: 라이브러리 설치 안 함
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: 카운터 만들기 (쉬움)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: 간단한 애니메이션 (중간)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: 미니 게임 만들기 ⭐ (어려움)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi 연결 - 인터넷 세계로
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시간 동기화 - 정확한 시계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-i2c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: I2C 통신이란?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-oled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: OLED 디스플레이
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: 프레임버퍼
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 0: 라이브러리 설치하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-1-oled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: OLED 연결하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 다양한 텍스트 표시하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: 도형 그리기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: 센서 데이터 표시하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-show" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: show()를 안 부름
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: 화면을 안 지우고 덮어씀
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-i2c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: I2C 핀 번호 오류
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 4: 좌표가 화면을 벗어남
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 5: 라이브러리 설치 안 함
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: 카운터 만들기 (쉬움)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: 간단한 애니메이션 (중간)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: 미니 게임 만들기 ⭐ (어려움)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="oled-">OLED 디스플레이 - 화면에 표시하기<a class="headerlink" href="#oled-" title="Permanent link">&para;</a></h1>
+<h2 id="_1">🎯 이 장에서 배우는 것<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[ ] I2C 통신의 기본 원리를 설명할 수 있다</li>
+<li>[ ] OLED에 텍스트를 표시할 수 있다</li>
+<li>[ ] 센서 데이터를 OLED에 시각화할 수 있다</li>
+<li>[ ] 간단한 도형(선, 사각형)을 그릴 수 있다</li>
+</ul>
+<h2 id="_2">💡 왜 이걸 배우나요?<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>지금까지 우리는 <code>print()</code>로 컴퓨터 화면에만 결과를 출력했어. 그런데 생각해봐 - 피코를 컴퓨터에서 분리해서 쓰고 싶다면? 예를 들어 침대 옆에 온도계를 놓고 싶다면, 컴퓨터 없이도 값을 볼 수 있어야 하잖아!</p>
+<p><strong>OLED 디스플레이</strong>는 바로 이 문제를 해결해줘. 작은 화면이지만 글자, 숫자, 심지어 그림까지 표시할 수 있어서 피코만으로 완전한 장치를 만들 수 있게 돼.</p>
+<p>실제로 이런 곳에서 쓰여:
+- 🌡️ 스마트 온습도계
+- ⌚ DIY 스마트워치
+- 🎮 레트로 게임기
+- 📊 서버 모니터링 장치</p>
+<h2 id="_3">📚 핵심 개념<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="1-i2c">개념 1: I2C 통신이란?<a class="headerlink" href="#1-i2c" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>비유로 시작</strong>: "I2C는 마치 버스 정류장 시스템과 같아요"</li>
+<li>하나의 버스 노선(2개의 선)에 여러 승객(장치)이 탑승해</li>
+<li>각 승객은 고유한 주소(좌석 번호)를 가지고 있어</li>
+<li>
+<p>버스 기사(피코)가 "42번 승객!"하고 부르면 해당 승객만 대답해</p>
+</li>
+<li>
+<p><strong>정확한 정의</strong>: "I2C(Inter-Integrated Circuit)는 단 2개의 선으로 여러 장치와 통신하는 프로토콜이야"</p>
+</li>
+<li><strong>SDA</strong> (Serial Data): 실제 데이터가 오가는 선</li>
+<li>
+<p><strong>SCL</strong> (Serial Clock): 박자를 맞춰주는 신호 선</p>
+</li>
+<li>
+<p><strong>예시로 확인</strong>: "OLED의 기본 주소는 보통 0x3C(60번)야. 피코가 '0x3C야, 이 글자 보여줘!'하면 OLED가 화면에 표시해"</p>
+</li>
+</ol>
+<p><strong>쉽게 말하면</strong>: I2C는 2개의 선만으로 여러 장치와 대화할 수 있는 효율적인 통신 방법이야!</p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    subgraph PICO[&quot;🎛️ Pico 2W&quot;]
+        M[Master]
+    end
+
+    subgraph BUS[&quot;🚌 I2C 버스 (2선)&quot;]
+        SDA[&quot;SDA (데이터)&quot;]
+        SCL[&quot;SCL (클럭)&quot;]
+    end
+
+    subgraph DEVICES[&quot;📟 장치들&quot;]
+        OLED[&quot;OLED\n주소: 0x3C&quot;]
+        SENSOR[&quot;센서\n주소: 0x68&quot;]
+    end
+
+    M --&gt; SDA
+    M --&gt; SCL
+    SDA --&gt; OLED
+    SDA --&gt; SENSOR
+    SCL --&gt; OLED
+    SCL --&gt; SENSOR
+
+    style PICO fill:#e3f2fd,stroke:#1976d2
+    style BUS fill:#fff3e0,stroke:#f57c00
+    style DEVICES fill:#e8f5e9,stroke:#388e3c
+</code></pre></div>
+<h3 id="2-oled">개념 2: OLED 디스플레이<a class="headerlink" href="#2-oled" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>비유로 시작</strong>: "OLED는 마치 128×64칸의 모눈종이와 같아요"</li>
+<li>각 칸에 점을 찍거나 지울 수 있어</li>
+<li>
+<p>점들을 모아서 글자나 그림을 만들어</p>
+</li>
+<li>
+<p><strong>정확한 정의</strong>: "0.96인치 OLED는 128×64 픽셀의 자체발광 디스플레이야"</p>
+</li>
+<li>백라이트 없이 픽셀 자체가 빛을 내서 선명해</li>
+<li>
+<p>검은 배경에 흰색(또는 노란색+파란색) 표시</p>
+</li>
+<li>
+<p><strong>예시로 확인</strong>: "좌표 (0,0)은 왼쪽 위 모서리, (127,63)은 오른쪽 아래 모서리야"</p>
+</li>
+</ol>
+<p><strong>쉽게 말하면</strong>: OLED는 128×64개의 작은 전구가 모여있는 화면이야!</p>
+<div class="highlight"><pre><span></span><code>flowchart TB
+    subgraph SCREEN[&quot;📺 OLED 화면 좌표계&quot;]
+        direction TB
+        A[&quot;(0,0) ← 시작점&quot;] 
+        B[&quot;X축 →\n0 ~ 127&quot;]
+        C[&quot;Y축 ↓\n0 ~ 63&quot;]
+        D[&quot;(127,63) ← 끝점&quot;]
+    end
+
+    A --&gt; B
+    A --&gt; C
+    C --&gt; D
+    B --&gt; D
+
+    style SCREEN fill:#f3e5f5,stroke:#7b1fa2
+</code></pre></div>
+<h3 id="3">개념 3: 프레임버퍼<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>비유로 시작</strong>: "프레임버퍼는 마치 스케치북과 같아요"</li>
+<li>스케치북에 먼저 그림을 그리고 (버퍼에 저장)</li>
+<li>
+<p>완성되면 액자에 걸어 (show()로 화면에 표시)</p>
+</li>
+<li>
+<p><strong>정확한 정의</strong>: "프레임버퍼는 화면에 표시할 내용을 메모리에 미리 그려두는 공간이야"</p>
+</li>
+<li>
+<p><strong>예시로 확인</strong>: 
+   <div class="highlight"><pre><span></span><code><span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># 버퍼에 그리기</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>               <span class="c1"># 화면에 표시!</span>
+</code></pre></div></p>
+</li>
+</ol>
+<p><strong>쉽게 말하면</strong>: 그림을 다 그린 다음에 한 번에 보여주는 거야!</p>
+<h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="step-0">Step 0: 라이브러리 설치하기<a class="headerlink" href="#step-0" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: OLED를 제어하기 위한 ssd1306 라이브러리 설치</p>
+<p>OLED를 사용하려면 먼저 라이브러리를 설치해야 해. Thonny에서 쉽게 할 수 있어!</p>
+<p><strong>설치 방법</strong>:
+1. Thonny 상단 메뉴에서 <strong>도구(Tools)</strong> → <strong>패키지 관리(Manage packages)</strong> 클릭
+2. 검색창에 <code>ssd1306</code> 입력
+3. <code>micropython-ssd1306</code> 선택 후 <strong>Install</strong> 클릭
+4. 설치 완료될 때까지 대기</p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A[&quot;🔧 도구 메뉴&quot;] --&gt; B[&quot;📦 패키지 관리&quot;]
+    B --&gt; C[&quot;🔍 ssd1306 검색&quot;]
+    C --&gt; D[&quot;⬇️ Install 클릭&quot;]
+    D --&gt; E[&quot;✅ 설치 완료!&quot;]
+
+    style A fill:#e3f2fd,stroke:#1976d2
+    style E fill:#e8f5e9,stroke:#388e3c
+</code></pre></div>
+<h3 id="step-1-oled">Step 1: OLED 연결하기<a class="headerlink" href="#step-1-oled" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: Grove OLED를 피코에 연결하고 초기화</p>
+<p><strong>회로 연결</strong>:
+Grove Shield의 <strong>I2C 포트</strong>에 OLED 연결</p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    subgraph PICO[&quot;🎛️ Pico 2W + Grove Shield&quot;]
+        I2C[&quot;I2C 포트&quot;]
+    end
+
+    subgraph CABLE[&quot;🔌 Grove 케이블&quot;]
+        C[&quot;4핀 케이블&quot;]
+    end
+
+    subgraph OLED[&quot;📺 Grove OLED&quot;]
+        D[&quot;0.96인치 디스플레이&quot;]
+    end
+
+    I2C &lt;--&gt; C &lt;--&gt; D
+
+    style PICO fill:#e3f2fd,stroke:#1976d2
+    style CABLE fill:#fff3e0,stroke:#f57c00
+    style OLED fill:#e8f5e9,stroke:#388e3c
+</code></pre></div>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: OLED 초기화하고 Hello 표시하기 ===</span>
+<span class="c1"># 첫 번째 OLED 프로그램! 화면에 글자를 띄워보자</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># OLED를 사용하려면 먼저 I2C 통신을 설정하고</span>
+<span class="c1"># 라이브러리로 OLED 객체를 만들어야 해</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">I2C</span>  <span class="c1"># I2C 통신을 위한 모듈</span>
+<span class="kn">import</span> <span class="nn">ssd1306</span>                 <span class="c1"># OLED 제어 라이브러리</span>
+
+<span class="c1"># I2C 설정 - GP4(SDA), GP5(SCL)은 Grove Shield의 I2C 포트</span>
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">400000</span><span class="p">)</span>
+
+<span class="c1"># OLED 객체 생성 - 128x64 크기, I2C 통신 사용</span>
+<span class="n">oled</span> <span class="o">=</span> <span class="n">ssd1306</span><span class="o">.</span><span class="n">SSD1306_I2C</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">i2c</span><span class="p">)</span>
+
+<span class="c1"># 화면 지우기 (모두 검은색으로)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 텍스트 쓰기 - (&quot;내용&quot;, x좌표, y좌표)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Hello!&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Pico 2W&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># 버퍼 내용을 실제 화면에 표시</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;OLED 초기화 완료!&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>OLED 초기화 완료!
+</code></pre></div>
+그리고 OLED 화면에 "Hello!"와 "Pico 2W"가 표시돼!</p>
+<p><strong>여기서 잠깐! 🤔</strong>
+- <code>freq=400000</code>은 I2C 통신 속도야 (400kHz = 빠른 모드)
+- <code>oled.fill(0)</code>은 검은색(0), <code>oled.fill(1)</code>은 흰색(1)
+- <strong>반드시 <code>show()</code>를 호출해야 화면에 나타나!</strong></p>
+<h3 id="step-2">Step 2: 다양한 텍스트 표시하기<a class="headerlink" href="#step-2" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 여러 줄의 텍스트를 다양한 위치에 표시</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 여러 텍스트를 다양한 위치에 표시 ===</span>
+<span class="c1"># 좌표를 이해하고 원하는 위치에 글자를 배치해보자</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 센서 값, 시간 등 여러 정보를 화면에 정리해서 보여주려면</span>
+<span class="c1"># 텍스트 위치 조절을 할 줄 알아야 해</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">I2C</span>
+<span class="kn">import</span> <span class="nn">ssd1306</span>
+
+<span class="c1"># I2C, OLED 초기화</span>
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">400000</span><span class="p">)</span>
+<span class="n">oled</span> <span class="o">=</span> <span class="n">ssd1306</span><span class="o">.</span><span class="n">SSD1306_I2C</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">i2c</span><span class="p">)</span>
+
+<span class="c1"># 화면 지우기</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 다양한 위치에 텍스트 배치</span>
+<span class="c1"># 기본 글꼴은 8x8 픽셀이라 한 글자가 8픽셀 차지해</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Line 1&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>    <span class="c1"># 첫 번째 줄 (y=0)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Line 2&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>   <span class="c1"># 두 번째 줄 (y=10)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Line 3&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>   <span class="c1"># 세 번째 줄 (y=20)</span>
+
+<span class="c1"># 오른쪽 정렬 효과 - x 좌표 조절</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Right!&quot;</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>  <span class="c1"># 오른쪽으로 이동</span>
+
+<span class="c1"># 중앙 배치 (대략적으로)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Center&quot;</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">56</span><span class="p">)</span>  <span class="c1"># 아래쪽 중앙</span>
+
+<span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;텍스트 표시 완료!&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+OLED에 5개의 텍스트가 각기 다른 위치에 표시돼!</p>
+<p><strong>여기서 잠깐! 🤔</strong>
+- 기본 글꼴은 <strong>8x8 픽셀</strong> 크기야
+- 한 화면에 최대 <strong>16글자 × 8줄</strong> 정도 들어가
+- 한글은 지원 안 돼 😢 (영문, 숫자, 특수문자만)</p>
+<h3 id="step-3">Step 3: 도형 그리기<a class="headerlink" href="#step-3" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 선, 사각형 등 기본 도형 그리기</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: OLED에 도형 그리기 ===</span>
+<span class="c1"># 점, 선, 사각형으로 간단한 그래픽 만들기</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 그래프, 게이지, UI 요소 등을 만들려면</span>
+<span class="c1"># 기본 도형을 그릴 줄 알아야 해</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">I2C</span>
+<span class="kn">import</span> <span class="nn">ssd1306</span>
+
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">400000</span><span class="p">)</span>
+<span class="n">oled</span> <span class="o">=</span> <span class="n">ssd1306</span><span class="o">.</span><span class="n">SSD1306_I2C</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">i2c</span><span class="p">)</span>
+
+<span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># 화면 지우기</span>
+
+<span class="c1"># === 점 찍기 ===</span>
+<span class="c1"># pixel(x, y, color) - color: 1=흰색, 0=검은색</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">pixel</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">pixel</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">pixel</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># === 수평선 그리기 ===</span>
+<span class="c1"># hline(x, y, width, color)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">hline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 화면 전체 가로선</span>
+
+<span class="c1"># === 수직선 그리기 ===</span>
+<span class="c1"># vline(x, y, height, color)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">vline</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 세로선</span>
+
+<span class="c1"># === 사각형 (테두리만) ===</span>
+<span class="c1"># rect(x, y, width, height, color)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># === 채워진 사각형 ===</span>
+<span class="c1"># fill_rect(x, y, width, height, color)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">fill_rect</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 도형 위에 텍스트</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Shapes!&quot;</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;도형 그리기 완료!&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>도형 그리기 완료!
+</code></pre></div>
+화면에 점 3개, 가로선, 세로선, 빈 사각형, 채운 사각형이 표시돼!</p>
+<div class="highlight"><pre><span></span><code>flowchart TB
+    subgraph METHODS[&quot;📐 OLED 그리기 메서드&quot;]
+        A[&quot;pixel(x, y, c)\n점 찍기&quot;]
+        B[&quot;hline(x, y, w, c)\n가로선&quot;]
+        C[&quot;vline(x, y, h, c)\n세로선&quot;]
+        D[&quot;rect(x, y, w, h, c)\n사각형 테두리&quot;]
+        E[&quot;fill_rect(x, y, w, h, c)\n채운 사각형&quot;]
+    end
+
+    style METHODS fill:#e8f5e9,stroke:#388e3c
+</code></pre></div>
+<h3 id="step-4">Step 4: 센서 데이터 표시하기<a class="headerlink" href="#step-4" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 온습도 센서 값을 OLED에 실시간 표시</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 센서 값을 OLED에 표시하는 대시보드 ===</span>
+<span class="c1"># 온습도 센서(DHT11)와 OLED를 연결해서 미니 모니터 만들기</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 컴퓨터 없이도 센서 값을 확인할 수 있는</span>
+<span class="c1"># 독립적인 모니터링 장치를 만들 수 있어</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">I2C</span>
+<span class="kn">import</span> <span class="nn">ssd1306</span>
+<span class="kn">import</span> <span class="nn">dht</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># === 장치 초기화 ===</span>
+<span class="c1"># I2C, OLED 설정</span>
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">400000</span><span class="p">)</span>
+<span class="n">oled</span> <span class="o">=</span> <span class="n">ssd1306</span><span class="o">.</span><span class="n">SSD1306_I2C</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">i2c</span><span class="p">)</span>
+
+<span class="c1"># DHT11 센서 (D16 포트)</span>
+<span class="n">sensor</span> <span class="o">=</span> <span class="n">dht</span><span class="o">.</span><span class="n">DHT11</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">))</span>
+
+<span class="c1"># === 대시보드 그리기 함수 ===</span>
+<span class="k">def</span> <span class="nf">draw_dashboard</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">humi</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;온습도 데이터를 화면에 표시&quot;&quot;&quot;</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># 화면 지우기</span>
+
+    <span class="c1"># 제목</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;== Weather ==&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># 구분선</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">hline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># 온도 표시</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Temp:&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; C&quot;</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+    <span class="c1"># 습도 표시</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Humi:&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">humi</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; %&quot;</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
+
+    <span class="c1"># 상태 바 (습도를 막대 그래프로)</span>
+    <span class="n">bar_width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">humi</span> <span class="o">*</span> <span class="mf">1.2</span><span class="p">)</span>  <span class="c1"># 최대 120픽셀</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>       <span class="c1"># 테두리</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">fill_rect</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">bar_width</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 채우기</span>
+
+    <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># === 메인 루프 ===</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;센서 대시보드 시작!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ctrl+C로 종료&quot;</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># 센서 측정</span>
+        <span class="n">sensor</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">temperature</span><span class="p">()</span>
+        <span class="n">humi</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">humidity</span><span class="p">()</span>
+
+        <span class="c1"># 화면 업데이트</span>
+        <span class="n">draw_dashboard</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">humi</span><span class="p">)</span>
+
+        <span class="c1"># 콘솔에도 출력</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;온도: </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">°C, 습도: </span><span class="si">{</span><span class="n">humi</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># 센서 오류 시</span>
+        <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Sensor Error!&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+        <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;오류: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 2초마다 갱신</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>센서 대시보드 시작!
+Ctrl+C로 종료
+온도: 24°C, 습도: 65%
+온도: 24°C, 습도: 64%
+...
+</code></pre></div>
+OLED에 온도, 습도, 습도 막대 그래프가 표시되고 2초마다 갱신돼!</p>
+<p><strong>여기서 잠깐! 🤔</strong>
+- <code>fill(0)</code>으로 매번 화면을 지우고 다시 그려
+- 안 그러면 이전 글자 위에 새 글자가 겹쳐!</p>
+<h2 id="_5">📝 전체 코드<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># === 센서 데이터 OLED 대시보드 완성판 ===</span>
+<span class="c1"># 파일명: step4_oled_dashboard.py</span>
+<span class="c1"># 온습도 센서 값을 OLED에 실시간으로 표시하는 프로그램</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">I2C</span>
+<span class="kn">import</span> <span class="nn">ssd1306</span>
+<span class="kn">import</span> <span class="nn">dht</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># ===== 장치 초기화 =====</span>
+<span class="c1"># I2C 통신 설정 (Grove Shield의 I2C 포트)</span>
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">400000</span><span class="p">)</span>
+
+<span class="c1"># OLED 디스플레이 (128x64 픽셀)</span>
+<span class="n">oled</span> <span class="o">=</span> <span class="n">ssd1306</span><span class="o">.</span><span class="n">SSD1306_I2C</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">i2c</span><span class="p">)</span>
+
+<span class="c1"># DHT11 온습도 센서 (D16 포트에 연결)</span>
+<span class="n">sensor</span> <span class="o">=</span> <span class="n">dht</span><span class="o">.</span><span class="n">DHT11</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">))</span>
+
+<span class="c1"># ===== 함수 정의 =====</span>
+<span class="k">def</span> <span class="nf">draw_dashboard</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">humi</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;온습도 데이터를 대시보드 형태로 표시</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        temp: 온도 값 (정수)</span>
+<span class="sd">        humi: 습도 값 (정수)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># 화면 초기화 (검은색)</span>
+
+    <span class="c1"># 제목 영역</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;== Weather ==&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">hline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 구분선</span>
+
+    <span class="c1"># 온도 표시</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Temp:&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; C&quot;</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+    <span class="c1"># 습도 표시</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Humi:&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">humi</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; %&quot;</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
+
+    <span class="c1"># 습도 막대 그래프</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 테두리</span>
+    <span class="n">bar_width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">humi</span> <span class="o">*</span> <span class="mf">1.2</span><span class="p">)</span>   <span class="c1"># 습도에 비례한 막대 길이</span>
+    <span class="k">if</span> <span class="n">bar_width</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">oled</span><span class="o">.</span><span class="n">fill_rect</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">bar_width</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># 화면에 표시</span>
+
+<span class="k">def</span> <span class="nf">show_error</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;에러 메시지를 화면에 표시</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        message: 표시할 에러 메시지</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;ERROR!&quot;</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># ===== 메인 프로그램 =====</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;센서 대시보드 시작!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2초마다 센서 값을 갱신합니다&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ctrl+C로 종료하세요&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+
+<span class="c1"># 시작 화면</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Starting...&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 무한 루프</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># 센서에서 데이터 읽기</span>
+        <span class="n">sensor</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">temperature</span><span class="p">()</span>
+        <span class="n">humi</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">humidity</span><span class="p">()</span>
+
+        <span class="c1"># OLED에 표시</span>
+        <span class="n">draw_dashboard</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">humi</span><span class="p">)</span>
+
+        <span class="c1"># 콘솔에도 출력</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;온도: </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">°C | 습도: </span><span class="si">{</span><span class="n">humi</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># 센서 통신 오류</span>
+        <span class="n">show_error</span><span class="p">(</span><span class="s2">&quot;Sensor N/A&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;센서 오류: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># 기타 오류</span>
+        <span class="n">show_error</span><span class="p">(</span><span class="s2">&quot;Unknown Err&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;오류 발생: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 2초 대기</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="_6">⚠️ 자주 하는 실수<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="1-show">실수 1: show()를 안 부름<a class="headerlink" href="#1-show" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: 코드는 에러 없이 실행되는데 화면에 아무것도 안 나와</p>
+<p><strong>원인</strong>: OLED는 프레임버퍼 방식이라 <code>show()</code>를 호출해야 실제 화면이 갱신돼</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="c1"># 여기서 끝나면 화면에 안 나타남!</span>
+
+<span class="c1"># 올바른 코드</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># 이걸 꼭 호출해야 해!</span>
+</code></pre></div></p>
+<h3 id="2">실수 2: 화면을 안 지우고 덮어씀<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: 글자가 겹쳐서 뭉개져 보임</p>
+<p><strong>원인</strong>: 이전에 그린 내용 위에 새 내용이 덧그려짐</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># 계속 겹침</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># 올바른 코드</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># 먼저 화면 지우기!</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</code></pre></div></p>
+<h3 id="3-i2c">실수 3: I2C 핀 번호 오류<a class="headerlink" href="#3-i2c" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: <code>OSError: [Errno 5] EIO</code> 에러 발생</p>
+<p><strong>원인</strong>: I2C 핀 번호가 잘못됐거나 연결이 안 됨</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드 (핀 번호 틀림)</span>
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># 올바른 코드 (Grove Shield I2C 포트)</span>
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">400000</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="4">실수 4: 좌표가 화면을 벗어남<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: 글자나 도형이 잘려서 보이거나 안 보임</p>
+<p><strong>원인</strong>: x는 0~127, y는 0~63 범위를 벗어남</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># 글자가 오른쪽으로 잘림</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>     <span class="c1"># 글자가 아래로 잘림</span>
+
+<span class="c1"># 올바른 코드 (글자 크기 8x8 고려)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>   <span class="c1"># 5글자 * 8 = 40, 128-40 = 88</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">56</span><span class="p">)</span>     <span class="c1"># 64-8 = 56</span>
+</code></pre></div></p>
+<h3 id="5">실수 5: 라이브러리 설치 안 함<a class="headerlink" href="#5" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: <code>ImportError: no module named 'ssd1306'</code></p>
+<p><strong>원인</strong>: ssd1306 라이브러리가 피코에 설치되지 않음</p>
+<p><strong>해결</strong>:
+1. Thonny → 도구 → 패키지 관리
+2. <code>ssd1306</code> 검색
+3. <code>micropython-ssd1306</code> 설치</p>
+<h2 id="_7">✅ 스스로 점검하기<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>I2C 통신에서 SDA와 SCL의 역할은 각각 무엇인가요?</strong></p>
+</li>
+<li>
+<p><strong>OLED에 "Score: 100"을 화면 중앙에 표시하려면 x 좌표를 대략 얼마로 해야 할까요?</strong></p>
+</li>
+<li>
+<p><strong>왜 화면을 갱신하기 전에 <code>oled.fill(0)</code>을 호출하는 게 좋을까요?</strong></p>
+</li>
+</ol>
+<details>
+<summary>정답 확인</summary>
+
+1. **SDA**(Serial Data)는 실제 데이터가 오가는 선이고, **SCL**(Serial Clock)은 데이터 전송의 타이밍(박자)을 맞춰주는 신호 선이야.
+
+2. "Score: 100"은 10글자야. 글자당 8픽셀이니까 총 80픽셀.
+   중앙 정렬: (128 - 80) / 2 = **24** 정도!
+
+3. `fill(0)`을 안 하면 이전에 그렸던 내용이 그대로 남아있어서 새 내용과 겹쳐 보여. 화면을 깨끗이 지우고 다시 그려야 깔끔하게 표시돼!
+
+</details>
+
+<h2 id="_8">🚀 더 해보기<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<h3 id="1">도전 1: 카운터 만들기 (쉬움)<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p>버튼을 누를 때마다 숫자가 1씩 증가하고 OLED에 표시되는 카운터를 만들어봐!</p>
+<p><strong>힌트</strong>:
+<div class="highlight"><pre><span></span><code><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="c1"># 버튼 누르면 count += 1</span>
+<span class="c1"># OLED에 count 표시</span>
+</code></pre></div></p>
+<h3 id="2_1">도전 2: 간단한 애니메이션 (중간)<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h3>
+<p>사각형이 왼쪽에서 오른쪽으로 이동하는 애니메이션을 만들어봐!</p>
+<p><strong>힌트</strong>:
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">fill_rect</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="3_1">도전 3: 미니 게임 만들기 ⭐ (어려움)<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h3>
+<p>조도 센서 값에 따라 막대가 움직이는 게임을 만들어봐!
+- 막대가 목표 영역에 들어오면 점수 획득
+- 점수와 레벨을 OLED에 표시</p>
+<p><strong>힌트</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 조도 값을 y 좌표로 변환</span>
+<span class="c1"># 목표 영역과 충돌 체크</span>
+<span class="c1"># 점수 시스템 추가</span>
+</code></pre></div></p>
+<h2 id="_9">🔗 다음 장으로<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>이번 장에서 우리는:
+- ✅ I2C 통신으로 OLED와 대화하는 법을 배웠어
+- ✅ 텍스트, 선, 사각형을 화면에 그릴 수 있게 됐어
+- ✅ 센서 데이터를 실시간으로 시각화하는 대시보드를 만들었어</p>
+<p><strong>다음 장에서는</strong> 피코를 인터넷에 연결해볼 거야! WiFi로 세상과 연결되면 날씨 정보도 받아오고, 시간도 동기화할 수 있어. 지금 만든 OLED 대시보드에 인터넷 정보까지 더하면 진짜 IoT 장치가 완성돼! 🌐</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

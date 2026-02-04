@@ -1,0 +1,2769 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="라즈베리파이 피코 2W와 MicroPython을 활용한 15시간 피지컬 컴퓨팅 입문 과정으로, 복잡한 개념을 친근한 비유로 쉽게 배웁니다.">
+      
+      
+        <meta name="author" content="Created with Data-AI-Book Generator">
+      
+      
+      
+        <link rel="prev" href="../chapter06/">
+      
+      
+        <link rel="next" href="../chapter08/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>함수로 정리 - 코드의 레고 블록 - 피코와 친해지기 - 피지컬 컴퓨팅 입문</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-07-" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-header__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            피코와 친해지기 - 피지컬 컴퓨팅 입문
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              함수로 정리 - 코드의 레고 블록
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter01/" class="md-tabs__link">
+          
+  
+  
+  Part 1 - 기초 다지기
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Part 2 - 프로젝트 도전
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter10/" class="md-tabs__link">
+          
+  
+  
+  Part 3 - 네트워크 연결
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-nav__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    피코와 친해지기 - 피지컬 컴퓨팅 입문
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 - 기초 다지기
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 - 기초 다지기
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    피코 만나기 - 첫 만남과 환경 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LED의 세계 - 빛으로 말하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    버튼과 대화 - 입력 받기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    센서 입문 - 세상을 느끼다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    출력의 마법 - 세상에 표현하다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조건과 반복 - 자동화의 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 - 프로젝트 도전
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 - 프로젝트 도전
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    함수로 정리 - 코드의 레고 블록
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    함수로 정리 - 코드의 레고 블록
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#part-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: 프로젝트 도전
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: 함수(Function)란?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: 함수의 구조
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: 매개변수와 반환값
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: 가장 간단한 함수 만들기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 매개변수 사용하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: 여러 매개변수 사용하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: 기본값 설정하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: 반환값 사용하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: 여러 값 반환하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: 기존 코드를 함수로 리팩토링하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📝 전체 코드">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        나만의 피코 라이브러리
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        라이브러리 사용 예제
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: 함수 호출 시 괄호 빼먹기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: 매개변수 순서 헷갈리기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: 반환값 무시하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 4: 함수 안에서 만든 변수를 밖에서 사용
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-return" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 5: return 후에 코드 작성
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ 스스로 점검하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 다음 코드의 출력 결과는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 이 함수의 문제점은 무엇일까?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 매개변수와 인자의 차이점을 설명해보세요.
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: 온도 변환 함수 만들기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: 버튼 카운터 함수 만들기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: 나만의 피코 라이브러리 확장하기 ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 설계와 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 완성과 발표
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 - 네트워크 연결
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 - 네트워크 연결
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OLED 디스플레이 - 화면에 표시하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi 연결 - 인터넷 세계로
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시간 동기화 - 정확한 시계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#part-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: 프로젝트 도전
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: 함수(Function)란?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: 함수의 구조
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: 매개변수와 반환값
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: 가장 간단한 함수 만들기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 매개변수 사용하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: 여러 매개변수 사용하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: 기본값 설정하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: 반환값 사용하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: 여러 값 반환하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: 기존 코드를 함수로 리팩토링하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📝 전체 코드">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        나만의 피코 라이브러리
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        라이브러리 사용 예제
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: 함수 호출 시 괄호 빼먹기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: 매개변수 순서 헷갈리기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: 반환값 무시하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 4: 함수 안에서 만든 변수를 밖에서 사용
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-return" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 5: return 후에 코드 작성
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ 스스로 점검하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 다음 코드의 출력 결과는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 이 함수의 문제점은 무엇일까?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 매개변수와 인자의 차이점을 설명해보세요.
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: 온도 변환 함수 만들기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: 버튼 카운터 함수 만들기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: 나만의 피코 라이브러리 확장하기 ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-07-">Chapter 07: 함수로 정리 - 코드의 레고 블록<a class="headerlink" href="#chapter-07-" title="Permanent link">&para;</a></h1>
+<h2 id="part-2">Part 2: 프로젝트 도전<a class="headerlink" href="#part-2" title="Permanent link">&para;</a></h2>
+<hr />
+<h2 id="_1">🎯 이 장에서 배우는 것<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[ ] 함수를 정의하고 호출할 수 있다</li>
+<li>[ ] 매개변수로 함수에 정보를 전달할 수 있다</li>
+<li>[ ] 반환값으로 함수에서 결과를 받아올 수 있다</li>
+<li>[ ] 기존 코드를 함수로 리팩토링할 수 있다</li>
+<li>[ ] 나만의 함수 라이브러리를 만들 수 있다</li>
+</ul>
+<hr />
+<h2 id="_2">💡 왜 이걸 배우나요?<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>지금까지 작성한 코드를 다시 살펴봐. LED 켜기, 센서 읽기, 조건 판단... 비슷한 코드가 여러 번 반복되지 않았어?</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 이런 코드가 여기저기 흩어져 있다면...</span>
+<span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># 또 여기서도...</span>
+<span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># 또 저기서도...</span>
+<span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+<p>코드가 100줄, 200줄로 늘어나면? 😱 수정할 때 일일이 다 찾아서 고쳐야 해!</p>
+<p><strong>함수</strong>는 이런 문제를 해결해주는 마법 같은 도구야. 반복되는 코드를 <strong>레고 블록</strong>처럼 하나로 묶어서, 필요할 때마다 <strong>이름만 불러서</strong> 사용할 수 있거든.</p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A[📝 반복 코드] --&gt; B[📦 함수로 묶기]
+    B --&gt; C[🎯 이름으로 호출]
+    C --&gt; D[✨ 깔끔한 코드]
+
+    style A fill:#ffebee,stroke:#c62828
+    style B fill:#fff3e0,stroke:#f57c00
+    style C fill:#e3f2fd,stroke:#1976d2
+    style D fill:#e8f5e9,stroke:#388e3c
+</code></pre></div>
+<hr />
+<h2 id="_3">📚 핵심 개념<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="1-function">개념 1: 함수(Function)란?<a class="headerlink" href="#1-function" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>비유로 시작</strong>: "함수는 마치 자판기와 같아요"</li>
+<li>돈(입력)을 넣으면 → 자판기가 작동해서 → 음료(출력)가 나와</li>
+<li>
+<p>매번 직접 음료를 만들 필요 없이, 버튼만 누르면 끝!</p>
+</li>
+<li>
+<p><strong>정확한 정의</strong>: "정확히 말하면, 함수는 특정 작업을 수행하는 코드 블록에 이름을 붙인 것입니다"</p>
+</li>
+<li>한 번 만들어두면 이름을 불러서 반복 사용 가능</li>
+<li>
+<p>코드의 재사용성과 가독성을 높여줌</p>
+</li>
+<li>
+<p><strong>예시로 확인</strong>: "예를 들어, <code>print()</code>도 함수야!"</p>
+</li>
+<li><code>print("안녕")</code> - 괄호 안에 넣은 걸 화면에 출력해주는 함수</li>
+<li>누군가 이미 만들어둔 함수를 우리가 사용하는 거지</li>
+</ol>
+<p><strong>쉽게 말하면</strong>: 자주 쓰는 코드에 이름표를 붙여서, 이름만 부르면 실행되게 하는 것!</p>
+<hr />
+<h3 id="2">개념 2: 함수의 구조<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>flowchart TB
+    subgraph 함수정의[&quot;📦 함수 정의&quot;]
+        A[&quot;def 함수이름(매개변수):&quot;]
+        B[&quot;    코드 블록&quot;]
+        C[&quot;    return 결과&quot;]
+    end
+
+    subgraph 함수호출[&quot;🎯 함수 호출&quot;]
+        D[&quot;결과 = 함수이름(인자)&quot;]
+    end
+
+    함수정의 --&gt; 함수호출
+
+    style A fill:#e3f2fd,stroke:#1976d2
+    style B fill:#fff3e0,stroke:#f57c00
+    style C fill:#e8f5e9,stroke:#388e3c
+    style D fill:#f3e5f5,stroke:#7b1fa2
+</code></pre></div>
+<p>함수는 <strong>레시피</strong>와 같아:</p>
+<table>
+<thead>
+<tr>
+<th>레시피</th>
+<th>함수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>레시피 이름</td>
+<td>함수 이름</td>
+</tr>
+<tr>
+<td>재료</td>
+<td>매개변수 (Parameter)</td>
+</tr>
+<tr>
+<td>조리 과정</td>
+<td>함수 본문 (코드)</td>
+</tr>
+<tr>
+<td>완성된 요리</td>
+<td>반환값 (Return)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>쉽게 말하면</strong>: <code>def</code>로 레시피를 작성하고, 함수 이름으로 요리를 주문하는 것!</p>
+<hr />
+<h3 id="3">개념 3: 매개변수와 반환값<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A[&quot;🥕 재료&lt;br/&gt;(매개변수)&quot;] --&gt; B[&quot;🍳 요리&lt;br/&gt;(함수 실행)&quot;]
+    B --&gt; C[&quot;🍽️ 완성&lt;br/&gt;(반환값)&quot;]
+
+    style A fill:#ffecb3,stroke:#ff8f00
+    style B fill:#fff3e0,stroke:#f57c00
+    style C fill:#c8e6c9,stroke:#388e3c
+</code></pre></div>
+<ul>
+<li><strong>매개변수(Parameter)</strong>: 함수에 전달하는 재료</li>
+<li>함수를 정의할 때 괄호 안에 적는 변수</li>
+<li>
+<p><code>def blink(times):</code> ← <code>times</code>가 매개변수</p>
+</li>
+<li>
+<p><strong>인자(Argument)</strong>: 함수를 호출할 때 실제로 넣는 값</p>
+</li>
+<li>
+<p><code>blink(5)</code> ← <code>5</code>가 인자</p>
+</li>
+<li>
+<p><strong>반환값(Return Value)</strong>: 함수가 돌려주는 결과</p>
+</li>
+<li><code>return</code> 키워드로 반환</li>
+<li>없으면 <code>None</code> 반환</li>
+</ul>
+<p><strong>쉽게 말하면</strong>: 재료(매개변수)를 넣으면 → 함수가 처리해서 → 결과(반환값)를 돌려줘!</p>
+<hr />
+<h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="step-1">Step 1: 가장 간단한 함수 만들기<a class="headerlink" href="#step-1" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 매개변수도 반환값도 없는 기본 함수 만들기</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 가장 간단한 함수 만들기 ===</span>
+<span class="c1"># LED를 한 번 깜빡이는 함수를 만들어요</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 깜빡임 코드를 매번 쓰지 않고, 이름만 불러서 실행하려고</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>  <span class="c1"># 핀 제어용</span>
+<span class="kn">import</span> <span class="nn">time</span>              <span class="c1"># 시간 관련 기능</span>
+
+<span class="c1"># LED 설정</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>  <span class="c1"># 내장 LED</span>
+
+<span class="c1"># === 함수 정의 ===</span>
+<span class="k">def</span> <span class="nf">blink</span><span class="p">():</span>               <span class="c1"># def = 함수를 정의한다는 선언</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LED를 한 번 깜빡입니다&quot;&quot;&quot;</span>  <span class="c1"># 함수 설명 (선택사항)</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>               <span class="c1"># LED 켜기</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>        <span class="c1"># 0.3초 대기</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>              <span class="c1"># LED 끄기</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>        <span class="c1"># 0.3초 대기</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;깜빡!&quot;</span><span class="p">)</span>         <span class="c1"># 확인용 출력</span>
+
+<span class="c1"># === 함수 호출 ===</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;함수 호출 전...&quot;</span><span class="p">)</span>
+<span class="n">blink</span><span class="p">()</span>                    <span class="c1"># 함수 이름으로 호출!</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1번 깜빡 완료!&quot;</span><span class="p">)</span>
+
+<span class="n">blink</span><span class="p">()</span>                    <span class="c1"># 또 호출!</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2번 깜빡 완료!&quot;</span><span class="p">)</span>
+
+<span class="n">blink</span><span class="p">()</span>                    <span class="c1"># 또 호출!</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3번 깜빡 완료!&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>함수 호출 전...
+깜빡!
+1번 깜빡 완료!
+깜빡!
+2번 깜빡 완료!
+깜빡!
+3번 깜빡 완료!
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong>
+- <code>def blink():</code> - 함수를 <strong>정의</strong>만 한 거야. 아직 실행 안 됨!
+- <code>blink()</code> - 이때 비로소 함수가 <strong>실행</strong>돼!
+- 괄호 <code>()</code>를 빼면 함수가 실행되지 않아! <code>blink</code>만 쓰면 "이런 함수가 있다"는 정보만 나와</p>
+<hr />
+<h3 id="step-2">Step 2: 매개변수 사용하기<a class="headerlink" href="#step-2" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 깜빡이는 횟수를 지정할 수 있게 만들기</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 매개변수가 있는 함수 ===</span>
+<span class="c1"># 깜빡이는 횟수를 지정할 수 있어요</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 상황에 따라 다른 횟수로 깜빡이고 싶어서</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># === 매개변수가 있는 함수 ===</span>
+<span class="k">def</span> <span class="nf">blink</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>          <span class="c1"># times가 매개변수!</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LED를 지정한 횟수만큼 깜빡입니다</span>
+
+<span class="sd">    times: 깜빡일 횟수</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>     <span class="c1"># times번 반복</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">times</span><span class="si">}</span><span class="s2">번 깜빡 완료!&quot;</span><span class="p">)</span>
+
+<span class="c1"># === 다양한 호출 ===</span>
+<span class="n">blink</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>    <span class="c1"># 3번 깜빡 (3이 times에 전달됨)</span>
+<span class="n">blink</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>    <span class="c1"># 5번 깜빡</span>
+<span class="n">blink</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>    <span class="c1"># 1번 깜빡</span>
+
+<span class="c1"># 변수로도 전달 가능!</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">blink</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>  <span class="c1"># 10번 깜빡</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>3번 깜빡 완료!
+5번 깜빡 완료!
+1번 깜빡 완료!
+10번 깜빡 완료!
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong>
+- <code>times</code>는 <strong>매개변수</strong> - 함수 정의에서 사용
+- <code>3</code>, <code>5</code>, <code>1</code>, <code>count</code>는 <strong>인자</strong> - 함수 호출할 때 전달하는 실제 값
+- 함수가 호출될 때마다 <code>times</code>에 다른 값이 들어가!</p>
+<hr />
+<h3 id="step-3">Step 3: 여러 매개변수 사용하기<a class="headerlink" href="#step-3" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 횟수와 속도를 모두 지정할 수 있게 만들기</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 여러 매개변수를 받는 함수 ===</span>
+<span class="c1"># 횟수와 속도를 모두 지정할 수 있어요</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 더 유연하게 깜빡임을 제어하고 싶어서</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># === 여러 매개변수 ===</span>
+<span class="k">def</span> <span class="nf">blink</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>   <span class="c1"># 쉼표로 구분해서 여러 개!</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LED를 지정한 횟수와 속도로 깜빡입니다</span>
+
+<span class="sd">    times: 깜빡일 횟수</span>
+<span class="sd">    speed: 깜빡임 간격 (초 단위)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;속도 </span><span class="si">{</span><span class="n">speed</span><span class="si">}</span><span class="s2">초로 </span><span class="si">{</span><span class="n">times</span><span class="si">}</span><span class="s2">번 깜빡이기 시작!&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;완료!&quot;</span><span class="p">)</span>
+
+<span class="c1"># === 호출 ===</span>
+<span class="n">blink</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>      <span class="c1"># 3번, 0.5초 간격 (느리게)</span>
+<span class="n">blink</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>      <span class="c1"># 5번, 0.1초 간격 (빠르게)</span>
+<span class="n">blink</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>      <span class="c1"># 2번, 1초 간격 (아주 느리게)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>속도 0.5초로 3번 깜빡이기 시작!
+완료!
+속도 0.1초로 5번 깜빡이기 시작!
+완료!
+속도 1.0초로 2번 깜빡이기 시작!
+완료!
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong>
+매개변수 순서가 중요해! <code>blink(3, 0.5)</code>에서:
+- <code>3</code>은 첫 번째 매개변수 <code>times</code>에
+- <code>0.5</code>는 두 번째 매개변수 <code>speed</code>에 전달돼</p>
+<hr />
+<h3 id="step-4">Step 4: 기본값 설정하기<a class="headerlink" href="#step-4" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 매개변수에 기본값을 줘서 더 편리하게 만들기</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 기본값이 있는 매개변수 ===</span>
+<span class="c1"># 인자를 안 넣으면 기본값이 사용돼요</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 매번 모든 값을 넣기 귀찮을 때, 자주 쓰는 값을 기본으로</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># === 기본값 설정 ===</span>
+<span class="k">def</span> <span class="nf">blink</span><span class="p">(</span><span class="n">times</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">speed</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>  <span class="c1"># = 뒤에 기본값!</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LED를 깜빡입니다</span>
+
+<span class="sd">    times: 깜빡일 횟수 (기본 3번)</span>
+<span class="sd">    speed: 깜빡임 간격 (기본 0.3초)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">speed</span><span class="si">}</span><span class="s2">초 간격으로 </span><span class="si">{</span><span class="n">times</span><span class="si">}</span><span class="s2">번 깜빡이기!&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span>
+
+<span class="c1"># === 다양한 호출 방법 ===</span>
+<span class="n">blink</span><span class="p">()</span>           <span class="c1"># 기본값 사용: 3번, 0.3초</span>
+<span class="n">blink</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>          <span class="c1"># times만 지정: 5번, 0.3초</span>
+<span class="n">blink</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>     <span class="c1"># 둘 다 지정: 2번, 0.1초</span>
+
+<span class="c1"># 이름으로 지정하기 (키워드 인자)</span>
+<span class="n">blink</span><span class="p">(</span><span class="n">speed</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>         <span class="c1"># times는 기본값, speed만 지정</span>
+<span class="n">blink</span><span class="p">(</span><span class="n">times</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">speed</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>  <span class="c1"># 둘 다 이름으로 지정</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>0.3초 간격으로 3번 깜빡이기!
+0.3초 간격으로 5번 깜빡이기!
+0.1초 간격으로 2번 깜빡이기!
+0.5초 간격으로 3번 깜빡이기!
+0.05초 간격으로 10번 깜빡이기!
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong>
+- 기본값이 있는 매개변수는 <strong>뒤쪽</strong>에 와야 해!
+- <code>def blink(times=3, speed):</code> ← 이건 에러!
+- <code>def blink(times, speed=0.3):</code> ← 이건 OK!</p>
+<hr />
+<h3 id="step-5">Step 5: 반환값 사용하기<a class="headerlink" href="#step-5" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 함수에서 계산 결과를 돌려받기</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 반환값이 있는 함수 ===</span>
+<span class="c1"># 함수가 결과를 돌려줘요</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 함수 안에서 계산한 결과를 밖에서 사용하고 싶어서</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">ADC</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># 조도 센서 설정 (A0에 연결)</span>
+<span class="n">light_sensor</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">26</span><span class="p">))</span>
+
+<span class="c1"># === 반환값이 있는 함수 ===</span>
+<span class="k">def</span> <span class="nf">read_light</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;조도 센서 값을 읽어서 반환합니다</span>
+
+<span class="sd">    반환: 조도 값 (0~65535)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">light_sensor</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span>  <span class="c1"># 센서 읽기</span>
+    <span class="k">return</span> <span class="n">value</span>                      <span class="c1"># 값을 반환!</span>
+
+<span class="k">def</span> <span class="nf">light_to_percent</span><span class="p">(</span><span class="n">raw_value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;조도 값을 퍼센트로 변환합니다</span>
+
+<span class="sd">    raw_value: 원본 센서 값 (0~65535)</span>
+<span class="sd">    반환: 퍼센트 값 (0~100)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">percent</span> <span class="o">=</span> <span class="n">raw_value</span> <span class="o">/</span> <span class="mi">65535</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">percent</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 소수점 1자리로 반올림해서 반환</span>
+
+<span class="c1"># === 반환값 사용하기 ===</span>
+<span class="c1"># 방법 1: 변수에 저장</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">read_light</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;원본 값: </span><span class="si">{</span><span class="n">raw</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 방법 2: 바로 다른 함수에 전달</span>
+<span class="n">percent</span> <span class="o">=</span> <span class="n">light_to_percent</span><span class="p">(</span><span class="n">read_light</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;밝기: </span><span class="si">{</span><span class="n">percent</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="c1"># 방법 3: 조건문에서 사용</span>
+<span class="k">if</span> <span class="n">read_light</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">30000</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;밝아요!&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;어두워요!&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong> (환경에 따라 다름):
+<div class="highlight"><pre><span></span><code>원본 값: 45230
+밝기: 69.0%
+밝아요!
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong>
+- <code>return</code>을 만나면 함수가 <strong>즉시 종료</strong>돼!
+- <code>return</code> 뒤의 코드는 실행되지 않아
+- <code>return</code>이 없으면 <code>None</code>을 반환해</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1번&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;끝&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2번&quot;</span><span class="p">)</span>  <span class="c1"># 이건 절대 실행 안 됨!</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">test</span><span class="p">()</span>  <span class="c1"># &quot;1번&quot; 출력</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>    <span class="c1"># &quot;끝&quot; 출력</span>
+</code></pre></div>
+<hr />
+<h3 id="step-6">Step 6: 여러 값 반환하기<a class="headerlink" href="#step-6" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 하나의 함수에서 여러 결과를 동시에 반환하기</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 여러 값을 반환하는 함수 ===</span>
+<span class="c1"># 튜플로 여러 값을 한꺼번에 반환해요</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 온도와 습도처럼 여러 값을 함께 얻고 싶을 때</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># DHT11 센서 시뮬레이션 (실제 센서가 없을 때)</span>
+<span class="c1"># 실제 사용 시에는 dht 라이브러리 사용</span>
+
+<span class="k">def</span> <span class="nf">read_environment</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;온도와 습도를 읽어서 반환합니다</span>
+
+<span class="sd">    반환: (온도, 습도) 튜플</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># 시뮬레이션 값 (실제로는 센서에서 읽기)</span>
+    <span class="n">temperature</span> <span class="o">=</span> <span class="mf">25.5</span>
+    <span class="n">humidity</span> <span class="o">=</span> <span class="mf">60.0</span>
+    <span class="k">return</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">humidity</span>  <span class="c1"># 여러 값 반환!</span>
+
+<span class="k">def</span> <span class="nf">analyze_comfort</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">humid</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;온습도로 쾌적도를 분석합니다</span>
+
+<span class="sd">    temp: 온도</span>
+<span class="sd">    humid: 습도</span>
+<span class="sd">    반환: (쾌적도 점수, 메시지)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="c1"># 온도 분석</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="o">&lt;</span> <span class="mi">18</span> <span class="ow">or</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">28</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">-=</span> <span class="mi">30</span>
+    <span class="k">elif</span> <span class="n">temp</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="ow">or</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">26</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">-=</span> <span class="mi">10</span>
+
+    <span class="c1"># 습도 분석</span>
+    <span class="k">if</span> <span class="n">humid</span> <span class="o">&lt;</span> <span class="mi">40</span> <span class="ow">or</span> <span class="n">humid</span> <span class="o">&gt;</span> <span class="mi">70</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">-=</span> <span class="mi">30</span>
+    <span class="k">elif</span> <span class="n">humid</span> <span class="o">&lt;</span> <span class="mi">45</span> <span class="ow">or</span> <span class="n">humid</span> <span class="o">&gt;</span> <span class="mi">65</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">-=</span> <span class="mi">10</span>
+
+    <span class="c1"># 메시지 결정</span>
+    <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;=</span> <span class="mi">80</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;쾌적해요! 😊&quot;</span>
+    <span class="k">elif</span> <span class="n">score</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;괜찮아요 🙂&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;조금 불편해요 😓&quot;</span>
+
+    <span class="k">return</span> <span class="n">score</span><span class="p">,</span> <span class="n">message</span>  <span class="c1"># 두 값 반환</span>
+
+<span class="c1"># === 여러 값 받기 ===</span>
+<span class="c1"># 방법 1: 여러 변수로 받기</span>
+<span class="n">temp</span><span class="p">,</span> <span class="n">humid</span> <span class="o">=</span> <span class="n">read_environment</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;온도: </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">°C, 습도: </span><span class="si">{</span><span class="n">humid</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="c1"># 방법 2: 튜플로 받기</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">read_environment</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;결과: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>       <span class="c1"># (25.5, 60.0)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;온도: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>  <span class="c1"># 인덱스로 접근</span>
+
+<span class="c1"># === 연결해서 사용하기 ===</span>
+<span class="n">temp</span><span class="p">,</span> <span class="n">humid</span> <span class="o">=</span> <span class="n">read_environment</span><span class="p">()</span>
+<span class="n">score</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="n">analyze_comfort</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">humid</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;쾌적도: </span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">점 - </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>온도: 25.5°C, 습도: 60.0%
+결과: (25.5, 60.0)
+온도: 25.5°C
+쾌적도: 100점 - 쾌적해요! 😊
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong>
+<code>return a, b</code>는 실제로 <code>return (a, b)</code> - 튜플을 반환하는 거야!
+받을 때 <code>x, y = 함수()</code>로 풀어서 받을 수 있어 (언패킹)</p>
+<hr />
+<h3 id="step-7">Step 7: 기존 코드를 함수로 리팩토링하기<a class="headerlink" href="#step-7" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 이전에 작성한 자동 야간등 코드를 함수로 깔끔하게 정리하기</p>
+<p><strong>리팩토링 전 (6차시 코드)</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 지저분한 코드 😓</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">ADC</span><span class="p">,</span> <span class="n">PWM</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">light_sensor</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">26</span><span class="p">))</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">PWM</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">led</span><span class="o">.</span><span class="n">freq</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">light_value</span> <span class="o">=</span> <span class="n">light_sensor</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span>
+
+    <span class="c1"># 밝기 계산 (반복되는 패턴)</span>
+    <span class="k">if</span> <span class="n">light_value</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">:</span>
+        <span class="n">brightness</span> <span class="o">=</span> <span class="mi">65535</span>
+    <span class="k">elif</span> <span class="n">light_value</span> <span class="o">&lt;</span> <span class="mi">30000</span><span class="p">:</span>
+        <span class="n">brightness</span> <span class="o">=</span> <span class="mi">40000</span>
+    <span class="k">elif</span> <span class="n">light_value</span> <span class="o">&lt;</span> <span class="mi">50000</span><span class="p">:</span>
+        <span class="n">brightness</span> <span class="o">=</span> <span class="mi">20000</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">brightness</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">led</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="n">brightness</span><span class="p">)</span>
+
+    <span class="c1"># 출력 (또 반복...)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;조도: </span><span class="si">{</span><span class="n">light_value</span><span class="si">}</span><span class="s2">, LED: </span><span class="si">{</span><span class="n">brightness</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>리팩토링 후</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 함수로 정리한 자동 야간등 ===</span>
+<span class="c1"># 깔끔하게 정리된 코드 ✨</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 각 기능이 분리되어 읽기 쉽고, 수정도 쉬워요</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">ADC</span><span class="p">,</span> <span class="n">PWM</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># === 하드웨어 설정 ===</span>
+<span class="n">light_sensor</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">26</span><span class="p">))</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">PWM</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">led</span><span class="o">.</span><span class="n">freq</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># === 함수 정의 ===</span>
+<span class="k">def</span> <span class="nf">read_light</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;조도 센서 값을 읽습니다&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">light_sensor</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">calculate_brightness</span><span class="p">(</span><span class="n">light_value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;조도에 따른 LED 밝기를 계산합니다</span>
+
+<span class="sd">    light_value: 조도 센서 값</span>
+<span class="sd">    반환: LED 밝기 (0~65535)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">light_value</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">:</span>      <span class="c1"># 아주 어두움</span>
+        <span class="k">return</span> <span class="mi">65535</span>             <span class="c1"># 최대 밝기</span>
+    <span class="k">elif</span> <span class="n">light_value</span> <span class="o">&lt;</span> <span class="mi">30000</span><span class="p">:</span>    <span class="c1"># 어두움</span>
+        <span class="k">return</span> <span class="mi">40000</span>
+    <span class="k">elif</span> <span class="n">light_value</span> <span class="o">&lt;</span> <span class="mi">50000</span><span class="p">:</span>    <span class="c1"># 약간 어두움</span>
+        <span class="k">return</span> <span class="mi">20000</span>
+    <span class="k">else</span><span class="p">:</span>                        <span class="c1"># 밝음</span>
+        <span class="k">return</span> <span class="mi">0</span>                 <span class="c1"># LED 끄기</span>
+
+<span class="k">def</span> <span class="nf">set_led_brightness</span><span class="p">(</span><span class="n">brightness</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LED 밝기를 설정합니다&quot;&quot;&quot;</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="n">brightness</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">display_status</span><span class="p">(</span><span class="n">light</span><span class="p">,</span> <span class="n">brightness</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;현재 상태를 출력합니다&quot;&quot;&quot;</span>
+    <span class="n">percent</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">light</span> <span class="o">/</span> <span class="mi">65535</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">led_percent</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">brightness</span> <span class="o">/</span> <span class="mi">65535</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;조도: </span><span class="si">{</span><span class="n">percent</span><span class="si">}</span><span class="s2">% → LED: </span><span class="si">{</span><span class="n">led_percent</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="c1"># === 메인 루프 ===</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;자동 야간등 메인 함수&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🌙 자동 야간등 시작!&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="c1"># 1. 센서 읽기</span>
+        <span class="n">light</span> <span class="o">=</span> <span class="n">read_light</span><span class="p">()</span>
+
+        <span class="c1"># 2. 밝기 계산</span>
+        <span class="n">brightness</span> <span class="o">=</span> <span class="n">calculate_brightness</span><span class="p">(</span><span class="n">light</span><span class="p">)</span>
+
+        <span class="c1"># 3. LED 설정</span>
+        <span class="n">set_led_brightness</span><span class="p">(</span><span class="n">brightness</span><span class="p">)</span>
+
+        <span class="c1"># 4. 상태 출력</span>
+        <span class="n">display_status</span><span class="p">(</span><span class="n">light</span><span class="p">,</span> <span class="n">brightness</span><span class="p">)</span>
+
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># 프로그램 시작</span>
+<span class="n">main</span><span class="p">()</span>
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<p>리팩토링의 장점을 비교해보자:</p>
+<div class="highlight"><pre><span></span><code>flowchart TB
+    subgraph before[&quot;❌ 리팩토링 전&quot;]
+        A1[&quot;모든 코드가&lt;br/&gt;한 덩어리&quot;]
+        A2[&quot;수정할 때&lt;br/&gt;전체를 읽어야 함&quot;]
+        A3[&quot;재사용 불가&quot;]
+    end
+
+    subgraph after[&quot;✅ 리팩토링 후&quot;]
+        B1[&quot;기능별로&lt;br/&gt;분리됨&quot;]
+        B2[&quot;필요한 함수만&lt;br/&gt;수정&quot;]
+        B3[&quot;다른 프로젝트에&lt;br/&gt;재사용 가능&quot;]
+    end
+
+    before --&gt; |&quot;함수로 정리&quot;| after
+
+    style A1 fill:#ffcdd2,stroke:#c62828
+    style A2 fill:#ffcdd2,stroke:#c62828
+    style A3 fill:#ffcdd2,stroke:#c62828
+    style B1 fill:#c8e6c9,stroke:#388e3c
+    style B2 fill:#c8e6c9,stroke:#388e3c
+    style B3 fill:#c8e6c9,stroke:#388e3c
+</code></pre></div>
+<hr />
+<h2 id="_5">📝 전체 코드<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h3 id="_6">나만의 피코 라이브러리<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># === my_pico_lib.py ===</span>
+<span class="c1"># 나만의 피코 함수 라이브러리</span>
+<span class="c1"># 자주 쓰는 기능을 함수로 모아놨어요!</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">ADC</span><span class="p">,</span> <span class="n">PWM</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># ===== LED 관련 함수 =====</span>
+
+<span class="k">def</span> <span class="nf">setup_led</span><span class="p">(</span><span class="n">pin_num</span><span class="o">=</span><span class="s2">&quot;LED&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LED를 설정하고 반환합니다&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Pin</span><span class="p">(</span><span class="n">pin_num</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">blink</span><span class="p">(</span><span class="n">led</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">speed</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LED를 깜빡입니다</span>
+
+<span class="sd">    led: LED 핀 객체</span>
+<span class="sd">    times: 깜빡일 횟수 (기본 3)</span>
+<span class="sd">    speed: 간격 (기본 0.3초)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">sos_signal</span><span class="p">(</span><span class="n">led</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;SOS 신호를 보냅니다 (... --- ...)&quot;&quot;&quot;</span>
+    <span class="c1"># S: 짧게 3번</span>
+    <span class="n">blink</span><span class="p">(</span><span class="n">led</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+    <span class="c1"># O: 길게 3번</span>
+    <span class="n">blink</span><span class="p">(</span><span class="n">led</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+    <span class="c1"># S: 짧게 3번</span>
+    <span class="n">blink</span><span class="p">(</span><span class="n">led</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># ===== 센서 관련 함수 =====</span>
+
+<span class="k">def</span> <span class="nf">setup_light_sensor</span><span class="p">(</span><span class="n">pin_num</span><span class="o">=</span><span class="mi">26</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;조도 센서를 설정하고 반환합니다&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">ADC</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="n">pin_num</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">read_light_percent</span><span class="p">(</span><span class="n">sensor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;조도를 퍼센트로 반환합니다 (0~100)&quot;&quot;&quot;</span>
+    <span class="n">raw</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">raw</span> <span class="o">/</span> <span class="mi">65535</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_light_level</span><span class="p">(</span><span class="n">percent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;조도 퍼센트를 텍스트로 변환합니다&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">percent</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;아주 어두움 🌑&quot;</span>
+    <span class="k">elif</span> <span class="n">percent</span> <span class="o">&lt;</span> <span class="mi">40</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;어두움 🌙&quot;</span>
+    <span class="k">elif</span> <span class="n">percent</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;보통 🌤️&quot;</span>
+    <span class="k">elif</span> <span class="n">percent</span> <span class="o">&lt;</span> <span class="mi">80</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;밝음 ☀️&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;아주 밝음 🌟&quot;</span>
+
+<span class="c1"># ===== PWM LED 관련 함수 =====</span>
+
+<span class="k">def</span> <span class="nf">setup_pwm_led</span><span class="p">(</span><span class="n">pin_num</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;PWM LED를 설정하고 반환합니다&quot;&quot;&quot;</span>
+    <span class="n">pwm</span> <span class="o">=</span> <span class="n">PWM</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="n">pin_num</span><span class="p">))</span>
+    <span class="n">pwm</span><span class="o">.</span><span class="n">freq</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pwm</span>
+
+<span class="k">def</span> <span class="nf">set_brightness</span><span class="p">(</span><span class="n">pwm_led</span><span class="p">,</span> <span class="n">percent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LED 밝기를 퍼센트로 설정합니다 (0~100)&quot;&quot;&quot;</span>
+    <span class="n">duty</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">percent</span> <span class="o">/</span> <span class="mi">100</span> <span class="o">*</span> <span class="mi">65535</span><span class="p">)</span>
+    <span class="n">pwm_led</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="n">duty</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">fade_in</span><span class="p">(</span><span class="n">pwm_led</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LED를 서서히 켭니다&quot;&quot;&quot;</span>
+    <span class="n">delay</span> <span class="o">=</span> <span class="n">duration</span> <span class="o">/</span> <span class="n">steps</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">brightness</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">steps</span> <span class="o">*</span> <span class="mi">100</span>
+        <span class="n">set_brightness</span><span class="p">(</span><span class="n">pwm_led</span><span class="p">,</span> <span class="n">brightness</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">fade_out</span><span class="p">(</span><span class="n">pwm_led</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LED를 서서히 끕니다&quot;&quot;&quot;</span>
+    <span class="n">delay</span> <span class="o">=</span> <span class="n">duration</span> <span class="o">/</span> <span class="n">steps</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">brightness</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">steps</span> <span class="o">*</span> <span class="mi">100</span>
+        <span class="n">set_brightness</span><span class="p">(</span><span class="n">pwm_led</span><span class="p">,</span> <span class="n">brightness</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+<span class="c1"># ===== 유틸리티 함수 =====</span>
+
+<span class="k">def</span> <span class="nf">map_value</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">from_min</span><span class="p">,</span> <span class="n">from_max</span><span class="p">,</span> <span class="n">to_min</span><span class="p">,</span> <span class="n">to_max</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;값을 한 범위에서 다른 범위로 변환합니다</span>
+
+<span class="sd">    예: map_value(50, 0, 100, 0, 255) → 127.5</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">from_min</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">from_max</span> <span class="o">-</span> <span class="n">from_min</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">to_max</span> <span class="o">-</span> <span class="n">to_min</span><span class="p">)</span> <span class="o">+</span> <span class="n">to_min</span>
+
+<span class="k">def</span> <span class="nf">constrain</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;값을 지정된 범위 내로 제한합니다&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">min_val</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_val</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+<span class="c1"># ===== 테스트 =====</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># 이 파일을 직접 실행했을 때만 테스트</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📚 my_pico_lib 테스트&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+
+    <span class="c1"># LED 테스트</span>
+    <span class="n">led</span> <span class="o">=</span> <span class="n">setup_led</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;LED 깜빡이기...&quot;</span><span class="p">)</span>
+    <span class="n">blink</span><span class="p">(</span><span class="n">led</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+
+    <span class="c1"># 조도 센서 테스트 (연결된 경우)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">light</span> <span class="o">=</span> <span class="n">setup_light_sensor</span><span class="p">()</span>
+        <span class="n">percent</span> <span class="o">=</span> <span class="n">read_light_percent</span><span class="p">(</span><span class="n">light</span><span class="p">)</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="n">get_light_level</span><span class="p">(</span><span class="n">percent</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;조도: </span><span class="si">{</span><span class="n">percent</span><span class="si">}</span><span class="s2">% - </span><span class="si">{</span><span class="n">level</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;조도 센서 없음&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ 테스트 완료!&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="_7">라이브러리 사용 예제<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># === main.py ===</span>
+<span class="c1"># 라이브러리를 활용한 자동 야간등</span>
+
+<span class="kn">from</span> <span class="nn">my_pico_lib</span> <span class="kn">import</span> <span class="o">*</span>  <span class="c1"># 모든 함수 가져오기</span>
+
+<span class="c1"># 하드웨어 설정</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">setup_led</span><span class="p">()</span>
+<span class="n">pwm_led</span> <span class="o">=</span> <span class="n">setup_pwm_led</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">light_sensor</span> <span class="o">=</span> <span class="n">setup_light_sensor</span><span class="p">(</span><span class="mi">26</span><span class="p">)</span>
+
+<span class="c1"># 시작 신호</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🌙 자동 야간등 시작!&quot;</span><span class="p">)</span>
+<span class="n">blink</span><span class="p">(</span><span class="n">led</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>  <span class="c1"># 시작 표시</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># 조도 읽기</span>
+    <span class="n">light</span> <span class="o">=</span> <span class="n">read_light_percent</span><span class="p">(</span><span class="n">light_sensor</span><span class="p">)</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="n">get_light_level</span><span class="p">(</span><span class="n">light</span><span class="p">)</span>
+
+    <span class="c1"># 조도에 따라 LED 밝기 설정</span>
+    <span class="c1"># 어두울수록 LED를 밝게 (반비례)</span>
+    <span class="n">led_brightness</span> <span class="o">=</span> <span class="n">constrain</span><span class="p">(</span><span class="mi">100</span> <span class="o">-</span> <span class="n">light</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">set_brightness</span><span class="p">(</span><span class="n">pwm_led</span><span class="p">,</span> <span class="n">led_brightness</span><span class="p">)</span>
+
+    <span class="c1"># 상태 출력</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;조도: </span><span class="si">{</span><span class="n">light</span><span class="si">}</span><span class="s2">% (</span><span class="si">{</span><span class="n">level</span><span class="si">}</span><span class="s2">) → LED: </span><span class="si">{</span><span class="n">led_brightness</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="_8">⚠️ 자주 하는 실수<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<h3 id="1">실수 1: 함수 호출 시 괄호 빼먹기<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: 함수가 실행되지 않고, 이상한 출력이 나옴</p>
+<div class="highlight"><pre><span></span><code>&lt;function blink at 0x20002a40&gt;
+</code></pre></div>
+<p><strong>원인</strong>: 괄호 <code>()</code>를 빼먹으면 함수 자체를 출력함</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드</span>
+<span class="n">blink</span>          <span class="c1"># 괄호 없음 - 함수 실행 안 됨!</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">blink</span><span class="p">)</span>   <span class="c1"># 함수 객체 정보만 출력</span>
+
+<span class="c1"># 올바른 코드</span>
+<span class="n">blink</span><span class="p">()</span>        <span class="c1"># 괄호 있음 - 함수 실행!</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">blink</span><span class="p">())</span> <span class="c1"># 함수 실행 후 반환값 출력</span>
+</code></pre></div></p>
+<hr />
+<h3 id="2_1">실수 2: 매개변수 순서 헷갈리기<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: 의도와 다르게 동작함</p>
+<p><strong>원인</strong>: 매개변수 순서를 잘못 넣음</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">blink</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">speed</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="c1"># 잘못된 코드</span>
+<span class="n">blink</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>  <span class="c1"># 0.3번 깜빡이기? 5초 간격?? 🤔</span>
+
+<span class="c1"># 올바른 코드</span>
+<span class="n">blink</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>  <span class="c1"># 5번, 0.3초 간격 ✓</span>
+
+<span class="c1"># 더 안전한 방법: 키워드 인자 사용</span>
+<span class="n">blink</span><span class="p">(</span><span class="n">times</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">speed</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>  <span class="c1"># 명확함!</span>
+<span class="n">blink</span><span class="p">(</span><span class="n">speed</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">times</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># 순서 바꿔도 OK!</span>
+</code></pre></div></p>
+<hr />
+<h3 id="3_1">실수 3: 반환값 무시하기<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: 계산 결과가 사라짐</p>
+<p><strong>원인</strong>: <code>return</code>으로 돌려준 값을 받지 않음</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">calculate_brightness</span><span class="p">(</span><span class="n">light</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">65535</span> <span class="o">-</span> <span class="n">light</span>
+
+<span class="c1"># 잘못된 코드</span>
+<span class="n">calculate_brightness</span><span class="p">(</span><span class="mi">30000</span><span class="p">)</span>  <span class="c1"># 결과가 사라짐!</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;밝기를 계산했어요&quot;</span><span class="p">)</span>   <span class="c1"># 근데 결과는 어디?</span>
+
+<span class="c1"># 올바른 코드</span>
+<span class="n">brightness</span> <span class="o">=</span> <span class="n">calculate_brightness</span><span class="p">(</span><span class="mi">30000</span><span class="p">)</span>  <span class="c1"># 변수에 저장!</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;밝기: </span><span class="si">{</span><span class="n">brightness</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<hr />
+<h3 id="4">실수 4: 함수 안에서 만든 변수를 밖에서 사용<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: <code>NameError: name 'xxx' is not defined</code></p>
+<p><strong>원인</strong>: 함수 안에서 만든 변수는 함수 밖에서 사용 불가 (지역 변수)</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드</span>
+<span class="k">def</span> <span class="nf">calculate</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">100</span>    <span class="c1"># 함수 안에서만 존재</span>
+
+<span class="n">calculate</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>       <span class="c1"># 에러! result는 함수 밖에 없어</span>
+
+<span class="c1"># 올바른 코드</span>
+<span class="k">def</span> <span class="nf">calculate</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">result</span>   <span class="c1"># 반환으로 내보내기</span>
+
+<span class="n">value</span> <span class="o">=</span> <span class="n">calculate</span><span class="p">()</span> <span class="c1"># 반환값 받기</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>        <span class="c1"># OK!</span>
+</code></pre></div></p>
+<hr />
+<h3 id="5-return">실수 5: return 후에 코드 작성<a class="headerlink" href="#5-return" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: 일부 코드가 실행되지 않음</p>
+<p><strong>원인</strong>: <code>return</code>을 만나면 함수가 즉시 종료됨</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드</span>
+<span class="k">def</span> <span class="nf">process</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s2">&quot;결과&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;처리 완료!&quot;</span><span class="p">)</span>  <span class="c1"># 절대 실행 안 됨!</span>
+
+<span class="c1"># 올바른 코드</span>
+<span class="k">def</span> <span class="nf">process</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;처리 완료!&quot;</span><span class="p">)</span>  <span class="c1"># 먼저 실행</span>
+    <span class="k">return</span> <span class="s2">&quot;결과&quot;</span>        <span class="c1"># 마지막에 반환</span>
+</code></pre></div></p>
+<hr />
+<h2 id="_9">✅ 스스로 점검하기<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<h3 id="1_1">1. 다음 코드의 출력 결과는?<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;학생&quot;</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;안녕, </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">!&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">greet</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">greet</span><span class="p">(</span><span class="s2">&quot;철수&quot;</span><span class="p">))</span>
+</code></pre></div>
+<h3 id="2_2">2. 이 함수의 문제점은 무엇일까?<a class="headerlink" href="#2_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_and_print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;결과: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="3_2">3. 매개변수와 인자의 차이점을 설명해보세요.<a class="headerlink" href="#3_2" title="Permanent link">&para;</a></h3>
+<details>
+<summary>정답 확인</summary>
+
+**1번 답**:
+<div class="highlight"><pre><span></span><code>안녕, 학생!
+안녕, 철수!
+</code></pre></div>
+- 첫 번째 호출: 인자 없음 → 기본값 "학생" 사용
+- 두 번째 호출: "철수"가 name에 전달됨
+
+**2번 답**:
+- 문제: `return`이 없어서 결과를 밖에서 사용할 수 없음
+- `print()`는 화면에 출력만 하고, 값을 돌려주지 않음
+- 수정: `return result` 추가
+
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_and_print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;결과: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>  <span class="c1"># 이게 있어야 결과를 받을 수 있음</span>
+</code></pre></div>
+
+**3번 답**:
+- **매개변수(Parameter)**: 함수를 **정의**할 때 괄호 안에 쓰는 변수
+  - `def greet(name):` ← `name`이 매개변수
+- **인자(Argument)**: 함수를 **호출**할 때 전달하는 실제 값
+  - `greet("철수")` ← `"철수"`가 인자
+
+쉽게 기억하기: 매개변수는 "재료 목록", 인자는 "실제 재료"
+
+</details>
+
+<hr />
+<h2 id="_10">🚀 더 해보기<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<h3 id="1_2">도전 1: 온도 변환 함수 만들기<a class="headerlink" href="#1_2" title="Permanent link">&para;</a></h3>
+<p>섭씨를 화씨로, 화씨를 섭씨로 변환하는 함수를 만들어보세요.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 힌트</span>
+<span class="c1"># 화씨 = 섭씨 × 9/5 + 32</span>
+<span class="c1"># 섭씨 = (화씨 - 32) × 5/9</span>
+
+<span class="k">def</span> <span class="nf">celsius_to_fahrenheit</span><span class="p">(</span><span class="n">celsius</span><span class="p">):</span>
+    <span class="c1"># 여기에 코드 작성</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">fahrenheit_to_celsius</span><span class="p">(</span><span class="n">fahrenheit</span><span class="p">):</span>
+    <span class="c1"># 여기에 코드 작성</span>
+    <span class="k">pass</span>
+
+<span class="c1"># 테스트</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">celsius_to_fahrenheit</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>   <span class="c1"># 32.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">celsius_to_fahrenheit</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span> <span class="c1"># 212.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fahrenheit_to_celsius</span><span class="p">(</span><span class="mi">32</span><span class="p">))</span>  <span class="c1"># 0.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fahrenheit_to_celsius</span><span class="p">(</span><span class="mf">98.6</span><span class="p">))</span> <span class="c1"># 37.0</span>
+</code></pre></div>
+<hr />
+<h3 id="2_3">도전 2: 버튼 카운터 함수 만들기<a class="headerlink" href="#2_3" title="Permanent link">&para;</a></h3>
+<p>버튼을 누른 횟수를 세고, 일정 횟수마다 LED 패턴을 바꾸는 프로그램을 함수로 구현해보세요.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 힌트 구조</span>
+<span class="k">def</span> <span class="nf">read_button</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;버튼 상태를 읽고 눌림 여부 반환&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">count_press</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">pressed</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;버튼이 눌리면 카운트 증가&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">get_pattern</span><span class="p">(</span><span class="n">count</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;카운트에 따른 LED 패턴 반환&quot;&quot;&quot;</span>
+    <span class="c1"># 5번마다 다른 패턴</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">play_pattern</span><span class="p">(</span><span class="n">pattern</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;패턴에 맞게 LED 동작&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+</code></pre></div>
+<hr />
+<h3 id="3_3">도전 3: 나만의 피코 라이브러리 확장하기 ⭐<a class="headerlink" href="#3_3" title="Permanent link">&para;</a></h3>
+<p><code>my_pico_lib.py</code>에 다음 함수들을 추가해보세요:</p>
+<ol>
+<li><strong>버저 관련 함수</strong></li>
+<li><code>setup_buzzer(pin_num)</code> - 버저 설정</li>
+<li><code>beep(buzzer, frequency, duration)</code> - 특정 주파수로 울리기</li>
+<li>
+<p><code>play_melody(buzzer, notes)</code> - 멜로디 연주</p>
+</li>
+<li>
+<p><strong>RGB LED 관련 함수</strong></p>
+</li>
+<li><code>setup_rgb_led(r_pin, g_pin, b_pin)</code> - RGB LED 설정</li>
+<li><code>set_color(rgb, r, g, b)</code> - 색상 설정</li>
+<li>
+<p><code>rainbow_cycle(rgb, speed)</code> - 무지개 색상 순환</p>
+</li>
+<li>
+<p><strong>환경 분석 함수</strong></p>
+</li>
+<li><code>read_environment()</code> - 온도, 습도, 조도 한번에 읽기</li>
+<li><code>analyze_comfort(temp, humid)</code> - 쾌적도 분석</li>
+<li><code>suggest_action(comfort_score)</code> - 행동 제안</li>
+</ol>
+<hr />
+<h2 id="_11">🔗 다음 장으로<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<p>축하해! 🎉 이제 함수라는 강력한 도구를 사용할 수 있게 됐어!</p>
+<p><strong>이번 장에서 배운 것</strong>:
+- <code>def</code>로 함수 정의하기
+- 매개변수로 재료 전달하기
+- <code>return</code>으로 결과 돌려받기
+- 기본값으로 편리하게 만들기
+- 기존 코드를 함수로 리팩토링하기</p>
+<p><strong>다음 장 미리보기</strong>:</p>
+<blockquote>
+<p>8-9차시는 <strong>미니 프로젝트</strong> 시간이야! 지금까지 배운 모든 것을 총동원해서 나만의 작품을 만들어볼 거야.</p>
+<ul>
+<li>스마트 무드등 🌈</li>
+<li>반응형 알람 ⏰  </li>
+<li>또는 네가 상상하는 어떤 것이든!</li>
+</ul>
+<p>오늘 만든 <code>my_pico_lib.py</code>를 활용하면 프로젝트가 훨씬 수월해질 거야!</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

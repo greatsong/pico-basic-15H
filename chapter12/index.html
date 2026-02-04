@@ -1,0 +1,2335 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="라즈베리파이 피코 2W와 MicroPython을 활용한 15시간 피지컬 컴퓨팅 입문 과정으로, 복잡한 개념을 친근한 비유로 쉽게 배웁니다.">
+      
+      
+        <meta name="author" content="Created with Data-AI-Book Generator">
+      
+      
+      
+        <link rel="prev" href="../chapter11/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>시간 동기화 - 정확한 시계 - 피코와 친해지기 - 피지컬 컴퓨팅 입문</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#-" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-header__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            피코와 친해지기 - 피지컬 컴퓨팅 입문
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              시간 동기화 - 정확한 시계
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter01/" class="md-tabs__link">
+          
+  
+  
+  Part 1 - 기초 다지기
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter07/" class="md-tabs__link">
+          
+  
+  
+  Part 2 - 프로젝트 도전
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../chapter10/" class="md-tabs__link">
+          
+  
+  
+  Part 3 - 네트워크 연결
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-nav__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    피코와 친해지기 - 피지컬 컴퓨팅 입문
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 - 기초 다지기
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 - 기초 다지기
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    피코 만나기 - 첫 만남과 환경 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LED의 세계 - 빛으로 말하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    버튼과 대화 - 입력 받기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    센서 입문 - 세상을 느끼다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    출력의 마법 - 세상에 표현하다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조건과 반복 - 자동화의 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 - 프로젝트 도전
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 - 프로젝트 도전
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    함수로 정리 - 코드의 레고 블록
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 설계와 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 완성과 발표
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 - 네트워크 연결
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 - 네트워크 연결
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OLED 디스플레이 - 화면에 표시하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi 연결 - 인터넷 세계로
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시간 동기화 - 정확한 시계
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시간 동기화 - 정확한 시계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-ntp-network-time-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: NTP (Network Time Protocol)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-utc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: UTC와 시간대
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-rtc-real-time-clock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: RTC (Real Time Clock)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-wifi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: WiFi 연결 함수 준비
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-ntp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: NTP로 시간 받아오기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: 한국 시간으로 변환하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-oled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: OLED에 디지털 시계 표시하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-wifi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: WiFi 정보를 그대로 두고 실행
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: 시간대 계산을 안 해서 9시간 느린 시간 표시
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-ntp-wifi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: NTP 동기화를 WiFi 연결 전에 시도
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-oled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 4: OLED 라이브러리 없음
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-while-timesleep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 5: while 루프에서 time.sleep() 빼먹음
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-ampm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: AM/PM 형식으로 바꾸기 ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: 초침 애니메이션 추가하기 ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: 알람 기능 추가하기 ⭐⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-ntp-network-time-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: NTP (Network Time Protocol)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-utc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: UTC와 시간대
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-rtc-real-time-clock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: RTC (Real Time Clock)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-wifi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: WiFi 연결 함수 준비
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-ntp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: NTP로 시간 받아오기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: 한국 시간으로 변환하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-oled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: OLED에 디지털 시계 표시하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-wifi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: WiFi 정보를 그대로 두고 실행
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: 시간대 계산을 안 해서 9시간 느린 시간 표시
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-ntp-wifi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: NTP 동기화를 WiFi 연결 전에 시도
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-oled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 4: OLED 라이브러리 없음
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-while-timesleep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 5: while 루프에서 time.sleep() 빼먹음
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-ampm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: AM/PM 형식으로 바꾸기 ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: 초침 애니메이션 추가하기 ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: 알람 기능 추가하기 ⭐⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="-">시간 동기화 - 정확한 시계<a class="headerlink" href="#-" title="Permanent link">&para;</a></h1>
+<h2 id="_1">🎯 이 장에서 배우는 것<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[ ] NTP 프로토콜이 무엇인지 설명할 수 있다</li>
+<li>[ ] 인터넷에서 현재 시간을 받아올 수 있다</li>
+<li>[ ] 한국 시간대(UTC+9)를 설정할 수 있다</li>
+<li>[ ] OLED에 실시간 디지털 시계를 표시할 수 있다</li>
+</ul>
+<h2 id="_2">💡 왜 이걸 배우나요?<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>피코는 <strong>시간을 기억하지 못해</strong>. 전원을 끄면 시간 정보가 사라지고, 다시 켜면 1970년 1월 1일부터 시작해. 마치 정전 후 깜빡이는 전자레인지 시계처럼!</p>
+<p><strong>이런 문제가 생겨</strong>:
+- 센서 데이터를 기록할 때 "언제" 측정했는지 모름
+- 알람 시계를 만들어도 시간이 엉망
+- IoT 기기들끼리 시간이 안 맞아서 혼란</p>
+<p><strong>해결책</strong>: 인터넷에 있는 <strong>시간 서버</strong>에게 물어보는 거야!</p>
+<div class="highlight"><pre><span></span><code>🕐 &quot;지금 몇 시야?&quot;
+
+피코 ──────────────► 시간 서버 (NTP)
+     ◄──────────────
+     &quot;2024년 12월 15일 14:30:25야!&quot;
+</code></pre></div>
+<p>스마트폰, 컴퓨터, 인터넷 공유기 모두 이 방식으로 정확한 시간을 유지해. 오늘 이걸 직접 구현해볼 거야!</p>
+<h2 id="_3">📚 핵심 개념<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="1-ntp-network-time-protocol">개념 1: NTP (Network Time Protocol)<a class="headerlink" href="#1-ntp-network-time-protocol" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>비유로 시작</strong>: "NTP는 마치 <strong>114 시간 안내 서비스</strong>와 같아요. 전화해서 '지금 몇 시야?'라고 물으면 정확한 시간을 알려주는 것처럼, 피코가 인터넷으로 시간 서버에 물어보는 거예요."</p>
+</li>
+<li>
+<p><strong>정확한 정의</strong>: "NTP(Network Time Protocol)는 컴퓨터와 기기들이 인터넷을 통해 정확한 시간을 동기화하는 표준 프로토콜입니다. 전 세계에 수천 개의 NTP 서버가 있어요."</p>
+</li>
+<li>
+<p><strong>예시로 확인</strong>: "예를 들어, <code>pool.ntp.org</code>라는 서버에 요청하면 현재 UTC 시간을 밀리초 단위로 정확하게 알려줘요."</p>
+</li>
+</ol>
+<p><strong>쉽게 말하면</strong>: 인터넷에 있는 "공식 시계"에서 시간을 가져오는 방법이야!</p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A[🔌 피코 2W] --&gt;|&quot;지금 몇 시야?&quot;| B[🌐 인터넷]
+    B --&gt; C[⏰ NTP 서버]
+    C --&gt;|&quot;UTC 14:30:25&quot;| B
+    B --&gt; A
+
+    style A fill:#e3f2fd,stroke:#1976d2
+    style B fill:#fff3e0,stroke:#f57c00
+    style C fill:#e8f5e9,stroke:#388e3c
+</code></pre></div>
+<h3 id="2-utc">개념 2: UTC와 시간대<a class="headerlink" href="#2-utc" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>비유로 시작</strong>: "UTC는 마치 <strong>세계 공용어인 영어</strong>와 같아요. 모든 나라가 영어로 소통하면 혼란이 없듯이, 모든 컴퓨터는 UTC라는 '세계 표준 시간'으로 먼저 소통해요."</p>
+</li>
+<li>
+<p><strong>정확한 정의</strong>: "UTC(Coordinated Universal Time)는 영국 그리니치 천문대를 기준으로 하는 세계 표준시예요. 한국은 UTC보다 9시간 빠른 UTC+9를 사용합니다."</p>
+</li>
+<li>
+<p><strong>예시로 확인</strong>: 
+<div class="highlight"><pre><span></span><code>UTC 시간:    05:00 (새벽 5시)
+한국 시간:   14:00 (오후 2시)  ← UTC + 9시간
+</code></pre></div></p>
+</li>
+</ol>
+<p><strong>쉽게 말하면</strong>: NTP가 알려주는 시간에 9시간을 더하면 한국 시간이야!</p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A[🌍 UTC&lt;br/&gt;05:00] --&gt;|&quot;+9시간&quot;| B[🇰🇷 한국&lt;br/&gt;14:00]
+    A --&gt;|&quot;+0시간&quot;| C[🇬🇧 영국&lt;br/&gt;05:00]
+    A --&gt;|&quot;-5시간&quot;| D[🇺🇸 뉴욕&lt;br/&gt;00:00]
+
+    style A fill:#fff9c4,stroke:#f9a825
+    style B fill:#e8f5e9,stroke:#388e3c
+    style C fill:#e3f2fd,stroke:#1976d2
+    style D fill:#fce4ec,stroke:#c2185b
+</code></pre></div>
+<h3 id="3-rtc-real-time-clock">개념 3: RTC (Real Time Clock)<a class="headerlink" href="#3-rtc-real-time-clock" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>비유로 시작</strong>: "RTC는 피코 내부의 <strong>작은 손목시계</strong>와 같아요. 한 번 맞춰놓으면 계속 시간을 세고 있지만, 전원이 꺼지면 멈춰요."</p>
+</li>
+<li>
+<p><strong>정확한 정의</strong>: "RTC(Real Time Clock)는 마이크로컨트롤러 내부에서 시간을 추적하는 하드웨어입니다. 피코의 RTC는 전원이 켜져 있는 동안 1초씩 시간을 증가시켜요."</p>
+</li>
+<li>
+<p><strong>예시로 확인</strong>: "NTP로 시간을 한 번 맞추면, RTC가 이후 시간을 자동으로 계산해줘서 매초 NTP 서버에 물어볼 필요가 없어요."</p>
+</li>
+</ol>
+<p><strong>쉽게 말하면</strong>: 처음에 한 번만 시간을 맞추면, 피코가 알아서 시계처럼 돌아가!</p>
+<div class="highlight"><pre><span></span><code>sequenceDiagram
+    participant P as 🔌 피코
+    participant N as ⏰ NTP 서버
+    participant R as 🕐 내부 RTC
+
+    P-&gt;&gt;N: 시간 알려줘!
+    N--&gt;&gt;P: UTC 05:30:00
+    P-&gt;&gt;R: 14:30:00으로 설정해 (+9시간)
+    loop 매초
+        R-&gt;&gt;R: 1초씩 증가
+    end
+    P-&gt;&gt;R: 지금 몇 시야?
+    R--&gt;&gt;P: 14:35:27
+</code></pre></div>
+<h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="step-1-wifi">Step 1: WiFi 연결 함수 준비<a class="headerlink" href="#step-1-wifi" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 이전 장에서 배운 WiFi 연결 코드를 함수로 정리해서 재사용하기</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: WiFi 연결을 위한 기본 설정 ===</span>
+<span class="c1"># NTP 시간을 받으려면 먼저 인터넷에 연결해야 해요</span>
+
+<span class="c1"># --- WHY: 이전 장의 코드를 함수로 정리 ---</span>
+<span class="c1"># 매번 긴 코드를 쓰지 않고, connect_wifi() 한 줄로 연결!</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">import</span> <span class="nn">network</span>      <span class="c1"># WiFi 연결 기능</span>
+<span class="kn">import</span> <span class="nn">time</span>         <span class="c1"># 대기 시간 처리</span>
+
+<span class="c1"># ⚠️ 여기에 실제 WiFi 정보를 입력하세요!</span>
+<span class="n">WIFI_SSID</span> <span class="o">=</span> <span class="s2">&quot;your_wifi_name&quot;</span>      <span class="c1"># WiFi 이름</span>
+<span class="n">WIFI_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;your_password&quot;</span>    <span class="c1"># WiFi 비밀번호</span>
+
+<span class="k">def</span> <span class="nf">connect_wifi</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;WiFi에 연결하는 함수&quot;&quot;&quot;</span>
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>  <span class="c1"># WiFi 클라이언트 모드</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>                     <span class="c1"># WiFi 켜기</span>
+
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ 이미 WiFi에 연결됨!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wlan</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📡 &#39;</span><span class="si">{</span><span class="n">WIFI_SSID</span><span class="si">}</span><span class="s2">&#39;에 연결 중...&quot;</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">WIFI_PASSWORD</span><span class="p">)</span>
+
+    <span class="c1"># 최대 10초 대기</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">while</span> <span class="n">timeout</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ WiFi 연결 성공!&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📍 IP 주소: </span><span class="si">{</span><span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">wlan</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">timeout</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   대기 중... </span><span class="si">{</span><span class="n">timeout</span><span class="si">}</span><span class="s2">초&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;❌ WiFi 연결 실패!&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="c1"># 테스트</span>
+<span class="n">wifi</span> <span class="o">=</span> <span class="n">connect_wifi</span><span class="p">()</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>📡 &#39;your_wifi_name&#39;에 연결 중...
+   대기 중... 9초
+   대기 중... 8초
+✅ WiFi 연결 성공!
+📍 IP 주소: 192.168.0.15
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong>
+WiFi 이름과 비밀번호는 <strong>큰따옴표 안에</strong> 정확히 입력해야 해! 대소문자도 구분하니까 주의하자.</p>
+<hr />
+<h3 id="step-2-ntp">Step 2: NTP로 시간 받아오기<a class="headerlink" href="#step-2-ntp" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: ntptime 라이브러리로 인터넷에서 정확한 시간 받아오기</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: NTP 서버에서 현재 시간 받아오기 ===</span>
+<span class="c1"># 인터넷 시간 서버에 &quot;지금 몇 시야?&quot; 물어보는 코드</span>
+
+<span class="c1"># --- WHY: 피코는 전원을 끄면 시간을 잊어버려요 ---</span>
+<span class="c1"># NTP로 정확한 시간을 받아와서 내부 시계를 맞춰요</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">import</span> <span class="nn">network</span>
+<span class="kn">import</span> <span class="nn">ntptime</span>      <span class="c1"># NTP 시간 동기화 라이브러리</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># WiFi 설정 (위에서 복사)</span>
+<span class="n">WIFI_SSID</span> <span class="o">=</span> <span class="s2">&quot;your_wifi_name&quot;</span>
+<span class="n">WIFI_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;your_password&quot;</span>
+
+<span class="k">def</span> <span class="nf">connect_wifi</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;WiFi에 연결하는 함수&quot;&quot;&quot;</span>
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">wlan</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📡 &#39;</span><span class="si">{</span><span class="n">WIFI_SSID</span><span class="si">}</span><span class="s2">&#39;에 연결 중...&quot;</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">WIFI_PASSWORD</span><span class="p">)</span>
+
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">while</span> <span class="n">timeout</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ WiFi 연결 성공!&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">wlan</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">timeout</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">sync_time_ntp</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;NTP 서버에서 시간을 받아와 동기화&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">⏰ NTP 서버에서 시간 받아오는 중...&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># NTP 서버 설정 (한국에서 가까운 서버)</span>
+        <span class="n">ntptime</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="s2">&quot;pool.ntp.org&quot;</span>
+
+        <span class="c1"># 시간 동기화 실행!</span>
+        <span class="n">ntptime</span><span class="o">.</span><span class="n">settime</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ 시간 동기화 성공!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ 시간 동기화 실패: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="c1"># === 메인 실행 ===</span>
+<span class="c1"># 1. WiFi 연결</span>
+<span class="n">wifi</span> <span class="o">=</span> <span class="n">connect_wifi</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">wifi</span><span class="p">:</span>
+    <span class="c1"># 2. NTP 동기화</span>
+    <span class="k">if</span> <span class="n">sync_time_ntp</span><span class="p">():</span>
+        <span class="c1"># 3. 현재 시간 확인 (UTC 시간)</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🌍 UTC 시간: </span><span class="si">{</span><span class="n">current</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">년 </span><span class="si">{</span><span class="n">current</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">월 </span><span class="si">{</span><span class="n">current</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">일&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;            </span><span class="si">{</span><span class="n">current</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">current</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">current</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>📡 &#39;your_wifi_name&#39;에 연결 중...
+✅ WiFi 연결 성공!
+
+⏰ NTP 서버에서 시간 받아오는 중...
+✅ 시간 동기화 성공!
+
+🌍 UTC 시간: 2024년 12월 15일
+            05:30:25
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong>
+출력된 시간이 현재 한국 시간보다 9시간 느린 게 정상이야! UTC는 세계 표준시니까. 다음 단계에서 한국 시간으로 바꿔볼 거야.</p>
+<hr />
+<h3 id="step-3">Step 3: 한국 시간으로 변환하기<a class="headerlink" href="#step-3" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: UTC 시간에 9시간을 더해서 한국 시간(KST)으로 변환</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: UTC를 한국 시간(KST)으로 변환 ===</span>
+<span class="c1"># NTP가 알려주는 UTC 시간에 9시간을 더해요</span>
+
+<span class="c1"># --- WHY: 한국은 UTC+9 시간대 ---</span>
+<span class="c1"># UTC 05:00 = 한국 14:00</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">import</span> <span class="nn">network</span>
+<span class="kn">import</span> <span class="nn">ntptime</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">WIFI_SSID</span> <span class="o">=</span> <span class="s2">&quot;your_wifi_name&quot;</span>
+<span class="n">WIFI_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;your_password&quot;</span>
+<span class="n">KST_OFFSET</span> <span class="o">=</span> <span class="mi">9</span> <span class="o">*</span> <span class="mi">3600</span>  <span class="c1"># 9시간을 초 단위로 (9 * 60 * 60)</span>
+
+<span class="k">def</span> <span class="nf">connect_wifi</span><span class="p">():</span>
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">wlan</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">WIFI_PASSWORD</span><span class="p">)</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">while</span> <span class="n">timeout</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">wlan</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">timeout</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">sync_time_ntp</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ntptime</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="s2">&quot;pool.ntp.org&quot;</span>
+        <span class="n">ntptime</span><span class="o">.</span><span class="n">settime</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span> <span class="nf">get_korea_time</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;현재 한국 시간을 반환&quot;&quot;&quot;</span>
+    <span class="c1"># UTC 타임스탬프 (1970년부터 지금까지 초)</span>
+    <span class="n">utc_timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="c1"># 한국 시간으로 변환 (+9시간)</span>
+    <span class="n">kst_timestamp</span> <span class="o">=</span> <span class="n">utc_timestamp</span> <span class="o">+</span> <span class="n">KST_OFFSET</span>
+
+    <span class="c1"># 읽기 좋은 형태로 변환</span>
+    <span class="n">kst_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">kst_timestamp</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">kst_time</span>
+
+<span class="k">def</span> <span class="nf">format_time</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;시간을 보기 좋게 포맷팅&quot;&quot;&quot;</span>
+    <span class="c1"># t = (년, 월, 일, 시, 분, 초, 요일, ...)</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">month</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">day</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">hour</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">minute</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">second</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">weekday</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>  <span class="c1"># 0=월요일, 6=일요일</span>
+
+    <span class="n">days</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;월&quot;</span><span class="p">,</span> <span class="s2">&quot;화&quot;</span><span class="p">,</span> <span class="s2">&quot;수&quot;</span><span class="p">,</span> <span class="s2">&quot;목&quot;</span><span class="p">,</span> <span class="s2">&quot;금&quot;</span><span class="p">,</span> <span class="s2">&quot;토&quot;</span><span class="p">,</span> <span class="s2">&quot;일&quot;</span><span class="p">]</span>
+    <span class="n">day_name</span> <span class="o">=</span> <span class="n">days</span><span class="p">[</span><span class="n">weekday</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">년 </span><span class="si">{</span><span class="n">month</span><span class="si">}</span><span class="s2">월 </span><span class="si">{</span><span class="n">day</span><span class="si">}</span><span class="s2">일 (</span><span class="si">{</span><span class="n">day_name</span><span class="si">}</span><span class="s2">) </span><span class="si">{</span><span class="n">hour</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">minute</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">second</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># === 메인 실행 ===</span>
+<span class="n">wifi</span> <span class="o">=</span> <span class="n">connect_wifi</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">wifi</span> <span class="ow">and</span> <span class="n">sync_time_ntp</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">40</span><span class="p">)</span>
+
+    <span class="c1"># UTC 시간</span>
+    <span class="n">utc</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🌍 UTC 시간: </span><span class="si">{</span><span class="n">format_time</span><span class="p">(</span><span class="n">utc</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 한국 시간</span>
+    <span class="n">kst</span> <span class="o">=</span> <span class="n">get_korea_time</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🇰🇷 한국 시간: </span><span class="si">{</span><span class="n">format_time</span><span class="p">(</span><span class="n">kst</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">40</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>========================================
+🌍 UTC 시간: 2024년 12월 15일 (일) 05:30:25
+🇰🇷 한국 시간: 2024년 12월 15일 (일) 14:30:25
+========================================
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong>
+<code>time.time()</code>은 1970년 1월 1일부터 지금까지 흐른 <strong>초</strong>를 반환해. 여기에 32400초(9시간×60분×60초)를 더하면 한국 시간이 되는 거야!</p>
+<hr />
+<h3 id="step-4-oled">Step 4: OLED에 디지털 시계 표시하기<a class="headerlink" href="#step-4-oled" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: OLED 화면에 예쁜 디지털 시계 만들기</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: OLED 디지털 시계 만들기 ===</span>
+<span class="c1"># 실시간으로 시간이 바뀌는 멋진 시계!</span>
+
+<span class="c1"># --- WHY: 눈에 보이는 결과물이 있어야 재미있잖아! ---</span>
+<span class="c1"># LED로 숫자를 표시하는 것보다 OLED가 훨씬 멋져요</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">import</span> <span class="nn">network</span>
+<span class="kn">import</span> <span class="nn">ntptime</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">I2C</span>
+<span class="kn">import</span> <span class="nn">ssd1306</span>
+
+<span class="c1"># === 설정 값 ===</span>
+<span class="n">WIFI_SSID</span> <span class="o">=</span> <span class="s2">&quot;your_wifi_name&quot;</span>
+<span class="n">WIFI_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;your_password&quot;</span>
+<span class="n">KST_OFFSET</span> <span class="o">=</span> <span class="mi">9</span> <span class="o">*</span> <span class="mi">3600</span>
+
+<span class="c1"># === OLED 초기화 ===</span>
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">oled</span> <span class="o">=</span> <span class="n">ssd1306</span><span class="o">.</span><span class="n">SSD1306_I2C</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">i2c</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">connect_wifi</span><span class="p">():</span>
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># OLED에 연결 중 표시</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;WiFi&quot;</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Connecting...&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">wlan</span>
+
+    <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">WIFI_PASSWORD</span><span class="p">)</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">while</span> <span class="n">timeout</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">wlan</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">timeout</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">sync_time_ntp</span><span class="p">():</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;NTP Sync...&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ntptime</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="s2">&quot;pool.ntp.org&quot;</span>
+        <span class="n">ntptime</span><span class="o">.</span><span class="n">settime</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span> <span class="nf">get_korea_time</span><span class="p">():</span>
+    <span class="n">utc_timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">kst_timestamp</span> <span class="o">=</span> <span class="n">utc_timestamp</span> <span class="o">+</span> <span class="n">KST_OFFSET</span>
+    <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">kst_timestamp</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">display_clock</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;OLED에 시계 표시&quot;&quot;&quot;</span>
+    <span class="c1"># t = (년, 월, 일, 시, 분, 초, 요일, ...)</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">month</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">day</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">hour</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">minute</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">second</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">weekday</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+
+    <span class="n">days</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;MON&quot;</span><span class="p">,</span> <span class="s2">&quot;TUE&quot;</span><span class="p">,</span> <span class="s2">&quot;WED&quot;</span><span class="p">,</span> <span class="s2">&quot;THU&quot;</span><span class="p">,</span> <span class="s2">&quot;FRI&quot;</span><span class="p">,</span> <span class="s2">&quot;SAT&quot;</span><span class="p">,</span> <span class="s2">&quot;SUN&quot;</span><span class="p">]</span>
+    <span class="n">day_name</span> <span class="o">=</span> <span class="n">days</span><span class="p">[</span><span class="n">weekday</span><span class="p">]</span>
+
+    <span class="c1"># 화면 지우기</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># 날짜 (위쪽)</span>
+    <span class="n">date_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">month</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">day</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">day_name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+    <span class="c1"># 구분선</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">hline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># 시간 (크게 - 중앙)</span>
+    <span class="n">time_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hour</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">minute</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">second</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="c1"># 큰 글씨 효과 (같은 텍스트를 약간 겹쳐서)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">time_str</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">time_str</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">time_str</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">)</span>
+
+    <span class="c1"># 한국 시간 표시</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;KST (UTC+9)&quot;</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+    <span class="c1"># 화면에 표시</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># === 메인 실행 ===</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🕐 OLED 디지털 시계 시작!&quot;</span><span class="p">)</span>
+
+<span class="c1"># 1. WiFi 연결</span>
+<span class="n">wifi</span> <span class="o">=</span> <span class="n">connect_wifi</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">wifi</span><span class="p">:</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;WiFi Failed!&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;❌ WiFi 연결 실패&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ WiFi 연결 성공&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 2. NTP 동기화</span>
+    <span class="k">if</span> <span class="n">sync_time_ntp</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ 시간 동기화 성공&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 3. 시계 표시 시작 (무한 루프)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⏰ 시계 작동 중... (Ctrl+C로 중지)&quot;</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">kst</span> <span class="o">=</span> <span class="n">get_korea_time</span><span class="p">()</span>
+            <span class="n">display_clock</span><span class="p">(</span><span class="n">kst</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 1초마다 갱신</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;NTP Failed!&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+        <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;❌ NTP 동기화 실패&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>🕐 OLED 디지털 시계 시작!
+✅ WiFi 연결 성공
+✅ 시간 동기화 성공
+⏰ 시계 작동 중... (Ctrl+C로 중지)
+</code></pre></div></p>
+<p><strong>OLED 화면</strong>:
+<div class="highlight"><pre><span></span><code>┌────────────────────────┐
+│  2024.12.15 SUN        │
+│────────────────────────│
+│                        │
+│      14:30:25          │
+│                        │
+│      KST (UTC+9)       │
+└────────────────────────┘
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong>
+<code>while True:</code>는 <strong>무한 루프</strong>야. 프로그램을 멈추려면 Thonny에서 <strong>Ctrl+C</strong>를 누르거나, <strong>Stop</strong> 버튼을 클릭해!</p>
+<h2 id="_5">📝 전체 코드<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># === OLED 디지털 시계 (NTP 동기화) ===</span>
+<span class="c1"># 인터넷에서 정확한 시간을 받아와 OLED에 표시</span>
+<span class="c1"># 작성일: 2024</span>
+
+<span class="kn">import</span> <span class="nn">network</span>
+<span class="kn">import</span> <span class="nn">ntptime</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">I2C</span>
+<span class="kn">import</span> <span class="nn">ssd1306</span>
+
+<span class="c1"># ========================================</span>
+<span class="c1"># 설정 - 여기만 수정하세요!</span>
+<span class="c1"># ========================================</span>
+<span class="n">WIFI_SSID</span> <span class="o">=</span> <span class="s2">&quot;your_wifi_name&quot;</span>      <span class="c1"># 👈 WiFi 이름</span>
+<span class="n">WIFI_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;your_password&quot;</span>    <span class="c1"># 👈 WiFi 비밀번호</span>
+<span class="n">KST_OFFSET</span> <span class="o">=</span> <span class="mi">9</span> <span class="o">*</span> <span class="mi">3600</span>              <span class="c1"># 한국 시간대 (UTC+9)</span>
+
+<span class="c1"># ========================================</span>
+<span class="c1"># OLED 초기화</span>
+<span class="c1"># ========================================</span>
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">I2C</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sda</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">scl</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">oled</span> <span class="o">=</span> <span class="n">ssd1306</span><span class="o">.</span><span class="n">SSD1306_I2C</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">i2c</span><span class="p">)</span>
+
+<span class="c1"># ========================================</span>
+<span class="c1"># 함수 정의</span>
+<span class="c1"># ========================================</span>
+<span class="k">def</span> <span class="nf">connect_wifi</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;WiFi에 연결&quot;&quot;&quot;</span>
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;WiFi&quot;</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Connecting...&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">wlan</span>
+
+    <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">WIFI_PASSWORD</span><span class="p">)</span>
+
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="k">while</span> <span class="n">timeout</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">wlan</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">timeout</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;WiFi&quot;</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+        <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Waiting... </span><span class="si">{</span><span class="n">timeout</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
+        <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">sync_time_ntp</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;NTP 서버와 시간 동기화&quot;&quot;&quot;</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;NTP Sync...&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ntptime</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="s2">&quot;pool.ntp.org&quot;</span>
+        <span class="n">ntptime</span><span class="o">.</span><span class="n">settime</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;NTP 오류: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span> <span class="nf">get_korea_time</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;한국 시간 반환&quot;&quot;&quot;</span>
+    <span class="n">utc_timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">kst_timestamp</span> <span class="o">=</span> <span class="n">utc_timestamp</span> <span class="o">+</span> <span class="n">KST_OFFSET</span>
+    <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">kst_timestamp</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">display_clock</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;OLED에 시계 표시&quot;&quot;&quot;</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">month</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">day</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">hour</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">minute</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">second</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">weekday</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+
+    <span class="n">days</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;MON&quot;</span><span class="p">,</span> <span class="s2">&quot;TUE&quot;</span><span class="p">,</span> <span class="s2">&quot;WED&quot;</span><span class="p">,</span> <span class="s2">&quot;THU&quot;</span><span class="p">,</span> <span class="s2">&quot;FRI&quot;</span><span class="p">,</span> <span class="s2">&quot;SAT&quot;</span><span class="p">,</span> <span class="s2">&quot;SUN&quot;</span><span class="p">]</span>
+    <span class="n">day_name</span> <span class="o">=</span> <span class="n">days</span><span class="p">[</span><span class="n">weekday</span><span class="p">]</span>
+
+    <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># 날짜</span>
+    <span class="n">date_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">month</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">day</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">day_name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+    <span class="c1"># 구분선</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">hline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># 시간 (굵게 표시)</span>
+    <span class="n">time_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">hour</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">minute</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">second</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">time_str</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">time_str</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">time_str</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">29</span><span class="p">)</span>
+
+    <span class="c1"># 시간대 표시</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;KST (UTC+9)&quot;</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+    <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">show_error</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;에러 메시지 표시&quot;&quot;&quot;</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;ERROR&quot;</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
+    <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># ========================================</span>
+<span class="c1"># 메인 실행</span>
+<span class="c1"># ========================================</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">40</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🕐 OLED 디지털 시계&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">40</span><span class="p">)</span>
+
+<span class="c1"># 1. WiFi 연결</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">1️⃣ WiFi 연결 중...&quot;</span><span class="p">)</span>
+<span class="n">wifi</span> <span class="o">=</span> <span class="n">connect_wifi</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">wifi</span><span class="p">:</span>
+    <span class="n">show_error</span><span class="p">(</span><span class="s2">&quot;WiFi Failed!&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;❌ WiFi 연결 실패 - SSID와 비밀번호를 확인하세요&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ WiFi 연결 성공!&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 2. NTP 시간 동기화</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">2️⃣ NTP 동기화 중...&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">sync_time_ntp</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ 시간 동기화 성공!&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 3. 시계 시작</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">3️⃣ 시계 작동 시작!&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Ctrl+C 로 중지</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">kst</span> <span class="o">=</span> <span class="n">get_korea_time</span><span class="p">()</span>
+                <span class="n">display_clock</span><span class="p">(</span><span class="n">kst</span><span class="p">)</span>
+
+                <span class="c1"># 터미널에도 시간 출력 (10초마다)</span>
+                <span class="k">if</span> <span class="n">kst</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">kst</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">kst</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">kst</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">⏹️ 시계 중지됨&quot;</span><span class="p">)</span>
+            <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Clock Stopped&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+            <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">show_error</span><span class="p">(</span><span class="s2">&quot;NTP Failed!&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;❌ NTP 동기화 실패 - 인터넷 연결을 확인하세요&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="_6">⚠️ 자주 하는 실수<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="1-wifi">실수 1: WiFi 정보를 그대로 두고 실행<a class="headerlink" href="#1-wifi" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: <code>WiFi 연결 실패</code> 또는 무한 대기</p>
+<p><strong>원인</strong>: <code>"your_wifi_name"</code>을 실제 WiFi 이름으로 바꾸지 않음</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드</span>
+<span class="n">WIFI_SSID</span> <span class="o">=</span> <span class="s2">&quot;your_wifi_name&quot;</span>      <span class="c1"># ❌ 예시 그대로</span>
+<span class="n">WIFI_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;your_password&quot;</span>    <span class="c1"># ❌ 예시 그대로</span>
+
+<span class="c1"># 올바른 코드</span>
+<span class="n">WIFI_SSID</span> <span class="o">=</span> <span class="s2">&quot;우리집WiFi&quot;</span>           <span class="c1"># ✅ 실제 WiFi 이름</span>
+<span class="n">WIFI_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;wifi12345&quot;</span>        <span class="c1"># ✅ 실제 비밀번호</span>
+</code></pre></div></p>
+<h3 id="2-9">실수 2: 시간대 계산을 안 해서 9시간 느린 시간 표시<a class="headerlink" href="#2-9" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: OLED에 새벽 5시로 나오는데, 실제는 오후 2시</p>
+<p><strong>원인</strong>: <code>time.localtime()</code>은 UTC를 반환하는데, 그대로 표시함</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드 - UTC 시간 그대로 표시</span>
+<span class="n">current</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>  <span class="c1"># ❌ UTC 시간</span>
+
+<span class="c1"># 올바른 코드 - 한국 시간으로 변환</span>
+<span class="n">KST_OFFSET</span> <span class="o">=</span> <span class="mi">9</span> <span class="o">*</span> <span class="mi">3600</span>
+<span class="n">utc_timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">kst_timestamp</span> <span class="o">=</span> <span class="n">utc_timestamp</span> <span class="o">+</span> <span class="n">KST_OFFSET</span>
+<span class="n">current</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">kst_timestamp</span><span class="p">)</span>  <span class="c1"># ✅ 한국 시간</span>
+</code></pre></div></p>
+<h3 id="3-ntp-wifi">실수 3: NTP 동기화를 WiFi 연결 전에 시도<a class="headerlink" href="#3-ntp-wifi" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: <code>OSError: [Errno -2] ENOENT</code> 또는 유사한 네트워크 에러</p>
+<p><strong>원인</strong>: 인터넷에 연결되지 않은 상태에서 NTP 서버에 접속 시도</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드 - 순서가 틀림</span>
+<span class="n">ntptime</span><span class="o">.</span><span class="n">settime</span><span class="p">()</span>  <span class="c1"># ❌ WiFi 연결 전에 실행</span>
+<span class="n">connect_wifi</span><span class="p">()</span>
+
+<span class="c1"># 올바른 코드 - 순서 지키기</span>
+<span class="n">wifi</span> <span class="o">=</span> <span class="n">connect_wifi</span><span class="p">()</span>  <span class="c1"># ✅ 1. 먼저 WiFi 연결</span>
+<span class="k">if</span> <span class="n">wifi</span><span class="p">:</span>
+    <span class="n">ntptime</span><span class="o">.</span><span class="n">settime</span><span class="p">()</span>  <span class="c1"># ✅ 2. 그 다음 NTP 동기화</span>
+</code></pre></div></p>
+<h3 id="4-oled">실수 4: OLED 라이브러리 없음<a class="headerlink" href="#4-oled" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: <code>ImportError: no module named 'ssd1306'</code></p>
+<p><strong>원인</strong>: ssd1306 라이브러리가 피코에 설치되지 않음</p>
+<p><strong>해결</strong>:
+1. Thonny 메뉴에서 <code>도구</code> → <code>패키지 관리</code>
+2. <code>ssd1306</code> 검색
+3. <code>micropython-ssd1306</code> 설치
+4. 다시 코드 실행</p>
+<h3 id="5-while-timesleep">실수 5: while 루프에서 time.sleep() 빼먹음<a class="headerlink" href="#5-while-timesleep" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: OLED 화면이 깜빡거리거나, 피코가 과열됨</p>
+<p><strong>원인</strong>: 루프가 초당 수천 번 실행되면서 과부하</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드 - sleep 없음</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">display_clock</span><span class="p">(</span><span class="n">kst</span><span class="p">)</span>  <span class="c1"># ❌ 초당 수천 번 실행!</span>
+
+<span class="c1"># 올바른 코드 - 1초 대기 추가</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">display_clock</span><span class="p">(</span><span class="n">kst</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>       <span class="c1"># ✅ 1초에 한 번만 실행</span>
+</code></pre></div></p>
+<h2 id="_7">✅ 스스로 점검하기<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>NTP가 뭔지 한 문장으로 설명할 수 있어?</strong></p>
+</li>
+<li>
+<p><strong>한국 시간은 UTC보다 몇 시간 빠를까? 그래서 코드에서 어떻게 처리했어?</strong></p>
+</li>
+<li>
+<p><strong>왜 WiFi 연결을 NTP 동기화보다 먼저 해야 할까?</strong></p>
+</li>
+<li>
+<p><strong><code>time.sleep(1)</code>을 <code>time.sleep(0.1)</code>로 바꾸면 어떻게 될까?</strong></p>
+</li>
+<li>
+<p><strong>피코 전원을 껐다 켜면 시간이 어떻게 될까? 왜 그럴까?</strong></p>
+</li>
+</ol>
+<details>
+<summary>정답 확인</summary>
+
+1. **NTP**: 인터넷에 있는 시간 서버에서 정확한 시간을 받아오는 프로토콜이야.
+
+2. **9시간 빠름**. `KST_OFFSET = 9 * 3600`으로 9시간(32400초)을 UTC에 더해서 한국 시간을 계산해.
+
+3. NTP 서버는 **인터넷에 있기 때문**에, WiFi로 인터넷에 먼저 연결해야 서버에 접속할 수 있어.
+
+4. 화면이 **0.1초마다 갱신**돼. 보기엔 차이 없지만, 피코가 10배 더 일하게 되어 전력 소모가 늘어나.
+
+5. **시간이 1970년 1월 1일로 초기화**돼. 피코는 배터리가 없어서 전원이 꺼지면 RTC가 멈추고, 시간 정보를 잃어버려. 그래서 매번 켤 때마다 NTP로 다시 동기화해야 해.
+
+</details>
+
+<h2 id="_8">🚀 더 해보기<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<h3 id="1-ampm">도전 1: AM/PM 형식으로 바꾸기 ⭐<a class="headerlink" href="#1-ampm" title="Permanent link">&para;</a></h3>
+<p>24시간 형식(14:30) 대신 12시간 형식(02:30 PM)으로 표시해봐!</p>
+<p><strong>힌트</strong>:
+<div class="highlight"><pre><span></span><code><span class="n">hour_12</span> <span class="o">=</span> <span class="n">hour</span> <span class="k">if</span> <span class="n">hour</span> <span class="o">&lt;=</span> <span class="mi">12</span> <span class="k">else</span> <span class="n">hour</span> <span class="o">-</span> <span class="mi">12</span>
+<span class="n">period</span> <span class="o">=</span> <span class="s2">&quot;AM&quot;</span> <span class="k">if</span> <span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">12</span> <span class="k">else</span> <span class="s2">&quot;PM&quot;</span>
+</code></pre></div></p>
+<h3 id="2">도전 2: 초침 애니메이션 추가하기 ⭐⭐<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p>OLED 화면 아래쪽에 초를 나타내는 진행 바를 그려봐!</p>
+<p><strong>힌트</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 60초를 128픽셀로 변환</span>
+<span class="n">bar_width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">second</span> <span class="o">*</span> <span class="mi">128</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">fill_rect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">bar_width</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="3">도전 3: 알람 기능 추가하기 ⭐⭐⭐<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p>특정 시간이 되면 부저가 울리는 알람 시계를 만들어봐!</p>
+<p><strong>힌트</strong>:
+<div class="highlight"><pre><span></span><code><span class="n">ALARM_HOUR</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">ALARM_MINUTE</span> <span class="o">=</span> <span class="mi">30</span>
+
+<span class="k">if</span> <span class="n">hour</span> <span class="o">==</span> <span class="n">ALARM_HOUR</span> <span class="ow">and</span> <span class="n">minute</span> <span class="o">==</span> <span class="n">ALARM_MINUTE</span><span class="p">:</span>
+    <span class="c1"># 부저 울리기!</span>
+    <span class="n">buzzer</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+</code></pre></div></p>
+<h2 id="_9">🔗 다음 장으로<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>축하해! 🎉 이제 피코가 <strong>정확한 시간</strong>을 알게 됐어!</p>
+<p><strong>이번 장에서 배운 것</strong>:
+- NTP로 인터넷에서 시간 받아오기
+- UTC를 한국 시간(UTC+9)으로 변환
+- OLED에 실시간 디지털 시계 표시</p>
+<p>다음 장에서는 <strong>웹 API</strong>를 배워볼 거야. 시간뿐만 아니라 <strong>날씨 정보</strong>도 인터넷에서 받아올 수 있어. 현재 기온, 날씨 상태, 심지어 내일 날씨까지! 시계에 날씨 정보를 추가하면 진짜 스마트 시계가 완성돼 🌤️</p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A[✅ 12장&lt;br/&gt;NTP 시계] --&gt; B[📖 13장&lt;br/&gt;웹 API]
+    B --&gt; C[🎯 14장&lt;br/&gt;IoT 시계]
+
+    style A fill:#c8e6c9,stroke:#388e3c
+    style B fill:#fff3e0,stroke:#f57c00
+    style C fill:#e3f2fd,stroke:#1976d2
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

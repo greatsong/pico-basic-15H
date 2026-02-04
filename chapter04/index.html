@@ -1,0 +1,2370 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="라즈베리파이 피코 2W와 MicroPython을 활용한 15시간 피지컬 컴퓨팅 입문 과정으로, 복잡한 개념을 친근한 비유로 쉽게 배웁니다.">
+      
+      
+        <meta name="author" content="Created with Data-AI-Book Generator">
+      
+      
+      
+        <link rel="prev" href="../chapter03/">
+      
+      
+        <link rel="next" href="../chapter05/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>센서 입문 - 세상을 느끼다 - 피코와 친해지기 - 피지컬 컴퓨팅 입문</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-04-" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-header__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            피코와 친해지기 - 피지컬 컴퓨팅 입문
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              센서 입문 - 세상을 느끼다
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../chapter01/" class="md-tabs__link">
+          
+  
+  
+  Part 1 - 기초 다지기
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter07/" class="md-tabs__link">
+          
+  
+  
+  Part 2 - 프로젝트 도전
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter10/" class="md-tabs__link">
+          
+  
+  
+  Part 3 - 네트워크 연결
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-nav__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    피코와 친해지기 - 피지컬 컴퓨팅 입문
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 - 기초 다지기
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 - 기초 다지기
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    피코 만나기 - 첫 만남과 환경 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LED의 세계 - 빛으로 말하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    버튼과 대화 - 입력 받기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    센서 입문 - 세상을 느끼다
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    센서 입문 - 세상을 느끼다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: 디지털 신호 vs 아날로그 신호
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-adc-analog-to-digital-converter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: ADC (Analog-to-Digital Converter)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: 센서의 종류
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: 조도 센서로 밝기 읽기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 밝기 값을 퍼센트로 변환하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-dht11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: DHT11 온습도 센서 사용하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: 센서 값으로 LED 자동 제어하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: 환경 모니터링 시스템 만들기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-adc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: ADC 핀 번호 혼동
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-dht11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: DHT11 측정 간격 너무 짧음
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-dht" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: dht 라이브러리 미설치
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-try-except-dht" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 4: try-except 없이 DHT 사용
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ 스스로 점검하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 아날로그와 디지털의 차이는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-adc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. ADC의 역할은?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-adc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 피코 ADC의 범위는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-dht11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. DHT11 측정 간격은?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-a0-gpio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. A0 포트의 GPIO 번호는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: 밝기 레벨 표시기 ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: 불쾌지수 계산기 ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: 데이터 로깅 시스템 ⭐⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    출력의 마법 - 세상에 표현하다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조건과 반복 - 자동화의 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 - 프로젝트 도전
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 - 프로젝트 도전
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    함수로 정리 - 코드의 레고 블록
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 설계와 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 완성과 발표
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 - 네트워크 연결
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 - 네트워크 연결
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OLED 디스플레이 - 화면에 표시하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi 연결 - 인터넷 세계로
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시간 동기화 - 정확한 시계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: 디지털 신호 vs 아날로그 신호
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-adc-analog-to-digital-converter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: ADC (Analog-to-Digital Converter)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: 센서의 종류
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: 조도 센서로 밝기 읽기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 밝기 값을 퍼센트로 변환하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-dht11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: DHT11 온습도 센서 사용하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: 센서 값으로 LED 자동 제어하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: 환경 모니터링 시스템 만들기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-adc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: ADC 핀 번호 혼동
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-dht11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: DHT11 측정 간격 너무 짧음
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-dht" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: dht 라이브러리 미설치
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-try-except-dht" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 4: try-except 없이 DHT 사용
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ 스스로 점검하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 아날로그와 디지털의 차이는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-adc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. ADC의 역할은?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-adc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 피코 ADC의 범위는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-dht11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. DHT11 측정 간격은?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-a0-gpio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. A0 포트의 GPIO 번호는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: 밝기 레벨 표시기 ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: 불쾌지수 계산기 ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: 데이터 로깅 시스템 ⭐⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-04-">Chapter 04: 센서 입문 - 세상을 느끼다<a class="headerlink" href="#chapter-04-" title="Permanent link">&para;</a></h1>
+<hr />
+<h2 id="_1">🎯 이 장에서 배우는 것<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[ ] 아날로그와 디지털 신호의 차이를 설명할 수 있다</li>
+<li>[ ] ADC를 사용하여 센서 값을 읽을 수 있다</li>
+<li>[ ] Grove 조도 센서로 밝기를 측정할 수 있다</li>
+<li>[ ] DHT11 센서로 온도와 습도를 측정할 수 있다</li>
+<li>[ ] 센서 값에 따라 LED를 자동 제어할 수 있다</li>
+</ul>
+<hr />
+<h2 id="_2">💡 왜 이걸 배우나요?<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>지금까지 버튼은 <strong>눌렀다(1) / 안 눌렀다(0)</strong> 두 가지만 구분했어. 하지만 세상은 그렇게 단순하지 않지!</p>
+<ul>
+<li>방이 <strong>조금</strong> 어두운지, <strong>많이</strong> 어두운지</li>
+<li>온도가 <strong>25도</strong>인지, <strong>30도</strong>인지</li>
+<li>소리가 <strong>작은지</strong>, <strong>큰지</strong></li>
+</ul>
+<p>이런 "정도"를 알려면 <strong>센서</strong>가 필요해. 센서는 세상의 다양한 정보를 숫자로 바꿔주는 장치야.</p>
+<p><strong>실제로 어디에 쓰일까?</strong> 🤔
+- 🌡️ 에어컨이 "덥다"를 아는 방법 → 온도 센서
+- 📱 스마트폰 화면 밝기 자동 조절 → 조도 센서
+- 🚗 자동차 후방 감지 → 초음파 센서</p>
+<p>이번 장에서 센서를 배우면, 피코가 <strong>세상을 느끼기</strong> 시작해!</p>
+<hr />
+<h2 id="_3">📚 핵심 개념<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="1-vs">개념 1: 디지털 신호 vs 아날로그 신호<a class="headerlink" href="#1-vs" title="Permanent link">&para;</a></h3>
+<p><strong>비유로 시작</strong>: 
+디지털 신호는 마치 <strong>계단</strong>과 같아요. 1층, 2층, 3층... 딱딱 끊어지지.
+아날로그 신호는 마치 <strong>경사로</strong>와 같아요. 부드럽게 연속으로 이어져.</p>
+<p><strong>정확한 정의</strong>:
+- <strong>디지털 신호</strong>: 0과 1, 두 가지 상태만 있는 신호 (ON/OFF)
+- <strong>아날로그 신호</strong>: 연속적인 값을 가지는 신호 (0~100% 사이 모든 값)</p>
+<p><strong>예시로 확인</strong>:
+<div class="highlight"><pre><span></span><code>디지털: 버튼        →  눌림(1) 또는 안눌림(0)
+아날로그: 볼륨 다이얼  →  0%, 30%, 75%, 100%... 무한한 값
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    subgraph 디지털
+        D1[0️⃣ OFF] --&gt; D2[1️⃣ ON]
+    end
+    subgraph 아날로그
+        A1[0] --&gt; A2[0.3] --&gt; A3[0.7] --&gt; A4[1.0]
+    end
+    style D1 fill:#ffcdd2,stroke:#c62828
+    style D2 fill:#c8e6c9,stroke:#2e7d32
+    style A1 fill:#e3f2fd,stroke:#1976d2
+    style A2 fill:#bbdefb,stroke:#1976d2
+    style A3 fill:#90caf9,stroke:#1976d2
+    style A4 fill:#64b5f6,stroke:#1976d2
+</code></pre></div>
+<p><strong>쉽게 말하면</strong>: 디지털은 "예/아니오", 아날로그는 "정도"를 표현해!</p>
+<hr />
+<h3 id="2-adc-analog-to-digital-converter">개념 2: ADC (Analog-to-Digital Converter)<a class="headerlink" href="#2-adc-analog-to-digital-converter" title="Permanent link">&para;</a></h3>
+<p><strong>비유로 시작</strong>:
+ADC는 마치 <strong>통역사</strong>와 같아요. 센서가 말하는 "아날로그 언어"를 컴퓨터가 이해하는 "디지털 숫자"로 바꿔줘.</p>
+<p><strong>정확한 정의</strong>:
+ADC는 연속적인 아날로그 전압을 디지털 숫자로 변환하는 장치야. 피코의 ADC는 <strong>16비트</strong>라서 0~65535 범위의 숫자로 바꿔줘.</p>
+<p><strong>예시로 확인</strong>:
+<div class="highlight"><pre><span></span><code>센서 전압    →    ADC 변환    →    디지털 값
+0V          →                →    0
+1.65V       →     피코 ADC   →    32768 (중간값)
+3.3V        →                →    65535 (최대값)
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A[🌡️ 센서&lt;br/&gt;아날로그 전압] --&gt; B[🔄 ADC&lt;br/&gt;변환기] --&gt; C[💻 피코&lt;br/&gt;디지털 숫자]
+    style A fill:#fff3e0,stroke:#f57c00
+    style B fill:#e8f5e9,stroke:#388e3c
+    style C fill:#e3f2fd,stroke:#1976d2
+</code></pre></div>
+<p><strong>쉽게 말하면</strong>: ADC는 센서의 "느낌"을 컴퓨터가 읽을 수 있는 "숫자"로 바꿔줘!</p>
+<hr />
+<h3 id="3">개념 3: 센서의 종류<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>flowchart TB
+    S[🎛️ 센서 종류] --&gt; D[디지털 센서]
+    S --&gt; A[아날로그 센서]
+
+    D --&gt; D1[버튼: 0 또는 1]
+    D --&gt; D2[DHT11: 디지털 통신]
+
+    A --&gt; A1[조도 센서: 밝기 정도]
+    A --&gt; A2[온도 센서: 온도 정도]
+    A --&gt; A3[가변저항: 회전 정도]
+
+    style S fill:#f3e5f5,stroke:#7b1fa2
+    style D fill:#e3f2fd,stroke:#1976d2
+    style A fill:#fff3e0,stroke:#f57c00
+    style D1 fill:#e8eaf6,stroke:#3f51b5
+    style D2 fill:#e8eaf6,stroke:#3f51b5
+    style A1 fill:#fff8e1,stroke:#ffa000
+    style A2 fill:#fff8e1,stroke:#ffa000
+    style A3 fill:#fff8e1,stroke:#ffa000
+</code></pre></div>
+<p><strong>오늘 사용할 센서</strong>:
+| 센서 | 종류 | 측정 대상 | 연결 포트 |
+|------|------|----------|----------|
+| Grove 조도 센서 | 아날로그 | 빛의 밝기 | A0 |
+| Grove DHT11 | 디지털 | 온도, 습도 | D16 |</p>
+<hr />
+<h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="step-1">Step 1: 조도 센서로 밝기 읽기<a class="headerlink" href="#step-1" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: Grove 조도 센서를 연결하고 밝기 값을 읽어보자!</p>
+<p><strong>회로 연결</strong>:</p>
+<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────┐
+│                  Pico 2W + Grove Shield             │
+│                                                     │
+│    ┌─────────────┐                                  │
+│    │  A0 포트    │◄──── Grove 조도 센서            │
+│    │  (아날로그)  │      (노란색 케이블)             │
+│    └─────────────┘                                  │
+│                                                     │
+│    Grove 케이블을 A0 포트에 연결하면 끝!            │
+└─────────────────────────────────────────────────────┘
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    subgraph Grove조도센서
+        L[💡 조도 센서]
+    end
+    subgraph PicoShield
+        P[A0 포트]
+    end
+    L --&gt;|Grove 케이블| P
+    style L fill:#fff9c4,stroke:#f9a825
+    style P fill:#e3f2fd,stroke:#1976d2
+</code></pre></div>
+<p><strong>코드</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 조도 센서 값 읽기 ===</span>
+<span class="c1"># 조도 센서로 현재 밝기를 측정해서 출력하는 코드야</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 방이 얼마나 밝은지 알아야 자동 조명 같은 걸 만들 수 있어!</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">ADC</span><span class="p">,</span> <span class="n">Pin</span>  <span class="c1"># ADC: 아날로그 값을 읽는 기능</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># Grove 조도 센서는 A0 포트에 연결</span>
+<span class="c1"># A0 = GPIO26번 핀</span>
+<span class="n">light_sensor</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">26</span><span class="p">))</span>  <span class="c1"># ADC 객체 생성</span>
+
+<span class="c1"># 무한 반복</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># 센서 값 읽기 (0 ~ 65535)</span>
+    <span class="n">light_value</span> <span class="o">=</span> <span class="n">light_sensor</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span>
+
+    <span class="c1"># 결과 출력</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;밝기:&quot;</span><span class="p">,</span> <span class="n">light_value</span><span class="p">)</span>
+
+    <span class="c1"># 0.5초 대기</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>밝기: 45230
+밝기: 45180
+밝기: 12450  ← 손으로 가렸을 때
+밝기: 11890
+밝기: 58920  ← 손전등 비췄을 때
+밝기: 59100
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<blockquote>
+<p><strong>read_u16()이 뭐야?</strong>
+- <code>read_u16()</code>은 16비트 unsigned(양수만) 정수로 읽어라는 뜻이야
+- u = unsigned(부호 없음), 16 = 16비트
+- 그래서 결과가 0 ~ 65535 범위로 나와!</p>
+</blockquote>
+<hr />
+<h3 id="step-2">Step 2: 밝기 값을 퍼센트로 변환하기<a class="headerlink" href="#step-2" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 0~65535 숫자는 직관적이지 않으니, 0~100%로 바꿔보자!</p>
+<p><strong>코드</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 밝기를 퍼센트로 변환 ===</span>
+<span class="c1"># 센서 값을 사람이 이해하기 쉬운 퍼센트로 바꾸는 코드야</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># &quot;45230&quot;보다 &quot;69%&quot;가 훨씬 이해하기 쉽잖아!</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">ADC</span><span class="p">,</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">light_sensor</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">26</span><span class="p">))</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># 원본 값 읽기</span>
+    <span class="n">raw_value</span> <span class="o">=</span> <span class="n">light_sensor</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span>
+
+    <span class="c1"># 퍼센트로 변환 (0~65535 → 0~100)</span>
+    <span class="c1"># 공식: (현재값 / 최대값) * 100</span>
+    <span class="n">percent</span> <span class="o">=</span> <span class="p">(</span><span class="n">raw_value</span> <span class="o">/</span> <span class="mi">65535</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+
+    <span class="c1"># 소수점 1자리까지 출력</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;밝기: </span><span class="si">{</span><span class="n">percent</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>밝기: 69.0%
+밝기: 68.9%
+밝기: 19.0%  ← 손으로 가렸을 때
+밝기: 18.1%
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<blockquote>
+<p><strong>f-string 포맷팅</strong>
+- <code>f"밝기: {percent:.1f}%"</code> 
+- <code>.1f</code> = 소수점 1자리까지 표시
+- <code>.2f</code> = 소수점 2자리까지 표시
+- 이게 없으면 <code>69.0324756...</code> 같이 길게 나와!</p>
+</blockquote>
+<hr />
+<h3 id="step-3-dht11">Step 3: DHT11 온습도 센서 사용하기<a class="headerlink" href="#step-3-dht11" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: DHT11 센서로 온도와 습도를 측정해보자!</p>
+<p><strong>회로 연결</strong>:</p>
+<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────┐
+│                  Pico 2W + Grove Shield             │
+│                                                     │
+│    ┌─────────────┐                                  │
+│    │  D16 포트   │◄──── Grove DHT11 센서           │
+│    │  (디지털)   │      (흰색 센서 모듈)            │
+│    └─────────────┘                                  │
+│                                                     │
+│    Grove 케이블을 D16 포트에 연결!                  │
+└─────────────────────────────────────────────────────┘
+</code></pre></div>
+<p><strong>라이브러리 설치가 필요해!</strong> 📦</p>
+<p>DHT11은 특별한 통신 방식을 써서 라이브러리가 필요해. Thonny에서 설치하자:</p>
+<ol>
+<li>Thonny 메뉴 → <strong>도구</strong> → <strong>패키지 관리</strong></li>
+<li>검색창에 <code>dht</code> 입력</li>
+<li><code>micropython-dht</code> 선택 → <strong>설치</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A[🔧 도구] --&gt; B[📦 패키지 관리] --&gt; C[🔍 dht 검색] --&gt; D[✅ 설치]
+    style A fill:#e3f2fd,stroke:#1976d2
+    style B fill:#e8f5e9,stroke:#388e3c
+    style C fill:#fff3e0,stroke:#f57c00
+    style D fill:#c8e6c9,stroke:#2e7d32
+</code></pre></div>
+<p><strong>코드</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: DHT11 온습도 센서 읽기 ===</span>
+<span class="c1"># 현재 온도와 습도를 측정해서 출력하는 코드야</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 스마트 홈, 식물 관리, 기상 관측에 온습도는 필수!</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">dht</span>              <span class="c1"># DHT 센서 라이브러리</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># DHT11 센서 객체 생성 (D16 포트 = GPIO16)</span>
+<span class="n">sensor</span> <span class="o">=</span> <span class="n">dht</span><span class="o">.</span><span class="n">DHT11</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">))</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># 센서 측정 명령</span>
+        <span class="n">sensor</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+
+        <span class="c1"># 측정된 값 읽기</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">temperature</span><span class="p">()</span>  <span class="c1"># 온도 (섭씨)</span>
+        <span class="n">humidity</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">humidity</span><span class="p">()</span> <span class="c1"># 습도 (%)</span>
+
+        <span class="c1"># 결과 출력</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;온도: </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">°C, 습도: </span><span class="si">{</span><span class="n">humidity</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># 센서 읽기 실패 시</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;센서 읽기 실패:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+    <span class="c1"># DHT11은 최소 1초 간격 필요</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>온도: 24°C, 습도: 55%
+온도: 24°C, 습도: 56%
+온도: 25°C, 습도: 54%
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<blockquote>
+<p><strong>try-except가 뭐야?</strong>
+- DHT11 센서는 가끔 읽기에 실패해 (통신 오류)
+- <code>try</code>: 이 코드를 시도해봐
+- <code>except</code>: 실패하면 이렇게 해
+- 에러가 나도 프로그램이 멈추지 않아!</p>
+<p><strong>왜 2초나 기다려?</strong>
+- DHT11은 저가형 센서라 측정에 시간이 걸려
+- 최소 1초 이상 간격을 줘야 정확한 값이 나와
+- DHT22(고급형)는 0.5초면 돼</p>
+</blockquote>
+<hr />
+<h3 id="step-4-led">Step 4: 센서 값으로 LED 자동 제어하기<a class="headerlink" href="#step-4-led" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 어두우면 LED가 켜지는 자동 야간등을 만들어보자!</p>
+<p><strong>회로 연결</strong>:</p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    subgraph 입력
+        L[💡 조도센서&lt;br/&gt;A0]
+    end
+    subgraph 처리
+        P[🤖 피코&lt;br/&gt;조건 판단]
+    end
+    subgraph 출력
+        LED[💡 LED&lt;br/&gt;D18]
+    end
+    L --&gt; P --&gt; LED
+    style L fill:#fff9c4,stroke:#f9a825
+    style P fill:#e3f2fd,stroke:#1976d2
+    style LED fill:#c8e6c9,stroke:#388e3c
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────┐
+│                  연결 정리                          │
+│                                                     │
+│    A0  포트 ◄──── Grove 조도 센서                  │
+│    D18 포트 ◄──── Grove LED                        │
+└─────────────────────────────────────────────────────┘
+</code></pre></div>
+<p><strong>코드</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 자동 야간등 ===</span>
+<span class="c1"># 어두우면 LED가 켜지고, 밝으면 LED가 꺼지는 코드야</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 현관등, 복도등처럼 자동으로 켜지는 조명의 원리야!</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">ADC</span><span class="p">,</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># 센서와 LED 설정</span>
+<span class="n">light_sensor</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">26</span><span class="p">))</span>  <span class="c1"># A0 포트</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>       <span class="c1"># D18 포트</span>
+
+<span class="c1"># 임계값 설정 (이 값보다 어두우면 LED ON)</span>
+<span class="c1"># 밝기 30% 이하면 어둡다고 판단</span>
+<span class="n">THRESHOLD</span> <span class="o">=</span> <span class="mi">30</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># 밝기 읽고 퍼센트 변환</span>
+    <span class="n">raw</span> <span class="o">=</span> <span class="n">light_sensor</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span>
+    <span class="n">brightness</span> <span class="o">=</span> <span class="p">(</span><span class="n">raw</span> <span class="o">/</span> <span class="mi">65535</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+
+    <span class="c1"># 조건 판단</span>
+    <span class="k">if</span> <span class="n">brightness</span> <span class="o">&lt;</span> <span class="n">THRESHOLD</span><span class="p">:</span>
+        <span class="c1"># 어두우면 LED 켜기</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;🌙 어두움 → LED ON&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># 밝으면 LED 끄기</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;☀️ 밝음 → LED OFF&quot;</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;밝기: </span><span class="si">{</span><span class="n">brightness</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% | </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>밝기: 68.5% | ☀️ 밝음 → LED OFF
+밝기: 67.9% | ☀️ 밝음 → LED OFF
+밝기: 25.3% | 🌙 어두움 → LED ON   ← 손으로 가림
+밝기: 18.7% | 🌙 어두움 → LED ON
+밝기: 52.1% | ☀️ 밝음 → LED OFF   ← 손 뗌
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<blockquote>
+<p><strong>THRESHOLD(임계값)를 왜 따로 만들어?</strong>
+- 숫자 <code>30</code>이 코드 여러 곳에 있으면 수정하기 힘들어
+- 맨 위에 <code>THRESHOLD = 30</code>으로 정의하면 한 번만 바꾸면 돼!
+- 대문자로 쓰면 "이건 설정값이야"라는 표시</p>
+</blockquote>
+<hr />
+<h3 id="step-5">Step 5: 환경 모니터링 시스템 만들기<a class="headerlink" href="#step-5" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 조도 + 온습도를 함께 측정하는 환경 모니터를 만들어보자!</p>
+<p><strong>코드</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 환경 모니터링 시스템 ===</span>
+<span class="c1"># 조도, 온도, 습도를 한번에 측정해서 보여주는 코드야</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># 내 방의 환경 데이터를 수집하면 쾌적한 환경을 만들 수 있어!</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">ADC</span><span class="p">,</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">dht</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># 센서 설정</span>
+<span class="n">light_sensor</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">26</span><span class="p">))</span>  <span class="c1"># 조도 센서 (A0)</span>
+<span class="n">dht_sensor</span> <span class="o">=</span> <span class="n">dht</span><span class="o">.</span><span class="n">DHT11</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">))</span>  <span class="c1"># 온습도 센서 (D16)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🏠 환경 모니터링 시스템 시작!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+
+<span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 측정 횟수</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># 조도 측정</span>
+    <span class="n">light_raw</span> <span class="o">=</span> <span class="n">light_sensor</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span>
+    <span class="n">brightness</span> <span class="o">=</span> <span class="p">(</span><span class="n">light_raw</span> <span class="o">/</span> <span class="mi">65535</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+
+    <span class="c1"># 온습도 측정</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dht_sensor</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">dht_sensor</span><span class="o">.</span><span class="n">temperature</span><span class="p">()</span>
+        <span class="n">humidity</span> <span class="o">=</span> <span class="n">dht_sensor</span><span class="o">.</span><span class="n">humidity</span><span class="p">()</span>
+
+        <span class="c1"># 결과 출력</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 측정 #</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   💡 밝기: </span><span class="si">{</span><span class="n">brightness</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   🌡️ 온도: </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   💧 습도: </span><span class="si">{</span><span class="n">humidity</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 환경 평가</span>
+        <span class="k">if</span> <span class="n">temp</span> <span class="o">&lt;</span> <span class="mi">18</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   ❄️ 좀 춥네요!&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="mi">28</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   🔥 좀 덥네요!&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   ✅ 쾌적해요!&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 측정 #</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   💡 밝기: </span><span class="si">{</span><span class="n">brightness</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   ⚠️ 온습도 센서 읽기 실패&quot;</span><span class="p">)</span>
+
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># 3초마다 측정</span>
+</code></pre></div>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>========================================
+🏠 환경 모니터링 시스템 시작!
+========================================
+
+📊 측정 #1
+   💡 밝기: 65.3%
+   🌡️ 온도: 24°C
+   💧 습도: 55%
+   ✅ 쾌적해요!
+
+📊 측정 #2
+   💡 밝기: 18.7%
+   🌡️ 온도: 24°C
+   💧 습도: 56%
+   ✅ 쾌적해요!
+
+📊 측정 #3
+   💡 밝기: 64.1%
+   🌡️ 온도: 25°C
+   💧 습도: 54%
+   ✅ 쾌적해요!
+</code></pre></div></p>
+<hr />
+<h2 id="_5">📝 전체 코드<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p><strong>파일명: <code>environment_monitor.py</code></strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># === 환경 모니터링 시스템 (완성본) ===</span>
+<span class="c1"># 조도, 온도, 습도를 측정하고 LED로 알림하는 시스템</span>
+<span class="c1"># </span>
+<span class="c1"># 하드웨어 연결:</span>
+<span class="c1">#   - Grove 조도 센서 → A0 포트</span>
+<span class="c1">#   - Grove DHT11 → D16 포트</span>
+<span class="c1">#   - Grove LED → D18 포트</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">ADC</span><span class="p">,</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">dht</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># === 하드웨어 설정 ===</span>
+<span class="n">light_sensor</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">26</span><span class="p">))</span>      <span class="c1"># 조도 센서 (A0 = GPIO26)</span>
+<span class="n">dht_sensor</span> <span class="o">=</span> <span class="n">dht</span><span class="o">.</span><span class="n">DHT11</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">))</span>  <span class="c1"># 온습도 센서 (D16)</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>           <span class="c1"># LED (D18)</span>
+
+<span class="c1"># === 설정값 ===</span>
+<span class="n">LIGHT_THRESHOLD</span> <span class="o">=</span> <span class="mi">30</span>  <span class="c1"># 이 값 이하면 어두움 (%)</span>
+<span class="n">TEMP_LOW</span> <span class="o">=</span> <span class="mi">18</span>         <span class="c1"># 이 값 이하면 추움 (°C)</span>
+<span class="n">TEMP_HIGH</span> <span class="o">=</span> <span class="mi">28</span>        <span class="c1"># 이 값 이상이면 더움 (°C)</span>
+
+<span class="c1"># === 초기화 ===</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">45</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🏠 스마트 환경 모니터링 시스템&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">45</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📌 어두움 기준: </span><span class="si">{</span><span class="n">LIGHT_THRESHOLD</span><span class="si">}</span><span class="s2">% 이하&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📌 쾌적 온도: </span><span class="si">{</span><span class="n">TEMP_LOW</span><span class="si">}</span><span class="s2">°C ~ </span><span class="si">{</span><span class="n">TEMP_HIGH</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">45</span><span class="p">)</span>
+
+<span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># === 메인 루프 ===</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># 조도 측정</span>
+    <span class="n">light_raw</span> <span class="o">=</span> <span class="n">light_sensor</span><span class="o">.</span><span class="n">read_u16</span><span class="p">()</span>
+    <span class="n">brightness</span> <span class="o">=</span> <span class="p">(</span><span class="n">light_raw</span> <span class="o">/</span> <span class="mi">65535</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+
+    <span class="c1"># 어두우면 LED 켜기</span>
+    <span class="k">if</span> <span class="n">brightness</span> <span class="o">&lt;</span> <span class="n">LIGHT_THRESHOLD</span><span class="p">:</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">light_status</span> <span class="o">=</span> <span class="s2">&quot;🌙 어두움 (LED ON)&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="n">light_status</span> <span class="o">=</span> <span class="s2">&quot;☀️ 밝음&quot;</span>
+
+    <span class="c1"># 온습도 측정</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dht_sensor</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">dht_sensor</span><span class="o">.</span><span class="n">temperature</span><span class="p">()</span>
+        <span class="n">humidity</span> <span class="o">=</span> <span class="n">dht_sensor</span><span class="o">.</span><span class="n">humidity</span><span class="p">()</span>
+
+        <span class="c1"># 온도 평가</span>
+        <span class="k">if</span> <span class="n">temp</span> <span class="o">&lt;</span> <span class="n">TEMP_LOW</span><span class="p">:</span>
+            <span class="n">temp_status</span> <span class="o">=</span> <span class="s2">&quot;❄️ 추움&quot;</span>
+        <span class="k">elif</span> <span class="n">temp</span> <span class="o">&gt;</span> <span class="n">TEMP_HIGH</span><span class="p">:</span>
+            <span class="n">temp_status</span> <span class="o">=</span> <span class="s2">&quot;🔥 더움&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">temp_status</span> <span class="o">=</span> <span class="s2">&quot;✅ 쾌적&quot;</span>
+
+        <span class="c1"># 결과 출력</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 측정 #</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   💡 밝기: </span><span class="si">{</span><span class="n">brightness</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% | </span><span class="si">{</span><span class="n">light_status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   🌡️ 온도: </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">°C | </span><span class="si">{</span><span class="n">temp_status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   💧 습도: </span><span class="si">{</span><span class="n">humidity</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 측정 #</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   💡 밝기: </span><span class="si">{</span><span class="n">brightness</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% | </span><span class="si">{</span><span class="n">light_status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ⚠️ 온습도 센서 오류: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="_6">⚠️ 자주 하는 실수<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="1-adc">실수 1: ADC 핀 번호 혼동<a class="headerlink" href="#1-adc" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: 센서 값이 항상 0이거나 이상한 값이 나옴</p>
+<p><strong>원인</strong>: Grove Shield의 포트 이름과 실제 GPIO 번호가 달라!</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드 ❌</span>
+<span class="n">light_sensor</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>  <span class="c1"># A0라서 0번?</span>
+
+<span class="c1"># 올바른 코드 ✅</span>
+<span class="n">light_sensor</span> <span class="o">=</span> <span class="n">ADC</span><span class="p">(</span><span class="n">Pin</span><span class="p">(</span><span class="mi">26</span><span class="p">))</span>  <span class="c1"># A0 포트 = GPIO26!</span>
+</code></pre></div></p>
+<p><strong>Grove Shield 포트 매핑</strong>:
+| Grove 포트 | GPIO 번호 |
+|-----------|----------|
+| A0 | GPIO26 |
+| A1 | GPIO27 |
+| A2 | GPIO28 |</p>
+<hr />
+<h3 id="2-dht11">실수 2: DHT11 측정 간격 너무 짧음<a class="headerlink" href="#2-dht11" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: "센서 읽기 실패" 메시지가 자주 뜸</p>
+<p><strong>원인</strong>: DHT11은 최소 1초 이상 간격이 필요해!</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드 ❌</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">sensor</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sensor</span><span class="o">.</span><span class="n">temperature</span><span class="p">())</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># 0.1초는 너무 짧아!</span>
+
+<span class="c1"># 올바른 코드 ✅</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">sensor</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sensor</span><span class="o">.</span><span class="n">temperature</span><span class="p">())</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 2초 이상 권장</span>
+</code></pre></div></p>
+<hr />
+<h3 id="3-dht">실수 3: dht 라이브러리 미설치<a class="headerlink" href="#3-dht" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: <code>ImportError: no module named 'dht'</code></p>
+<p><strong>원인</strong>: dht 라이브러리가 설치되지 않음</p>
+<p><strong>해결</strong>:
+1. Thonny 메뉴 → <strong>도구</strong> → <strong>패키지 관리</strong>
+2. <code>dht</code> 검색
+3. 설치 클릭</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 에러 메시지</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s2">&quot;&lt;stdin&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">2</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">ImportError</span><span class="p">:</span> <span class="n">no</span> <span class="n">module</span> <span class="n">named</span> <span class="s1">&#39;dht&#39;</span>
+
+<span class="c1"># 해결: 패키지 관리에서 dht 설치 후 다시 실행!</span>
+</code></pre></div>
+<hr />
+<h3 id="4-try-except-dht">실수 4: try-except 없이 DHT 사용<a class="headerlink" href="#4-try-except-dht" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: 프로그램이 가끔 멈춤</p>
+<p><strong>원인</strong>: DHT 센서는 가끔 통신 오류가 발생해</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드 ❌</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">sensor</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>  <span class="c1"># 여기서 에러나면 프로그램 종료!</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sensor</span><span class="o">.</span><span class="n">temperature</span><span class="p">())</span>
+
+<span class="c1"># 올바른 코드 ✅</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">sensor</span><span class="o">.</span><span class="n">measure</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">sensor</span><span class="o">.</span><span class="n">temperature</span><span class="p">())</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;측정 실패, 다시 시도...&quot;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></p>
+<hr />
+<h2 id="_7">✅ 스스로 점검하기<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h3 id="1">1. 아날로그와 디지털의 차이는?<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p>버튼은 (    ) 신호, 조도 센서는 (    ) 신호를 출력해.</p>
+<h3 id="2-adc">2. ADC의 역할은?<a class="headerlink" href="#2-adc" title="Permanent link">&para;</a></h3>
+<p>ADC는 (    ) 신호를 (    ) 신호로 변환해줘.</p>
+<h3 id="3-adc">3. 피코 ADC의 범위는?<a class="headerlink" href="#3-adc" title="Permanent link">&para;</a></h3>
+<p><code>read_u16()</code> 함수는 (    ) ~ (    ) 범위의 값을 반환해.</p>
+<h3 id="4-dht11">4. DHT11 측정 간격은?<a class="headerlink" href="#4-dht11" title="Permanent link">&para;</a></h3>
+<p>DHT11 센서는 최소 (    )초 이상 간격을 줘야 해.</p>
+<h3 id="5-a0-gpio">5. A0 포트의 GPIO 번호는?<a class="headerlink" href="#5-a0-gpio" title="Permanent link">&para;</a></h3>
+<p>Grove Shield의 A0 포트는 GPIO(    )번이야.</p>
+<details>
+<summary>정답 확인</summary>
+
+1. 버튼은 **(디지털)** 신호, 조도 센서는 **(아날로그)** 신호를 출력해.
+
+2. ADC는 **(아날로그)** 신호를 **(디지털)** 신호로 변환해줘.
+
+3. `read_u16()` 함수는 **(0)** ~ **(65535)** 범위의 값을 반환해.
+
+4. DHT11 센서는 최소 **(1)** 초 이상 간격을 줘야 해. (2초 권장)
+
+5. Grove Shield의 A0 포트는 GPIO**(26)**번이야.
+
+</details>
+
+<hr />
+<h2 id="_8">🚀 더 해보기<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<h3 id="1_1">도전 1: 밝기 레벨 표시기 ⭐<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h3>
+<p>밝기에 따라 다른 메시지를 출력해봐!</p>
+<div class="highlight"><pre><span></span><code>0~20%: &quot;🌑 아주 어두움&quot;
+21~40%: &quot;🌒 어두움&quot;
+41~60%: &quot;🌓 보통&quot;
+61~80%: &quot;🌔 밝음&quot;
+81~100%: &quot;🌕 아주 밝음&quot;
+</code></pre></div>
+<p><strong>힌트</strong>: <code>if-elif-else</code>를 여러 개 써봐!</p>
+<hr />
+<h3 id="2">도전 2: 불쾌지수 계산기 ⭐⭐<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p>온도와 습도로 불쾌지수를 계산해봐!</p>
+<div class="highlight"><pre><span></span><code>불쾌지수 = 0.81 × 온도 + 0.01 × 습도 × (0.99 × 온도 - 14.3) + 46.3
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>불쾌지수</th>
+<th>체감</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>~67</td>
+<td>쾌적 😊</td>
+</tr>
+<tr>
+<td>68~74</td>
+<td>보통 😐</td>
+</tr>
+<tr>
+<td>75~79</td>
+<td>불쾌 😣</td>
+</tr>
+<tr>
+<td>80~</td>
+<td>매우 불쾌 😫</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="3_1">도전 3: 데이터 로깅 시스템 ⭐⭐⭐<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h3>
+<p>측정 데이터를 파일로 저장해봐!</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 힌트: 파일 쓰기</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">humidity</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">brightness</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>나중에 엑셀에서 열어서 그래프를 그려볼 수 있어!</p>
+<hr />
+<h2 id="_9">🔗 다음 장으로<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>이번 장에서 배운 것:
+- ✅ 아날로그 vs 디지털 신호의 차이
+- ✅ ADC로 센서 값 읽기 (0~65535)
+- ✅ 조도 센서로 밝기 측정
+- ✅ DHT11로 온도/습도 측정
+- ✅ 센서 + LED로 자동 야간등 만들기</p>
+<p><strong>다음 장 예고</strong>: 🎨 <strong>출력의 마법 - 세상에 표현하다</strong></p>
+<p>지금까지 세상의 정보를 "읽는" 방법을 배웠어. 
+다음 장에서는 세상에 "표현"하는 방법을 배워볼 거야!</p>
+<ul>
+<li>RGB LED로 무지개 색 만들기 🌈</li>
+<li>부저로 멜로디 연주하기 🎵</li>
+<li>서보모터로 움직임 만들기 🤖</li>
+</ul>
+<p>센서가 느낀 정보를 다양한 방법으로 표현해보자!</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

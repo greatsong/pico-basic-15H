@@ -1,0 +1,2516 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="라즈베리파이 피코 2W와 MicroPython을 활용한 15시간 피지컬 컴퓨팅 입문 과정으로, 복잡한 개념을 친근한 비유로 쉽게 배웁니다.">
+      
+      
+        <meta name="author" content="Created with Data-AI-Book Generator">
+      
+      
+      
+        <link rel="prev" href="../chapter01/">
+      
+      
+        <link rel="next" href="../chapter03/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>LED의 세계 - 빛으로 말하기 - 피코와 친해지기 - 피지컬 컴퓨팅 입문</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-02-led-" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-header__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            피코와 친해지기 - 피지컬 컴퓨팅 입문
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              LED의 세계 - 빛으로 말하기
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../chapter01/" class="md-tabs__link">
+          
+  
+  
+  Part 1 - 기초 다지기
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter07/" class="md-tabs__link">
+          
+  
+  
+  Part 2 - 프로젝트 도전
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter10/" class="md-tabs__link">
+          
+  
+  
+  Part 3 - 네트워크 연결
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-nav__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    피코와 친해지기 - 피지컬 컴퓨팅 입문
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 - 기초 다지기
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 - 기초 다지기
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    피코 만나기 - 첫 만남과 환경 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LED의 세계 - 빛으로 말하기
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LED의 세계 - 빛으로 말하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-gpio-pin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: GPIO와 Pin 클래스
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pinout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: 출력 모드 (Pin.OUT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-timesleep-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: time.sleep() - 시간 제어
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-led-vs-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 4: 내장 LED vs 외부 LED
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: 내장 LED 켜기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: LED 끄기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-led-blink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: LED 깜빡이기 (Blink!)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-grove-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Grove LED 연결하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: 두 LED 동시 제어
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-for-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: for문으로 LED 패턴 만들기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: 점점 빨라지는 깜빡임
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📝 전체 코드">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#led-step1_led_basicpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        기본 LED 제어 (step1_led_basic.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#led-step2_led_blinkpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LED 깜빡이기 (step2_led_blink.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#led-step3_two_ledspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        두 LED 제어 (step3_two_leds.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#led-step4_led_patternpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        나만의 LED 패턴 (step4_led_pattern.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-import" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: import를 빼먹음
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-time-import" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: time 모듈 import 안 함
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: 핀 번호 vs 핀 이름 혼동
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-grove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 4: Grove 케이블 방향 틀림
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-while-true" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 5: while True 들여쓰기 오류
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: 하트비트 LED 🫀
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: 신호등 만들기 🚦
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: 이진수 카운터 ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    버튼과 대화 - 입력 받기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    센서 입문 - 세상을 느끼다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    출력의 마법 - 세상에 표현하다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조건과 반복 - 자동화의 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 - 프로젝트 도전
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 - 프로젝트 도전
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    함수로 정리 - 코드의 레고 블록
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 설계와 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 완성과 발표
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 - 네트워크 연결
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 - 네트워크 연결
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OLED 디스플레이 - 화면에 표시하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi 연결 - 인터넷 세계로
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시간 동기화 - 정확한 시계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-gpio-pin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: GPIO와 Pin 클래스
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-pinout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: 출력 모드 (Pin.OUT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-timesleep-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: time.sleep() - 시간 제어
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-led-vs-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 4: 내장 LED vs 외부 LED
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: 내장 LED 켜기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: LED 끄기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-led-blink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: LED 깜빡이기 (Blink!)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-grove-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Grove LED 연결하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: 두 LED 동시 제어
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-for-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: for문으로 LED 패턴 만들기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: 점점 빨라지는 깜빡임
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📝 전체 코드">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#led-step1_led_basicpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        기본 LED 제어 (step1_led_basic.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#led-step2_led_blinkpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LED 깜빡이기 (step2_led_blink.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#led-step3_two_ledspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        두 LED 제어 (step3_two_leds.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#led-step4_led_patternpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        나만의 LED 패턴 (step4_led_pattern.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-import" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: import를 빼먹음
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-time-import" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: time 모듈 import 안 함
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: 핀 번호 vs 핀 이름 혼동
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-grove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 4: Grove 케이블 방향 틀림
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-while-true" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 5: while True 들여쓰기 오류
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: 하트비트 LED 🫀
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: 신호등 만들기 🚦
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: 이진수 카운터 ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-02-led-">Chapter 02: LED의 세계 - 빛으로 말하기<a class="headerlink" href="#chapter-02-led-" title="Permanent link">&para;</a></h1>
+<hr />
+<h2 id="_1">🎯 이 장에서 배우는 것<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[ ] Pin 클래스를 사용하여 GPIO를 제어할 수 있다</li>
+<li>[ ] 내장 LED와 Grove LED를 제어할 수 있다</li>
+<li>[ ] time.sleep()으로 LED 패턴을 만들 수 있다</li>
+<li>[ ] for문을 활용해 반복적인 LED 동작을 구현할 수 있다</li>
+</ul>
+<hr />
+<h2 id="_2">💡 왜 이걸 배우나요?<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>LED 제어는 피지컬 컴퓨팅의 <strong>"Hello World"</strong>야. 프로그래밍을 처음 배울 때 화면에 글자를 출력하는 것처럼, 하드웨어를 다룰 때는 LED를 켜는 것부터 시작해.</p>
+<p>왜 LED일까? 🤔</p>
+<ol>
+<li><strong>즉각적인 피드백</strong>: 코드가 제대로 작동하는지 눈으로 바로 확인할 수 있어</li>
+<li><strong>단순하지만 강력</strong>: 켜고 끄는 것만으로도 신호등, 알림등, 상태 표시기를 만들 수 있어</li>
+<li><strong>기초가 탄탄해야</strong>: LED를 제어하는 원리를 알면 모터, 스피커 등 모든 출력 장치를 다룰 수 있어</li>
+</ol>
+<p>실생활에서 LED는 어디에 쓰일까?
+- 📱 스마트폰 알림등 (문자가 오면 깜빡!)
+- 🚦 교통 신호등
+- 🎄 크리스마스 트리 조명
+- 🖥️ 컴퓨터 전원 표시등</p>
+<p>오늘 배우는 Pin 클래스는 앞으로 센서를 읽고, 모터를 돌리고, 모든 하드웨어를 제어하는 <strong>기본 도구</strong>가 돼. 제대로 익혀두자!</p>
+<hr />
+<h2 id="_3">📚 핵심 개념<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="1-gpio-pin">개념 1: GPIO와 Pin 클래스<a class="headerlink" href="#1-gpio-pin" title="Permanent link">&para;</a></h3>
+<p><strong>비유로 시작</strong>: GPIO는 마치 <strong>벽에 있는 전기 콘센트</strong>와 같아. 콘센트에 플러그를 꽂으면 전기가 흐르고, 빼면 전기가 끊기지? GPIO 핀도 마찬가지로 전기 신호를 내보내거나(출력) 받아들일 수(입력) 있어.</p>
+<p><strong>정확한 정의</strong>: GPIO(General Purpose Input/Output)는 <strong>범용 입출력 핀</strong>이야. 프로그래밍으로 이 핀들을 자유롭게 제어할 수 있어. MicroPython에서는 <code>Pin</code> 클래스를 사용해서 GPIO 핀을 제어해.</p>
+<p><strong>예시로 확인</strong>:
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+
+<span class="c1"># GP16번 핀을 출력 모드로 설정</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># 핀에 전기 신호 보내기 (LED 켜기)</span>
+<span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 또는 led.on()</span>
+</code></pre></div></p>
+<p><strong>쉽게 말하면</strong>: Pin 클래스는 <strong>전기 스위치 리모컨</strong>이야. 코드로 스위치를 올리면(1) 전기가 흐르고, 내리면(0) 끊겨.</p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A[🐍 Python 코드] --&gt; B[📍 Pin 클래스]
+    B --&gt; C[⚡ GPIO 핀]
+    C --&gt; D[💡 LED]
+
+    style A fill:#e8eaf6,stroke:#3f51b5
+    style B fill:#fff3e0,stroke:#ff9800
+    style C fill:#fce4ec,stroke:#e91e63
+    style D fill:#e8f5e9,stroke:#4caf50
+</code></pre></div>
+<hr />
+<h3 id="2-pinout">개념 2: 출력 모드 (Pin.OUT)<a class="headerlink" href="#2-pinout" title="Permanent link">&para;</a></h3>
+<p><strong>비유로 시작</strong>: 출력 모드는 마치 <strong>확성기</strong>와 같아. 우리가 말하면(코드 실행) 확성기가 소리를 내보내듯, 출력 모드의 핀은 전기 신호를 밖으로 내보내.</p>
+<p><strong>정확한 정의</strong>: <code>Pin.OUT</code>은 핀을 <strong>출력 모드</strong>로 설정해. 이 모드에서 핀은 <strong>HIGH(1, 3.3V)</strong> 또는 <strong>LOW(0, 0V)</strong> 신호를 내보낼 수 있어.</p>
+<p><strong>예시로 확인</strong>:
+<div class="highlight"><pre><span></span><code><span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>  <span class="c1"># 16번 핀을 출력 모드로!</span>
+
+<span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># HIGH 신호 (3.3V 출력) → LED 켜짐</span>
+<span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># LOW 신호 (0V 출력) → LED 꺼짐</span>
+</code></pre></div></p>
+<p><strong>쉽게 말하면</strong>: 출력 모드는 "내가 전기를 줄게!"라고 선언하는 거야.</p>
+<div class="highlight"><pre><span></span><code>flowchart TB
+    subgraph 출력모드[&quot;📤 출력 모드 (Pin.OUT)&quot;]
+        A[value 1 = HIGH] --&gt; B[⚡ 3.3V 출력]
+        C[value 0 = LOW] --&gt; D[🔌 0V 출력]
+    end
+
+    B --&gt; E[💡 LED ON]
+    D --&gt; F[💡 LED OFF]
+
+    style A fill:#c8e6c9,stroke:#2e7d32
+    style C fill:#ffcdd2,stroke:#c62828
+    style E fill:#fff9c4,stroke:#f9a825
+    style F fill:#eceff1,stroke:#607d8b
+</code></pre></div>
+<hr />
+<h3 id="3-timesleep-">개념 3: time.sleep() - 시간 제어<a class="headerlink" href="#3-timesleep-" title="Permanent link">&para;</a></h3>
+<p><strong>비유로 시작</strong>: <code>time.sleep()</code>은 마치 <strong>알람 시계의 스누즈 버튼</strong>과 같아. 누르면 잠시 멈췄다가 다시 진행하지?</p>
+<p><strong>정확한 정의</strong>: <code>time.sleep(초)</code>는 프로그램을 지정한 <strong>초(seconds)</strong> 만큼 <strong>일시 정지</strong>시켜. 이 시간 동안 코드는 아무것도 하지 않고 기다려.</p>
+<p><strong>예시로 확인</strong>:
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;시작!&quot;</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>      <span class="c1"># 2초 대기</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2초 지났어!&quot;</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>    <span class="c1"># 0.5초(500ms) 대기</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;0.5초 더 지났어!&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>쉽게 말하면</strong>: 코드에게 "잠깐 쉬어!"라고 명령하는 거야.</p>
+<hr />
+<h3 id="4-led-vs-led">개념 4: 내장 LED vs 외부 LED<a class="headerlink" href="#4-led-vs-led" title="Permanent link">&para;</a></h3>
+<p>피코에는 두 종류의 LED를 사용할 수 있어:</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>내장 LED</th>
+<th>Grove LED</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>위치</td>
+<td>피코 보드 위에 내장</td>
+<td>별도 모듈로 연결</td>
+</tr>
+<tr>
+<td>핀 번호</td>
+<td><code>"LED"</code> 또는 <code>25</code></td>
+<td>연결한 포트 번호 (예: 16, 18)</td>
+</tr>
+<tr>
+<td>색상</td>
+<td>초록색</td>
+<td>빨강, 파랑 등 다양</td>
+</tr>
+<tr>
+<td>특징</td>
+<td>추가 연결 불필요</td>
+<td>케이블로 연결 필요</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    subgraph 피코[&quot;🔧 Raspberry Pi Pico 2W&quot;]
+        A[내장 LED&lt;br/&gt;GP25 / &#39;LED&#39;]
+    end
+
+    subgraph 그로브[&quot;🔌 Grove 모듈&quot;]
+        B[Grove LED&lt;br/&gt;D16 / D18 포트]
+    end
+
+    C[💻 Python 코드] --&gt; A
+    C --&gt; B
+
+    style A fill:#c8e6c9,stroke:#2e7d32
+    style B fill:#bbdefb,stroke:#1976d2
+    style C fill:#fff3e0,stroke:#ff9800
+</code></pre></div>
+<hr />
+<h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="step-1-led">Step 1: 내장 LED 켜기<a class="headerlink" href="#step-1-led" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 피코의 내장 LED를 코드로 켜보자!</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 피코 내장 LED 켜기 ===</span>
+<span class="c1"># 피코 보드에 내장된 LED를 켜는 첫 번째 하드웨어 제어!</span>
+
+<span class="c1"># --- WHY: 왜 이걸 먼저 할까? ---</span>
+<span class="c1"># 1. 추가 부품 연결 없이 바로 테스트 가능</span>
+<span class="c1"># 2. 피코가 제대로 연결됐는지 확인 가능</span>
+<span class="c1"># 3. Pin 클래스 사용법을 가장 간단하게 배울 수 있어</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>    <span class="c1"># Pin 클래스를 machine 모듈에서 가져와</span>
+
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>  <span class="c1"># 내장 LED를 출력 모드로 설정</span>
+                           <span class="c1"># &quot;LED&quot;는 피코 내장 LED의 특별한 이름</span>
+
+<span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>                   <span class="c1"># LED 켜기! (led.value(1)과 같아)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>(아무 메시지 없음 - 하지만 피코 보드의 초록색 LED가 켜짐! ✨)
+</code></pre></div></p>
+<p><strong>실행 방법</strong>:
+1. Thonny에서 위 코드 입력
+2. 초록색 ▶️ 실행 버튼 클릭
+3. 피코 보드를 봐! 작은 초록불이 켜졌어? 🎉</p>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<p><code>"LED"</code>라는 이름이 신기하지? 피코 2W에서는 내장 LED를 이렇게 문자열로 지정할 수 있어. 숫자 <code>25</code>를 써도 똑같이 작동해:
+<div class="highlight"><pre><span></span><code><span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>  <span class="c1"># 이것도 내장 LED야!</span>
+</code></pre></div></p>
+<hr />
+<h3 id="step-2-led">Step 2: LED 끄기<a class="headerlink" href="#step-2-led" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 켜진 LED를 끄는 법을 배우자</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: LED 끄기 ===</span>
+<span class="c1"># 켜진 LED를 끄는 방법</span>
+
+<span class="c1"># --- WHY: 왜 끄는 법도 배워야 할까? ---</span>
+<span class="c1"># 켜기만 하면 무슨 소용? 깜빡이려면 끄기도 알아야지!</span>
+
+<span class="c1"># HOW: 두 가지 방법이 있어</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># 방법 1: off() 메서드</span>
+<span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>                  <span class="c1"># 직관적이야!</span>
+
+<span class="c1"># 방법 2: value(0) 메서드  </span>
+<span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>               <span class="c1"># 0 = 끄기, 1 = 켜기</span>
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<p><code>on()/off()</code> vs <code>value(0)/value(1)</code> 뭘 써야 할까?
+- <strong><code>on()/off()</code></strong>: 읽기 쉽고 직관적! 처음 배울 때 추천 👍
+- <strong><code>value(0/1)</code></strong>: 변수로 제어할 때 편해. 나중에 더 활용하게 돼</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># value()의 장점 예시</span>
+<span class="n">상태</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">상태</span><span class="p">)</span>  <span class="c1"># 변수로 제어 가능!</span>
+</code></pre></div>
+<hr />
+<h3 id="step-3-led-blink">Step 3: LED 깜빡이기 (Blink!)<a class="headerlink" href="#step-3-led-blink" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: LED를 반복해서 껐다 켰다 해보자 - 피지컬 컴퓨팅의 진짜 "Hello World"!</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: LED 깜빡이기 (Blink) ===</span>
+<span class="c1"># LED를 1초 간격으로 껐다 켰다 반복!</span>
+
+<span class="c1"># --- WHY: 왜 이게 중요할까? ---</span>
+<span class="c1"># 1. &quot;살아있다&quot;는 신호! (프로그램이 동작 중임을 보여줌)</span>
+<span class="c1"># 2. time.sleep()으로 타이밍 제어하는 법을 배워</span>
+<span class="c1"># 3. 무한 반복(while True)의 기본을 익혀</span>
+
+<span class="c1"># HOW: 켜고 → 기다리고 → 끄고 → 기다리고 → 반복!</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>                <span class="c1"># 시간 관련 함수들이 들어있어</span>
+
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># 무한 반복 시작!</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>                <span class="c1"># True인 동안 = 영원히!</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>               <span class="c1"># 1. LED 켜기</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>          <span class="c1"># 2. 1초 기다리기</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>              <span class="c1"># 3. LED 끄기</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>          <span class="c1"># 4. 1초 기다리기</span>
+    <span class="c1"># → 다시 처음으로 돌아가서 반복!</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>(LED가 1초마다 껐다 켜졌다 반복됨 - 영원히! ♾️)
+</code></pre></div></p>
+<p><strong>멈추는 방법</strong>: Thonny에서 <strong>빨간 🛑 Stop</strong> 버튼 클릭!</p>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<p><code>while True</code>는 <strong>무한 루프</strong>야. 피지컬 컴퓨팅에서 정말 자주 써. 왜냐면:
+- 센서는 계속 값을 읽어야 하고
+- LED는 계속 상태를 유지해야 하고
+- 프로그램이 끝나면 안 되니까!</p>
+<div class="highlight"><pre><span></span><code>flowchart TB
+    A[🚀 시작] --&gt; B[💡 LED 켜기]
+    B --&gt; C[⏱️ 1초 대기]
+    C --&gt; D[💡 LED 끄기]
+    D --&gt; E[⏱️ 1초 대기]
+    E --&gt; B
+
+    style A fill:#e3f2fd,stroke:#1976d2
+    style B fill:#c8e6c9,stroke:#2e7d32
+    style C fill:#fff3e0,stroke:#ff9800
+    style D fill:#ffcdd2,stroke:#c62828
+    style E fill:#fff3e0,stroke:#ff9800
+</code></pre></div>
+<hr />
+<h3 id="step-4-grove-led">Step 4: Grove LED 연결하기<a class="headerlink" href="#step-4-grove-led" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 외부 Grove LED 모듈을 연결하고 제어하자!</p>
+<p><strong>준비물</strong>:
+- Grove LED 모듈 (빨간색 또는 다른 색)
+- Grove 케이블 (4핀)
+- Grove Shield for Pi Pico</p>
+<p><strong>연결 방법</strong>:</p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    subgraph shield[&quot;🛡️ Grove Shield&quot;]
+        D18[&quot;D18 포트&lt;br/&gt;(노란색 커넥터)&quot;]
+    end
+
+    subgraph led[&quot;💡 Grove LED&quot;]
+        VCC[&quot;VCC (빨강)&quot;]
+        GND[&quot;GND (검정)&quot;]
+        SIG[&quot;SIG (노랑)&quot;]
+        NC[&quot;NC (흰색)&quot;]
+    end
+
+    D18 ---|&quot;Grove 케이블&quot;| led
+
+    style D18 fill:#fff9c4,stroke:#f9a825
+    style led fill:#ffcdd2,stroke:#c62828
+</code></pre></div>
+<p><strong>연결 순서</strong>:
+1. 피코에 Grove Shield를 꽂아 (방향 주의! USB 포트 위치 맞춰서)
+2. Grove LED 모듈에 Grove 케이블 연결
+3. 케이블의 반대쪽을 Shield의 <strong>D18</strong> 포트에 연결
+4. 딸깍! 소리가 나면 제대로 꽂힌 거야</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: Grove LED 제어하기 ===</span>
+<span class="c1"># 외부 LED 모듈을 D18 포트로 제어</span>
+
+<span class="c1"># --- WHY: 왜 외부 LED를 쓸까? ---</span>
+<span class="c1"># 1. 내장 LED는 하나뿐이지만, 외부는 여러 개 연결 가능</span>
+<span class="c1"># 2. 다양한 색상의 LED 사용 가능</span>
+<span class="c1"># 3. 위치를 자유롭게 배치할 수 있어</span>
+
+<span class="c1"># HOW: D18 포트 = GPIO 18번 핀</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># D18 포트는 GPIO 18번에 연결되어 있어</span>
+<span class="n">grove_led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">grove_led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>        <span class="c1"># 0.5초 = 500밀리초</span>
+    <span class="n">grove_led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>(Grove LED 모듈이 0.5초 간격으로 빠르게 깜빡임! 🔴)
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<p>Grove Shield의 포트 번호와 GPIO 번호가 일치해서 편해!
+- D16 포트 → GPIO 16번 → <code>Pin(16, Pin.OUT)</code>
+- D18 포트 → GPIO 18번 → <code>Pin(18, Pin.OUT)</code>
+- D20 포트 → GPIO 20번 → <code>Pin(20, Pin.OUT)</code></p>
+<hr />
+<h3 id="step-5-led">Step 5: 두 LED 동시 제어<a class="headerlink" href="#step-5-led" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 내장 LED와 Grove LED를 동시에 제어해보자!</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 두 LED 교대로 깜빡이기 ===</span>
+<span class="c1"># 내장 LED와 Grove LED가 번갈아가며 켜지는 패턴</span>
+
+<span class="c1"># --- WHY: 여러 출력 장치 제어의 기초 ---</span>
+<span class="c1"># 실제 프로젝트에서는 여러 LED, 모터 등을 동시에 다뤄야 해</span>
+
+<span class="c1"># HOW: 두 개의 Pin 객체를 만들고 번갈아 제어</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># 두 LED 설정</span>
+<span class="n">builtin_led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>   <span class="c1"># 내장 LED</span>
+<span class="n">grove_led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>         <span class="c1"># Grove LED (D18)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># 패턴: 내장 켜짐 + Grove 꺼짐</span>
+    <span class="n">builtin_led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">grove_led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="c1"># 패턴: 내장 꺼짐 + Grove 켜짐</span>
+    <span class="n">builtin_led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="n">grove_led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>(두 LED가 시소처럼 번갈아 깜빡임! 마치 대화하는 것 같아 💬)
+</code></pre></div></p>
+<hr />
+<h3 id="step-6-for-led">Step 6: for문으로 LED 패턴 만들기<a class="headerlink" href="#step-6-for-led" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 반복문을 사용해서 다양한 깜빡임 패턴을 만들자!</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: for문으로 LED 깜빡이기 ===</span>
+<span class="c1"># 정해진 횟수만큼 깜빡이는 패턴 만들기</span>
+
+<span class="c1"># --- WHY: for문을 쓰면 좋은 점 ---</span>
+<span class="c1"># 1. &quot;5번 깜빡여&quot;처럼 횟수 지정 가능</span>
+<span class="c1"># 2. 점점 빨라지는 등 변화하는 패턴 가능</span>
+<span class="c1"># 3. 코드가 더 깔끔해져</span>
+
+<span class="c1"># HOW: for i in range(횟수) 사용</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== 5번 깜빡이기 ===&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>         <span class="c1"># 0, 1, 2, 3, 4 (총 5번)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;깜빡 </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">번째&quot;</span><span class="p">)</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;끝!&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>=== 5번 깜빡이기 ===
+깜빡 1번째
+깜빡 2번째
+깜빡 3번째
+깜빡 4번째
+깜빡 5번째
+끝!
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<p><code>range(5)</code>는 0부터 4까지의 숫자를 만들어줘. 그래서 <code>i+1</code>을 출력하면 1부터 5가 나와!</p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A[&quot;range(5)&quot;] --&gt; B[&quot;0, 1, 2, 3, 4&quot;]
+    B --&gt; C[&quot;총 5번 반복&quot;]
+
+    style A fill:#e3f2fd,stroke:#1976d2
+    style B fill:#fff3e0,stroke:#ff9800
+    style C fill:#c8e6c9,stroke:#2e7d32
+</code></pre></div>
+<hr />
+<h3 id="step-7">Step 7: 점점 빨라지는 깜빡임<a class="headerlink" href="#step-7" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 반복할수록 속도가 빨라지는 패턴을 만들자!</p>
+<p><strong>코드</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 점점 빨라지는 LED ===</span>
+<span class="c1"># 깜빡이는 속도가 점점 빨라지는 긴박한 패턴!</span>
+
+<span class="c1"># --- WHY: 변화하는 패턴이 필요할 때 ---</span>
+<span class="c1"># 알람, 카운트다운, 긴장감 표현 등에 활용</span>
+
+<span class="c1"># HOW: 대기 시간을 점점 줄여나가기</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== 점점 빨라지는 깜빡임 ===&quot;</span><span class="p">)</span>
+
+<span class="n">delay</span> <span class="o">=</span> <span class="mf">1.0</span>                <span class="c1"># 시작 대기 시간: 1초</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>        <span class="c1"># 10번 반복</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;대기 시간: </span><span class="si">{</span><span class="n">delay</span><span class="si">}</span><span class="s2">초&quot;</span><span class="p">)</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+
+    <span class="n">delay</span> <span class="o">=</span> <span class="n">delay</span> <span class="o">*</span> <span class="mf">0.7</span>    <span class="c1"># 대기 시간을 70%로 줄여 (점점 빨라짐!)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;끝! 💨&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>=== 점점 빨라지는 깜빡임 ===
+대기 시간: 1.0초
+대기 시간: 0.7초
+대기 시간: 0.49초
+대기 시간: 0.343초
+... (점점 빨라지다가)
+끝! 💨
+</code></pre></div></p>
+<hr />
+<h2 id="_5">📝 전체 코드<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h3 id="led-step1_led_basicpy">기본 LED 제어 (step1_led_basic.py)<a class="headerlink" href="#led-step1_led_basicpy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># === 기본 LED 제어 ===</span>
+<span class="c1"># 피코의 LED를 켜고 끄는 가장 기본적인 코드</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># LED 설정</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># 켜기</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;LED 켜기!&quot;</span><span class="p">)</span>
+<span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># 끄기</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;LED 끄기!&quot;</span><span class="p">)</span>
+<span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="led-step2_led_blinkpy">LED 깜빡이기 (step2_led_blink.py)<a class="headerlink" href="#led-step2_led_blinkpy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># === LED 깜빡이기 (Blink) ===</span>
+<span class="c1"># 1초 간격으로 무한히 깜빡이는 코드</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;LED 깜빡이기 시작! (멈추려면 Stop 버튼)&quot;</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="led-step3_two_ledspy">두 LED 제어 (step3_two_leds.py)<a class="headerlink" href="#led-step3_two_ledspy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># === 두 LED 교대 깜빡이기 ===</span>
+<span class="c1"># 내장 LED와 Grove LED가 번갈아 깜빡임</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">builtin_led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+<span class="n">grove_led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;두 LED 교대 깜빡이기!&quot;</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">builtin_led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">grove_led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+    <span class="n">builtin_led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="n">grove_led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="led-step4_led_patternpy">나만의 LED 패턴 (step4_led_pattern.py)<a class="headerlink" href="#led-step4_led_patternpy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># === 나만의 LED 패턴 ===</span>
+<span class="c1"># SOS 모스 부호 패턴 (· · · — — — · · ·)</span>
+
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">dot</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;짧은 점 (·)&quot;&quot;&quot;</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">dash</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;긴 선 (—)&quot;&quot;&quot;</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">letter_gap</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;글자 사이 간격&quot;&quot;&quot;</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.4</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">word_gap</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;단어 사이 간격&quot;&quot;&quot;</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== SOS 신호 시작! ===&quot;</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># S: · · ·</span>
+    <span class="n">dot</span><span class="p">()</span>
+    <span class="n">dot</span><span class="p">()</span>
+    <span class="n">dot</span><span class="p">()</span>
+    <span class="n">letter_gap</span><span class="p">()</span>
+
+    <span class="c1"># O: — — —</span>
+    <span class="n">dash</span><span class="p">()</span>
+    <span class="n">dash</span><span class="p">()</span>
+    <span class="n">dash</span><span class="p">()</span>
+    <span class="n">letter_gap</span><span class="p">()</span>
+
+    <span class="c1"># S: · · ·</span>
+    <span class="n">dot</span><span class="p">()</span>
+    <span class="n">dot</span><span class="p">()</span>
+    <span class="n">dot</span><span class="p">()</span>
+
+    <span class="n">word_gap</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SOS!&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="_6">⚠️ 자주 하는 실수<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="1-import">실수 1: import를 빼먹음<a class="headerlink" href="#1-import" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>:
+<div class="highlight"><pre><span></span><code>NameError: name &#39;Pin&#39; is not defined
+</code></pre></div></p>
+<p><strong>원인</strong>: <code>from machine import Pin</code>을 안 썼어!</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>  <span class="c1"># Pin이 뭔지 모름!</span>
+
+<span class="c1"># 올바른 코드</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>    <span class="c1"># 먼저 import!</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+</code></pre></div></p>
+<hr />
+<h3 id="2-time-import">실수 2: time 모듈 import 안 함<a class="headerlink" href="#2-time-import" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>:
+<div class="highlight"><pre><span></span><code>NameError: name &#39;time&#39; is not defined
+</code></pre></div></p>
+<p><strong>원인</strong>: <code>import time</code>을 빼먹었어!</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드</span>
+<span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># time이 뭔지 모름!</span>
+
+<span class="c1"># 올바른 코드</span>
+<span class="kn">import</span> <span class="nn">time</span>    <span class="c1"># 먼저 import!</span>
+<span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></p>
+<hr />
+<h3 id="3-vs">실수 3: 핀 번호 vs 핀 이름 혼동<a class="headerlink" href="#3-vs" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>:
+<div class="highlight"><pre><span></span><code>ValueError: invalid pin
+</code></pre></div></p>
+<p><strong>원인</strong>: 내장 LED는 <code>"LED"</code> (문자열) 또는 <code>25</code> (숫자)인데, 다른 값을 썼어</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="n">LED</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>    <span class="c1"># 따옴표 없으면 변수로 인식!</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;25&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>   <span class="c1"># 숫자를 문자열로 쓰면 안 돼!</span>
+
+<span class="c1"># 올바른 코드</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="s2">&quot;LED&quot;</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>  <span class="c1"># 문자열 &quot;LED&quot;</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>     <span class="c1"># 숫자 25</span>
+</code></pre></div></p>
+<hr />
+<h3 id="4-grove">실수 4: Grove 케이블 방향 틀림<a class="headerlink" href="#4-grove" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: 코드는 에러 없이 실행되는데 LED가 안 켜짐</p>
+<p><strong>원인</strong>: Grove 케이블의 색상 방향이 맞지 않거나, 포트를 잘못 연결함</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code>✅ 체크리스트:
+1. 케이블이 딸깍 소리 나게 꽂혔나?
+2. D18 포트에 연결했나? (코드에서 Pin(18) 사용 시)
+3. LED 모듈에 불량은 없나? (다른 포트로 테스트)
+</code></pre></div></p>
+<hr />
+<h3 id="5-while-true">실수 5: while True 들여쓰기 오류<a class="headerlink" href="#5-while-true" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>:
+<div class="highlight"><pre><span></span><code>IndentationError: expected an indented block
+</code></pre></div></p>
+<p><strong>원인</strong>: <code>while True:</code> 다음 줄의 들여쓰기가 없거나 잘못됨</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>           <span class="c1"># 들여쓰기가 없어!</span>
+
+<span class="c1"># 올바른 코드</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>       <span class="c1"># 스페이스 4칸 또는 Tab</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></p>
+<hr />
+<h2 id="_7">✅ 스스로 점검하기<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>Pin 클래스</strong>를 사용하여 GPIO 핀을 출력 모드로 설정하려면 어떻게 써야 할까?</p>
+</li>
+<li>
+<p><code>time.sleep(0.5)</code>는 프로그램을 몇 초 동안 멈추게 할까?</p>
+</li>
+<li>
+<p>내장 LED와 Grove LED를 동시에 사용할 때, 왜 두 개의 Pin 객체를 따로 만들어야 할까?</p>
+</li>
+<li>
+<p><code>while True</code>를 사용하는 이유는 무엇일까?</p>
+</li>
+<li>
+<p><code>led.on()</code>과 <code>led.value(1)</code>의 차이점은?</p>
+</li>
+</ol>
+<details>
+<summary>정답 확인</summary>
+
+1. `led = Pin(핀번호, Pin.OUT)` - Pin.OUT이 출력 모드를 의미해
+
+2. **0.5초** (500밀리초) - sleep()의 단위는 초(second)야
+
+3. 각 LED가 **다른 GPIO 핀**에 연결되어 있어서, 각각 독립적으로 제어해야 하기 때문이야. 하나의 Pin 객체는 하나의 핀만 제어할 수 있어.
+
+4. 피지컬 컴퓨팅에서는 프로그램이 **계속 실행**되어야 해. 한 번 실행하고 끝나면 LED가 바로 꺼지거나, 센서 값을 한 번만 읽고 말아버리니까!
+
+5. **기능은 똑같아!** `on()`/`off()`는 더 직관적이고, `value(0/1)`은 변수로 제어할 때 편해.
+<div class="highlight"><pre><span></span><code><span class="c1"># 같은 결과</span>
+<span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+<span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># value()의 장점</span>
+<span class="n">상태</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">상태</span><span class="p">)</span>  <span class="c1"># 변수 사용 가능!</span>
+</code></pre></div>
+
+</details>
+
+<hr />
+<h2 id="_8">🚀 더 해보기<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<h3 id="1-led">도전 1: 하트비트 LED 🫀<a class="headerlink" href="#1-led" title="Permanent link">&para;</a></h3>
+<p><strong>난이도</strong>: ⭐</p>
+<p>심장이 뛰는 것처럼 "두근두근" 패턴을 만들어봐!
+- 빠르게 두 번 깜빡이고
+- 잠시 쉬고
+- 반복!</p>
+<details>
+<summary>힌트</summary>
+
+<div class="highlight"><pre><span></span><code><span class="c1"># 두근(빠르게 2번) + 쉬기 패턴</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># 두근</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="c1"># 두근</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="c1"># 쉬기</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.6</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+
+<hr />
+<h3 id="2">도전 2: 신호등 만들기 🚦<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p><strong>난이도</strong>: ⭐⭐</p>
+<p>Grove LED 3개를 연결해서 신호등을 만들어봐! (또는 1개 LED로 타이밍만 구현)
+- 초록: 3초
+- 노랑: 1초
+- 빨강: 3초</p>
+<details>
+<summary>힌트</summary>
+
+<div class="highlight"><pre><span></span><code><span class="c1"># D16, D18, D20 포트에 각각 LED 연결</span>
+<span class="n">red</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+<span class="n">yellow</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+<span class="n">green</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># 초록불</span>
+    <span class="n">green</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">red</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">green</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+
+    <span class="c1"># 노란불</span>
+    <span class="n">yellow</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">yellow</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+
+    <span class="c1"># 빨간불</span>
+    <span class="n">red</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+
+<hr />
+<h3 id="3">도전 3: 이진수 카운터 ⭐<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p><strong>난이도</strong>: ⭐⭐⭐</p>
+<p>LED 4개로 0부터 15까지 이진수로 표시해봐!
+- 0 = 모두 꺼짐
+- 1 = 0001 (첫 번째만 켜짐)
+- 2 = 0010
+- 3 = 0011
+- ...
+- 15 = 1111 (모두 켜짐)</p>
+<details>
+<summary>힌트</summary>
+
+<div class="highlight"><pre><span></span><code><span class="n">leds</span> <span class="o">=</span> <span class="p">[</span><span class="n">Pin</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">),</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">),</span> 
+        <span class="n">Pin</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">),</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)]</span>
+
+<span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>  <span class="c1"># 0부터 15까지</span>
+    <span class="c1"># 이진수로 변환해서 각 LED 제어</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="n">bit</span> <span class="o">=</span> <span class="p">(</span><span class="n">number</span> <span class="o">&gt;&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span>  <span class="c1"># i번째 비트 추출</span>
+        <span class="n">leds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">bit</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+
+**설명**: `>>` 연산과 `& 1`로 각 비트를 추출해. 어렵다면 일단 패스하고 나중에 도전해도 좋아!
+
+</details>
+
+<hr />
+<h2 id="_9">🔗 다음 장으로<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>축하해! 🎉 이번 장에서 정말 많은 걸 배웠어:</p>
+<div class="highlight"><pre><span></span><code>flowchart LR
+    A[📍 Pin 클래스] --&gt; B[💡 LED 제어]
+    B --&gt; C[⏱️ time.sleep]
+    C --&gt; D[🔄 반복 패턴]
+
+    style A fill:#e3f2fd,stroke:#1976d2
+    style B fill:#c8e6c9,stroke:#2e7d32
+    style C fill:#fff3e0,stroke:#ff9800
+    style D fill:#f3e5f5,stroke:#7b1fa2
+</code></pre></div>
+<ul>
+<li><strong>Pin 클래스</strong>로 GPIO 핀을 제어하는 법</li>
+<li><strong>내장 LED</strong>와 <strong>Grove LED</strong>를 켜고 끄는 법</li>
+<li><strong>time.sleep()</strong>으로 타이밍 제어하는 법</li>
+<li><strong>for문</strong>으로 반복 패턴 만드는 법</li>
+</ul>
+<p>다음 장에서는 <strong>버튼과 대화</strong>를 배워볼 거야!</p>
+<p>지금까지는 피코가 일방적으로 LED를 제어했지? 다음에는 <strong>버튼을 눌러서 피코에게 명령</strong>을 내려볼 거야. 버튼을 누르면 LED가 켜지고, 다시 누르면 꺼지는 <strong>인터랙티브한 프로그램</strong>을 만들어보자!</p>
+<p><strong>출력(LED)</strong>에서 <strong>입력(버튼)</strong>으로 한 걸음 더 나아가는 거야! 👉</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
