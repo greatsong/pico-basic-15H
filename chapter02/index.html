@@ -50,8 +50,6 @@
       
     
     
-      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
-    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1888,7 +1886,7 @@
 <span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 또는 led.on()</span>
 </code></pre></div></p>
 <p><strong>쉽게 말하면</strong>: Pin 클래스는 <strong>전기 스위치 리모컨</strong>이야. 코드로 스위치를 올리면(1) 전기가 흐르고, 내리면(0) 끊겨.</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     A[🐍 Python 코드] --&gt; B[📍 Pin 클래스]
     B --&gt; C[⚡ GPIO 핀]
     C --&gt; D[💡 LED]
@@ -1896,7 +1894,7 @@
     style A fill:#e8eaf6,stroke:#3f51b5
     style B fill:#fff3e0,stroke:#ff9800
     style C fill:#fce4ec,stroke:#e91e63
-    style D fill:#e8f5e9,stroke:#4caf50</code></pre>
+    style D fill:#e8f5e9,stroke:#4caf50</div>
 <hr />
 <h3 id="2-pinout">개념 2: 출력 모드 (Pin.OUT)<a class="headerlink" href="#2-pinout" title="Permanent link">&para;</a></h3>
 <p><strong>비유로 시작</strong>: 출력 모드는 마치 <strong>확성기</strong>와 같아. 우리가 말하면(코드 실행) 확성기가 소리를 내보내듯, 출력 모드의 핀은 전기 신호를 밖으로 내보내.</p>
@@ -1908,7 +1906,7 @@
 <span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># LOW 신호 (0V 출력) → LED 꺼짐</span>
 </code></pre></div></p>
 <p><strong>쉽게 말하면</strong>: 출력 모드는 "내가 전기를 줄게!"라고 선언하는 거야.</p>
-<pre class="mermaid"><code>flowchart TB
+<div class="mermaid">flowchart TB
     subgraph 출력모드["📤 출력 모드 (Pin.OUT)"]
         A[value 1 = HIGH] --&gt; B[⚡ 3.3V 출력]
         C[value 0 = LOW] --&gt; D[🔌 0V 출력]
@@ -1920,7 +1918,7 @@
     style A fill:#c8e6c9,stroke:#2e7d32
     style C fill:#ffcdd2,stroke:#c62828
     style E fill:#fff9c4,stroke:#f9a825
-    style F fill:#eceff1,stroke:#607d8b</code></pre>
+    style F fill:#eceff1,stroke:#607d8b</div>
 <hr />
 <h3 id="3-timesleep-">개념 3: time.sleep() - 시간 제어<a class="headerlink" href="#3-timesleep-" title="Permanent link">&para;</a></h3>
 <p><strong>비유로 시작</strong>: <code>time.sleep()</code>은 마치 <strong>알람 시계의 스누즈 버튼</strong>과 같아. 누르면 잠시 멈췄다가 다시 진행하지?</p>
@@ -1969,7 +1967,7 @@
 </tr>
 </tbody>
 </table>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     subgraph 피코["🔧 Raspberry Pi Pico 2W"]
         A[내장 LED&lt;br/&gt;GP25 / 'LED']
     end
@@ -1983,7 +1981,7 @@
 
     style A fill:#c8e6c9,stroke:#2e7d32
     style B fill:#bbdefb,stroke:#1976d2
-    style C fill:#fff3e0,stroke:#ff9800</code></pre>
+    style C fill:#fff3e0,stroke:#ff9800</div>
 <hr />
 <h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <h3 id="step-1-led">Step 1: 내장 LED 켜기<a class="headerlink" href="#step-1-led" title="Permanent link">&para;</a></h3>
@@ -2080,7 +2078,7 @@
 - 센서는 계속 값을 읽어야 하고
 - LED는 계속 상태를 유지해야 하고
 - 프로그램이 끝나면 안 되니까!</p>
-<pre class="mermaid"><code>flowchart TB
+<div class="mermaid">flowchart TB
     A[🚀 시작] --&gt; B[💡 LED 켜기]
     B --&gt; C[⏱️ 1초 대기]
     C --&gt; D[💡 LED 끄기]
@@ -2091,7 +2089,7 @@
     style B fill:#c8e6c9,stroke:#2e7d32
     style C fill:#fff3e0,stroke:#ff9800
     style D fill:#ffcdd2,stroke:#c62828
-    style E fill:#fff3e0,stroke:#ff9800</code></pre>
+    style E fill:#fff3e0,stroke:#ff9800</div>
 <hr />
 <h3 id="step-4-grove-led">Step 4: Grove LED 연결하기<a class="headerlink" href="#step-4-grove-led" title="Permanent link">&para;</a></h3>
 <p><strong>목표</strong>: 외부 Grove LED 모듈을 연결하고 제어하자!</p>
@@ -2100,7 +2098,7 @@
 - Grove 케이블 (4핀)
 - Grove Shield for Pi Pico</p>
 <p><strong>연결 방법</strong>:</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     subgraph shield["🛡️ Grove Shield"]
         D18["D18 포트&lt;br/&gt;(노란색 커넥터)"]
     end
@@ -2115,7 +2113,7 @@
     D18 ---|"Grove 케이블"| led
 
     style D18 fill:#fff9c4,stroke:#f9a825
-    style led fill:#ffcdd2,stroke:#c62828</code></pre>
+    style led fill:#ffcdd2,stroke:#c62828</div>
 <p><strong>연결 순서</strong>:
 1. 피코에 Grove Shield를 꽂아 (방향 주의! USB 포트 위치 맞춰서)
 2. Grove LED 모듈에 Grove 케이블 연결
@@ -2222,13 +2220,13 @@
 </code></pre></div></p>
 <p><strong>여기서 잠깐! 🤔</strong></p>
 <p><code>range(5)</code>는 0부터 4까지의 숫자를 만들어줘. 그래서 <code>i+1</code>을 출력하면 1부터 5가 나와!</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     A["range(5)"] --&gt; B["0, 1, 2, 3, 4"]
     B --&gt; C["총 5번 반복"]
 
     style A fill:#e3f2fd,stroke:#1976d2
     style B fill:#fff3e0,stroke:#ff9800
-    style C fill:#c8e6c9,stroke:#2e7d32</code></pre>
+    style C fill:#c8e6c9,stroke:#2e7d32</div>
 <hr />
 <h3 id="step-7">Step 7: 점점 빨라지는 깜빡임<a class="headerlink" href="#step-7" title="Permanent link">&para;</a></h3>
 <p><strong>목표</strong>: 반복할수록 속도가 빨라지는 패턴을 만들자!</p>
@@ -2591,7 +2589,7 @@
 <hr />
 <h2 id="_9">🔗 다음 장으로<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
 <p>축하해! 🎉 이번 장에서 정말 많은 걸 배웠어:</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     A[📍 Pin 클래스] --&gt; B[💡 LED 제어]
     B --&gt; C[⏱️ time.sleep]
     C --&gt; D[🔄 반복 패턴]
@@ -2599,7 +2597,7 @@
     style A fill:#e3f2fd,stroke:#1976d2
     style B fill:#c8e6c9,stroke:#2e7d32
     style C fill:#fff3e0,stroke:#ff9800
-    style D fill:#f3e5f5,stroke:#7b1fa2</code></pre>
+    style D fill:#f3e5f5,stroke:#7b1fa2</div>
 <ul>
 <li><strong>Pin 클래스</strong>로 GPIO 핀을 제어하는 법</li>
 <li><strong>내장 LED</strong>와 <strong>Grove LED</strong>를 켜고 끄는 법</li>

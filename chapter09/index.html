@@ -50,8 +50,6 @@
       
     
     
-      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
-    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -2350,13 +2348,13 @@
 <hr />
 <h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <h3 id="_5">오늘의 전체 흐름<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     A[🔧 마무리&lt;br/&gt;15분] --&gt; B[📝 준비&lt;br/&gt;5분] --&gt; C[🎤 발표&lt;br/&gt;25분] --&gt; D[⭐ 평가&lt;br/&gt;5분]
 
     style A fill:#e3f2fd,stroke:#1976d2
     style B fill:#fff3e0,stroke:#f57c00
     style C fill:#e8f5e9,stroke:#388e3c
-    style D fill:#fce4ec,stroke:#c2185b</code></pre>
+    style D fill:#fce4ec,stroke:#c2185b</div>
 <hr />
 <h3 id="step-1-15">Step 1: 프로젝트 마무리 (15분)<a class="headerlink" href="#step-1-15" title="Permanent link">&para;</a></h3>
 <p><strong>목표</strong>: 남은 버그를 수정하고 완성도를 높이자</p>
@@ -2424,7 +2422,7 @@
     <span class="k">return</span> <span class="n">led_on</span>
 </code></pre></div>
 <h4 id="_8">시간이 부족할 때 우선순위<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
-<pre class="mermaid"><code>flowchart TD
+<div class="mermaid">flowchart TD
     A[⏰ 남은 시간?] --&gt; B{10분 이상?}
     B --&gt;|Yes| C[🎯 추가 기능&lt;br/&gt;구현해도 OK]
     B --&gt;|No| D{5분 이상?}
@@ -2434,7 +2432,7 @@
     style A fill:#fff3e0,stroke:#f57c00
     style C fill:#e8f5e9,stroke:#388e3c
     style E fill:#e3f2fd,stroke:#1976d2
-    style F fill:#fce4ec,stroke:#c2185b</code></pre>
+    style F fill:#fce4ec,stroke:#c2185b</div>
 <p><strong>여기서 잠깐! 🤔</strong></p>
 <blockquote>
 <p>완벽하지 않아도 괜찮아! </p>
@@ -2448,10 +2446,10 @@
 <h3 id="step-2-5">Step 2: 발표 준비 (5분)<a class="headerlink" href="#step-2-5" title="Permanent link">&para;</a></h3>
 <p><strong>목표</strong>: 1분 시연 발표 내용을 정리하자</p>
 <h4 id="1">1분 발표 구성 (황금 비율)<a class="headerlink" href="#1" title="Permanent link">&para;</a></h4>
-<pre class="mermaid"><code>pie title 1분 발표 시간 배분
+<div class="mermaid">pie title 1분 발표 시간 배분
     "소개 (10초)" : 10
     "시연 (35초)" : 35
-    "마무리 (15초)" : 15</code></pre>
+    "마무리 (15초)" : 15</div>
 <h4 id="_9">발표 스크립트 템플릿<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>🎤 1분 발표 스크립트
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -2511,14 +2509,14 @@
 <h3 id="step-3-25">Step 3: 발표 진행 (25분)<a class="headerlink" href="#step-3-25" title="Permanent link">&para;</a></h3>
 <p><strong>목표</strong>: 모든 조가 돌아가며 1분 시연 발표</p>
 <h4 id="_11">발표 순서와 역할<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     A[🎤 발표자] --&gt; B[👀 청중]
     B --&gt; C[📝 평가자]
     C --&gt; A
 
     style A fill:#e8f5e9,stroke:#388e3c
     style B fill:#e3f2fd,stroke:#1976d2
-    style C fill:#fff3e0,stroke:#f57c00</code></pre>
+    style C fill:#fff3e0,stroke:#f57c00</div>
 <ul>
 <li><strong>발표자</strong>: 1분 시연 + 질문 답변 (30초)</li>
 <li><strong>청중</strong>: 집중해서 보고, 배울 점 찾기</li>
@@ -2579,7 +2577,7 @@ _________________________________________________
 _________________________________________________
 </code></pre></div>
 <h4 id="_15">좋은 피드백 작성법<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h4>
-<pre class="mermaid"><code>flowchart TD
+<div class="mermaid">flowchart TD
     A[💬 피드백 작성] --&gt; B[1️⃣ 구체적으로]
     A --&gt; C[2️⃣ 긍정 먼저]
     A --&gt; D[3️⃣ 제안 형태로]
@@ -2591,7 +2589,7 @@ _________________________________________________
     style A fill:#e8f5e9,stroke:#388e3c
     style B fill:#e3f2fd,stroke:#1976d2
     style C fill:#fff3e0,stroke:#f57c00
-    style D fill:#fce4ec,stroke:#c2185b</code></pre>
+    style D fill:#fce4ec,stroke:#c2185b</div>
 <p><strong>피드백 문장 공식</strong>:
 <div class="highlight"><pre><span></span><code>&quot;[좋았던 점] + 근데/그리고 + [개선 제안] + 하면 어떨까요?&quot;
 

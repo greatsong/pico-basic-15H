@@ -50,8 +50,6 @@
       
     
     
-      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
-    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1720,7 +1718,7 @@
 </li>
 </ol>
 <p><strong>쉽게 말하면</strong>: I2C는 2개의 선만으로 여러 장치와 대화할 수 있는 효율적인 통신 방법이야!</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     subgraph PICO["🎛️ Pico 2W"]
         M[Master]
     end
@@ -1744,7 +1742,7 @@
 
     style PICO fill:#e3f2fd,stroke:#1976d2
     style BUS fill:#fff3e0,stroke:#f57c00
-    style DEVICES fill:#e8f5e9,stroke:#388e3c</code></pre>
+    style DEVICES fill:#e8f5e9,stroke:#388e3c</div>
 <h3 id="2-oled">개념 2: OLED 디스플레이<a class="headerlink" href="#2-oled" title="Permanent link">&para;</a></h3>
 <ol>
 <li><strong>비유로 시작</strong>: "OLED는 마치 128×64칸의 모눈종이와 같아요"</li>
@@ -1764,7 +1762,7 @@
 </li>
 </ol>
 <p><strong>쉽게 말하면</strong>: OLED는 128×64개의 작은 전구가 모여있는 화면이야!</p>
-<pre class="mermaid"><code>flowchart TB
+<div class="mermaid">flowchart TB
     subgraph SCREEN["📺 OLED 화면 좌표계"]
         direction TB
         A["(0,0) ← 시작점"] 
@@ -1778,7 +1776,7 @@
     C --&gt; D
     B --&gt; D
 
-    style SCREEN fill:#f3e5f5,stroke:#7b1fa2</code></pre>
+    style SCREEN fill:#f3e5f5,stroke:#7b1fa2</div>
 <h3 id="3">개념 3: 프레임버퍼<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
 <ol>
 <li><strong>비유로 시작</strong>: "프레임버퍼는 마치 스케치북과 같아요"</li>
@@ -1806,19 +1804,19 @@
 2. 검색창에 <code>ssd1306</code> 입력
 3. <code>micropython-ssd1306</code> 선택 후 <strong>Install</strong> 클릭
 4. 설치 완료될 때까지 대기</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     A["🔧 도구 메뉴"] --&gt; B["📦 패키지 관리"]
     B --&gt; C["🔍 ssd1306 검색"]
     C --&gt; D["⬇️ Install 클릭"]
     D --&gt; E["✅ 설치 완료!"]
 
     style A fill:#e3f2fd,stroke:#1976d2
-    style E fill:#e8f5e9,stroke:#388e3c</code></pre>
+    style E fill:#e8f5e9,stroke:#388e3c</div>
 <h3 id="step-1-oled">Step 1: OLED 연결하기<a class="headerlink" href="#step-1-oled" title="Permanent link">&para;</a></h3>
 <p><strong>목표</strong>: Grove OLED를 피코에 연결하고 초기화</p>
 <p><strong>회로 연결</strong>:
 Grove Shield의 <strong>I2C 포트</strong>에 OLED 연결</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     subgraph PICO["🎛️ Pico 2W + Grove Shield"]
         I2C["I2C 포트"]
     end
@@ -1835,7 +1833,7 @@ Grove Shield의 <strong>I2C 포트</strong>에 OLED 연결</p>
 
     style PICO fill:#e3f2fd,stroke:#1976d2
     style CABLE fill:#fff3e0,stroke:#f57c00
-    style OLED fill:#e8f5e9,stroke:#388e3c</code></pre>
+    style OLED fill:#e8f5e9,stroke:#388e3c</div>
 <p><strong>코드</strong>:
 <div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: OLED 초기화하고 Hello 표시하기 ===</span>
 <span class="c1"># 첫 번째 OLED 프로그램! 화면에 글자를 띄워보자</span>
@@ -1965,7 +1963,7 @@ OLED에 5개의 텍스트가 각기 다른 위치에 표시돼!</p>
 <div class="highlight"><pre><span></span><code>도형 그리기 완료!
 </code></pre></div>
 화면에 점 3개, 가로선, 세로선, 빈 사각형, 채운 사각형이 표시돼!</p>
-<pre class="mermaid"><code>flowchart TB
+<div class="mermaid">flowchart TB
     subgraph METHODS["📐 OLED 그리기 메서드"]
         A["pixel(x, y, c)\n점 찍기"]
         B["hline(x, y, w, c)\n가로선"]
@@ -1974,7 +1972,7 @@ OLED에 5개의 텍스트가 각기 다른 위치에 표시돼!</p>
         E["fill_rect(x, y, w, h, c)\n채운 사각형"]
     end
 
-    style METHODS fill:#e8f5e9,stroke:#388e3c</code></pre>
+    style METHODS fill:#e8f5e9,stroke:#388e3c</div>
 <h3 id="step-4">Step 4: 센서 데이터 표시하기<a class="headerlink" href="#step-4" title="Permanent link">&para;</a></h3>
 <p><strong>목표</strong>: 온습도 센서 값을 OLED에 실시간 표시</p>
 <p><strong>코드</strong>:

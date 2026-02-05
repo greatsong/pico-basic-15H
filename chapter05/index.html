@@ -50,8 +50,6 @@
       
     
     
-      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
-    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1903,7 +1901,7 @@
 <p>우리 눈이 그 속도를 따라가지 못해서 <strong>중간 밝기로 보여</strong>! 이게 PWM의 원리야.</p>
 <p><strong>정확히 말하면</strong>: PWM은 디지털 신호를 빠르게 ON/OFF 반복해서 <strong>아날로그처럼</strong> 중간 값을 만드는 기술이야. 한 주기에서 ON 상태인 비율을 <strong>듀티 사이클(Duty Cycle)</strong>이라고 해.</p>
 <p><strong>예시로 확인</strong>:</p>
-<pre class="mermaid"><code>flowchart TB
+<div class="mermaid">flowchart TB
     subgraph 듀티사이클 ["⚡ 듀티 사이클 비교"]
         direction LR
         A["25% 듀티&lt;br/&gt;어두운 LED 💡"]
@@ -1913,7 +1911,7 @@
 
     style A fill:#fff9c4,stroke:#f9a825
     style B fill:#ffcc80,stroke:#ef6c00
-    style C fill:#ffab91,stroke:#e64a19</code></pre>
+    style C fill:#ffab91,stroke:#e64a19</div>
 <div class="highlight"><pre><span></span><code>25% 듀티 사이클 (어두움):
 ┌─┐   ┌─┐   ┌─┐   ┌─┐
 │█│   │█│   │█│   │█│    ← 25%만 켜짐
@@ -1934,7 +1932,7 @@
 <h3 id="2-rgb-led">개념 2: RGB LED의 색 혼합<a class="headerlink" href="#2-rgb-led" title="Permanent link">&para;</a></h3>
 <p><strong>비유로 시작</strong>: RGB LED는 마치 <strong>물감 섞기</strong>와 같아요. (정확히는 빛의 삼원색!)</p>
 <p><strong>정확히 말하면</strong>: RGB LED 안에는 빨강(R), 초록(G), 파랑(B) 3개의 LED가 들어있어. 각각의 밝기를 조절하면 <strong>1600만 가지 이상의 색</strong>을 만들 수 있어.</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     subgraph RGB ["🎨 RGB 색 혼합"]
         R["🔴 Red&lt;br/&gt;빨강"]
         G["🟢 Green&lt;br/&gt;초록"]
@@ -1957,7 +1955,7 @@
     style Y fill:#fff9c4,stroke:#f9a825
     style M fill:#f3e5f5,stroke:#7b1fa2
     style C fill:#e0f7fa,stroke:#00838f
-    style W fill:#fafafa,stroke:#616161</code></pre>
+    style W fill:#fafafa,stroke:#616161</div>
 <p><strong>예시로 확인</strong>:
 | 색상 | R | G | B | 결과 |
 |------|---|---|---|------|
@@ -2028,7 +2026,7 @@
 <p><strong>비유로 시작</strong>: 서보모터는 마치 <strong>시계 바늘</strong>과 같아요.</p>
 <p>시계 바늘이 정확히 3시를 가리키는 것처럼, 서보모터는 "90도로 가!" 하면 정확히 90도 위치로 이동해.</p>
 <p><strong>정확히 말하면</strong>: 서보모터는 PWM 신호의 <strong>펄스 폭</strong>에 따라 0~180도 사이의 각도로 회전해. 1ms 펄스면 0도, 2ms 펄스면 180도야.</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     subgraph SERVO ["🔧 서보모터 각도"]
         direction TB
         S0["1.0ms 펄스&lt;br/&gt;➡️ 0°"]
@@ -2038,7 +2036,7 @@
 
     style S0 fill:#e3f2fd,stroke:#1976d2
     style S90 fill:#fff3e0,stroke:#f57c00
-    style S180 fill:#fce4ec,stroke:#c2185b</code></pre>
+    style S180 fill:#fce4ec,stroke:#c2185b</div>
 <div class="highlight"><pre><span></span><code>펄스 폭에 따른 각도:
 
 1.0ms → 0°    (완전히 왼쪽)
@@ -2774,7 +2772,7 @@ Pico 2W                    Grove Servo
 - 🌈 <strong>RGB LED</strong>: 세 가지 색을 섞어 모든 색 표현
 - 🎵 <strong>부저</strong>: 주파수로 음높이 조절
 - 🔧 <strong>서보모터</strong>: 펄스 폭으로 정확한 각도 제어</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     subgraph 이번장 ["📚 5장: 출력의 마법"]
         A["💡 PWM 원리"]
         B["🌈 RGB LED"]
@@ -2796,7 +2794,7 @@ Pico 2W                    Grove Servo
     style D fill:#e8f5e9,stroke:#388e3c
     style E fill:#f3e5f5,stroke:#7b1fa2
     style F fill:#e0f7fa,stroke:#00838f
-    style G fill:#fff9c4,stroke:#f9a825</code></pre>
+    style G fill:#fff9c4,stroke:#f9a825</div>
 <p>다음 장에서는 <strong>조건문과 반복문</strong>을 배워서, 센서 값에 따라 자동으로 반응하는 <strong>"자동 야간등"</strong>을 만들어볼 거야!</p>
 <p>"밝으면 LED 끄고, 어두우면 LED 켜기" - 진짜 스마트한 장치의 시작이야! 🌙</p>
 

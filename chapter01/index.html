@@ -50,8 +50,6 @@
       
     
     
-      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
-    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1756,13 +1754,13 @@
 </li>
 </ol>
 <p><strong>쉽게 말하면</strong>: 피코 = 센서 읽고 + 생각하고 + 장치 제어하는 <strong>초소형 컴퓨터</strong></p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     A["🌡️ 센서&lt;br/&gt;입력"] --&gt; B["🧠 피코&lt;br/&gt;처리"]
     B --&gt; C["💡 LED/모터&lt;br/&gt;출력"]
 
     style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
     style B fill:#fff3e0,stroke:#f57c00,stroke-width:2px
-    style C fill:#e8f5e9,stroke:#388e3c,stroke-width:2px</code></pre>
+    style C fill:#e8f5e9,stroke:#388e3c,stroke-width:2px</div>
 <hr />
 <h3 id="2-thonny-ide">개념 2: Thonny IDE<a class="headerlink" href="#2-thonny-ide" title="Permanent link">&para;</a></h3>
 <ol>
@@ -1805,7 +1803,7 @@
 </li>
 </ol>
 <p><strong>쉽게 말하면</strong>: BOOTSEL = 피코에 <strong>처음 언어를 가르칠 때</strong> 누르는 버튼</p>
-<pre class="mermaid"><code>flowchart TB
+<div class="mermaid">flowchart TB
     subgraph 처음_한_번만
         A["🔘 BOOTSEL 누른 채"] --&gt; B["🔌 USB 연결"]
         B --&gt; C["📁 RPI-RP2 드라이브 나타남"]
@@ -1821,7 +1819,7 @@
     style C fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
     style D fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
     style E fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    style F fill:#e8f5e9,stroke:#388e3c,stroke-width:2px</code></pre>
+    style F fill:#e8f5e9,stroke:#388e3c,stroke-width:2px</div>
 <hr />
 <h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <h3 id="step-1-thonny">Step 1: Thonny 설치하기<a class="headerlink" href="#step-1-thonny" title="Permanent link">&para;</a></h3>
@@ -1832,7 +1830,7 @@
 <li>다운로드한 파일 실행</li>
 <li><strong>Next → Next → Install → Finish</strong> (기본 설정 그대로!)</li>
 </ol>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     A["🌐 thonny.org&lt;br/&gt;접속"] --&gt; B["⬇️ 다운로드&lt;br/&gt;클릭"]
     B --&gt; C["📦 설치 파일&lt;br/&gt;실행"]
     C --&gt; D["✅ 설치 완료!"]
@@ -1840,7 +1838,7 @@
     style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
     style B fill:#fff3e0,stroke:#f57c00,stroke-width:2px
     style C fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    style D fill:#e8f5e9,stroke:#388e3c,stroke-width:2px</code></pre>
+    style D fill:#e8f5e9,stroke:#388e3c,stroke-width:2px</div>
 <p><strong>여기서 잠깐! 🤔</strong></p>
 <p>설치할 때 "Add to PATH" 같은 옵션이 나와도 그냥 기본값으로 진행해. 복잡한 설정은 필요 없어!</p>
 <hr />
@@ -1854,7 +1852,7 @@
 <li>연결 후 BOOTSEL 버튼에서 손을 뗌</li>
 <li>컴퓨터에 <strong>RPI-RP2</strong>라는 USB 드라이브가 나타남</li>
 </ol>
-<pre class="mermaid"><code>sequenceDiagram
+<div class="mermaid">sequenceDiagram
     participant 너 as 👤 너
     participant 피코 as 🔌 피코
     participant PC as 💻 컴퓨터
@@ -1863,7 +1861,7 @@
     너-&gt;&gt;피코: USB 케이블 연결
     피코-&gt;&gt;PC: "나 준비됐어!"
     PC-&gt;&gt;PC: RPI-RP2 드라이브 표시
-    너-&gt;&gt;피코: 손 떼기</code></pre>
+    너-&gt;&gt;피코: 손 떼기</div>
 <ol>
 <li>Thonny 실행</li>
 <li>메뉴에서 <strong>도구(Tools) → 옵션(Options)</strong> 클릭</li>

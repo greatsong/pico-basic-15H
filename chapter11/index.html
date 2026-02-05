@@ -50,8 +50,6 @@
       
     
     
-      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
-    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1816,7 +1814,7 @@
 </li>
 </ol>
 <p><strong>쉽게 말하면</strong>: WiFi = 선 없이 인터넷 연결하는 기술 📶</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     subgraph 집/학교
         A[🌐 인터넷] --&gt; B[📡 공유기/AP]
         B &lt;-.-&gt;|WiFi 신호| C[📱 스마트폰]
@@ -1828,7 +1826,7 @@
     style B fill:#fff3e0,stroke:#f57c00
     style C fill:#e8f5e9,stroke:#388e3c
     style D fill:#e8f5e9,stroke:#388e3c
-    style E fill:#fce4ec,stroke:#c2185b</code></pre>
+    style E fill:#fce4ec,stroke:#c2185b</div>
 <hr />
 <h3 id="2-ssid">개념 2: SSID와 비밀번호<a class="headerlink" href="#2-ssid" title="Permanent link">&para;</a></h3>
 <ol>
@@ -1863,7 +1861,7 @@
 <li>피코 W: <code>192.168.0.23</code></li>
 </ol>
 <p><strong>쉽게 말하면</strong>: IP 주소 = 네트워크에서 나를 찾는 주소 🏠</p>
-<pre class="mermaid"><code>flowchart TB
+<div class="mermaid">flowchart TB
     subgraph 우리집 네트워크
         R[📡 공유기&lt;br/&gt;192.168.0.1]
         R --- P1[💻 노트북&lt;br/&gt;192.168.0.15]
@@ -1874,7 +1872,7 @@
     style R fill:#fff3e0,stroke:#f57c00
     style P1 fill:#e8f5e9,stroke:#388e3c
     style P2 fill:#e8f5e9,stroke:#388e3c
-    style P3 fill:#fce4ec,stroke:#c2185b</code></pre>
+    style P3 fill:#fce4ec,stroke:#c2185b</div>
 <hr />
 <h3 id="4-w">개념 4: 피코 W의 무선 칩<a class="headerlink" href="#4-w" title="Permanent link">&para;</a></h3>
 <p>피코 2W에는 <strong>CYW43439</strong> 무선 칩이 내장되어 있어:</p>
@@ -1900,7 +1898,7 @@
 </tr>
 </tbody>
 </table>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     subgraph 피코2W
         A[🧠 RP2350&lt;br/&gt;메인 칩] &lt;--&gt; B[📡 CYW43439&lt;br/&gt;무선 칩]
         B --&gt; C[📶 내장 안테나]
@@ -1908,7 +1906,7 @@
 
     style A fill:#e3f2fd,stroke:#1976d2
     style B fill:#fff3e0,stroke:#f57c00
-    style C fill:#e8f5e9,stroke:#388e3c</code></pre>
+    style C fill:#e8f5e9,stroke:#388e3c</div>
 <p><strong>쉽게 말하면</strong>: 피코 W = 일반 피코 + WiFi/Bluetooth 칩 🎁</p>
 <hr />
 <h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
@@ -2082,7 +2080,7 @@ SSID: School_WiFi
 <h3 id="step-3-oled">Step 3: OLED에 연결 상태 표시하기<a class="headerlink" href="#step-3-oled" title="Permanent link">&para;</a></h3>
 <p><strong>목표</strong>: WiFi 연결 상태와 IP 주소를 OLED에 표시하기</p>
 <p><strong>회로 연결</strong>:</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     subgraph 피코2W
         I2C[I2C 포트]
     end
@@ -2098,7 +2096,7 @@ SSID: School_WiFi
     I2C ---|Grove 케이블| OLED
 
     style I2C fill:#e3f2fd,stroke:#1976d2
-    style OLED fill:#fff3e0,stroke:#f57c00</code></pre>
+    style OLED fill:#fff3e0,stroke:#f57c00</div>
 <blockquote>
 <p>📌 Grove OLED를 피코의 <strong>I2C 포트</strong>에 연결하세요!</p>
 </blockquote>
@@ -2601,7 +2599,7 @@ OLED는 한 줄에 약 16글자만 표시 가능해요. <code>SSID[:16]</code>�
 - ✅ <code>network</code> 라이브러리로 WiFi 연결
 - ✅ IP 주소의 의미와 확인 방법
 - ✅ OLED에 연결 상태 표시</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     A[📡 WiFi 연결&lt;br/&gt;이번 장] --&gt; B[🕐 시간 동기화&lt;br/&gt;다음 장]
     B --&gt; C[🌤️ 날씨 API&lt;br/&gt;13장]
     C --&gt; D[⏰ IoT 시계&lt;br/&gt;14장]
@@ -2609,7 +2607,7 @@ OLED는 한 줄에 약 16글자만 표시 가능해요. <code>SSID[:16]</code>�
     style A fill:#e8f5e9,stroke:#388e3c
     style B fill:#fff3e0,stroke:#f57c00
     style C fill:#e3f2fd,stroke:#1976d2
-    style D fill:#fce4ec,stroke:#c2185b</code></pre>
+    style D fill:#fce4ec,stroke:#c2185b</div>
 <p><strong>다음 장 "시간 동기화 - 정확한 시계"에서는</strong>:
 - 인터넷에서 정확한 시간 받아오기 (NTP)
 - 한국 시간대 설정하기

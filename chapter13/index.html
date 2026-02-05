@@ -50,8 +50,6 @@
       
     
     
-      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
-    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1625,11 +1623,11 @@
 </li>
 </ol>
 <p><strong>쉽게 말하면</strong>: 질문하면 답을 주는 대화 방식이에요!</p>
-<pre class="mermaid"><code>sequenceDiagram
+<div class="mermaid">sequenceDiagram
     participant P as 🔌 피코
     participant S as 🌐 날씨 서버
     P-&gt;&gt;S: GET /weather?city=Seoul (요청)
-    S-&gt;&gt;P: {"temp": 15, "sky": "맑음"} (응답)</code></pre>
+    S-&gt;&gt;P: {"temp": 15, "sky": "맑음"} (응답)</div>
 <hr />
 <h3 id="2-api-api">개념 2: API와 API 키<a class="headerlink" href="#2-api-api" title="Permanent link">&para;</a></h3>
 <ol>
@@ -1838,7 +1836,7 @@ Seoul 날씨 요청 중...
 <p><strong>여기서 잠깐! 🤔</strong>
 - <code>response.json()</code>이 마법처럼 JSON을 파이썬 딕셔너리로 바꿔줘요
 - <code>data["main"]["temp"]</code>는 "main 서랍 안의 temp 값"을 의미해요</p>
-<pre class="mermaid"><code>flowchart TD
+<div class="mermaid">flowchart TD
     A["📥 JSON 응답"] --&gt; B["🔄 response.json()"]
     B --&gt; C["📦 Python 딕셔너리"]
     C --&gt; D["🌡️ data['main']['temp']"]
@@ -1847,7 +1845,7 @@ Seoul 날씨 요청 중...
     style B fill:#fff3e0,stroke:#f57c00
     style C fill:#e8f5e9,stroke:#388e3c
     style D fill:#fce4ec,stroke:#c2185b
-    style E fill:#fce4ec,stroke:#c2185b</code></pre>
+    style E fill:#fce4ec,stroke:#c2185b</div>
 <hr />
 <h2 id="_5">📝 전체 코드<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># === 서울 날씨 알리미 완성판 ===</span>

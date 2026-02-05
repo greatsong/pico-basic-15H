@@ -50,8 +50,6 @@
       
     
     
-      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
-    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1605,7 +1603,7 @@
 </li>
 </ol>
 <p><strong>쉽게 말하면</strong>: 레고 블록처럼 각 기능을 조립해서 하나의 완성품을 만드는 것!</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     A[📶 WiFi 연결] --&gt; B[🕐 NTP 동기화]
     B --&gt; C[🌤️ 날씨 API]
     C --&gt; D[📺 OLED 표시]
@@ -1616,7 +1614,7 @@
     style B fill:#fff3e0,stroke:#f57c00
     style C fill:#e8f5e9,stroke:#388e3c
     style D fill:#fce4ec,stroke:#c2185b
-    style E fill:#f3e5f5,stroke:#7b1fa2</code></pre>
+    style E fill:#f3e5f5,stroke:#7b1fa2</div>
 <h3 id="2">개념 2: 자동 업데이트<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
@@ -1634,7 +1632,7 @@
 <h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <h3 id="step-1">Step 1: 시스템 설계하기<a class="headerlink" href="#step-1" title="Permanent link">&para;</a></h3>
 <p><strong>목표</strong>: IoT 시계의 전체 구조를 이해합니다.</p>
-<pre class="mermaid"><code>flowchart TB
+<div class="mermaid">flowchart TB
     subgraph 초기화["🚀 초기화 (한 번만)"]
         A1[WiFi 연결] --&gt; A2[NTP 동기화]
         A2 --&gt; A3[첫 날씨 가져오기]
@@ -1654,7 +1652,7 @@
     style A1 fill:#e3f2fd,stroke:#1976d2
     style A2 fill:#fff3e0,stroke:#f57c00
     style A3 fill:#e8f5e9,stroke:#388e3c
-    style B2 fill:#fce4ec,stroke:#c2185b</code></pre>
+    style B2 fill:#fce4ec,stroke:#c2185b</div>
 <p><strong>OLED 화면 레이아웃</strong>:
 <div class="highlight"><pre><span></span><code>┌────────────────────────┐
 │  14:35:27              │  ← 현재 시간 (큰 글씨)

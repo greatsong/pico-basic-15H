@@ -50,8 +50,6 @@
       
     
     
-      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
-    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -2084,7 +2082,7 @@
 </ul>
 <p><strong>입력 없이는 진정한 인터랙션이 없어!</strong></p>
 <p>이번 장에서는 피코가 "사용자가 버튼을 눌렀네? 그럼 이렇게 해야지!"라고 <strong>스스로 판단</strong>하게 만들 거야. 이게 바로 <strong>디지털 입력</strong>의 시작이야.</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     A[👆 버튼 누름] --&gt; B[🔍 피코가 감지]
     B --&gt; C[🤔 if문으로 판단]
     C --&gt; D[💡 LED 켜기]
@@ -2092,7 +2090,7 @@
     style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
     style B fill:#fff3e0,stroke:#f57c00,stroke-width:2px
     style C fill:#fce4ec,stroke:#c2185b,stroke-width:2px
-    style D fill:#e8f5e9,stroke:#388e3c,stroke-width:2px</code></pre>
+    style D fill:#e8f5e9,stroke:#388e3c,stroke-width:2px</div>
 <hr />
 <h2 id="_3">📚 핵심 개념<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <h3 id="1-digital-input">개념 1: 디지털 입력 (Digital Input)<a class="headerlink" href="#1-digital-input" title="Permanent link">&para;</a></h3>
@@ -2108,7 +2106,7 @@
 <p><strong>비유로 시작</strong>: 
 - <code>Pin.OUT</code>은 <strong>스피커</strong>야 - 피코가 바깥 세상에 말하는 것 (LED 켜기)
 - <code>Pin.IN</code>은 <strong>마이크</strong>야 - 바깥 세상의 소리를 듣는 것 (버튼 읽기)</p>
-<pre class="mermaid"><code>flowchart TB
+<div class="mermaid">flowchart TB
     subgraph 출력["📤 출력 (Pin.OUT)"]
         A[피코] --&gt;|"전기 보내기"| B[💡 LED]
     end
@@ -2120,7 +2118,7 @@
     style A fill:#e3f2fd,stroke:#1976d2
     style B fill:#fff9c4,stroke:#f9a825
     style C fill:#f3e5f5,stroke:#7b1fa2
-    style D fill:#e3f2fd,stroke:#1976d2</code></pre>
+    style D fill:#e3f2fd,stroke:#1976d2</div>
 <p><strong>정확한 정의</strong>: 
 - <code>Pin.OUT</code>: 피코가 핀으로 전기 신호를 <strong>내보내는</strong> 모드
 - <code>Pin.IN</code>: 피코가 핀에서 전기 신호를 <strong>읽어오는</strong> 모드</p>
@@ -2128,7 +2126,7 @@
 <hr />
 <h3 id="3-pull_down-pull_up">개념 3: PULL_DOWN과 PULL_UP<a class="headerlink" href="#3-pull_down-pull_up" title="Permanent link">&para;</a></h3>
 <p><strong>비유로 시작</strong>: 버튼이 안 눌렸을 때, 핀은 <strong>붕 떠있는 상태</strong>가 돼. 마치 라디오 주파수를 안 맞췄을 때 지지직거리는 것처럼, 0인지 1인지 불안정해져.</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     subgraph 문제["❓ 문제 상황"]
         A[버튼 안 눌림] --&gt; B["핀 상태: ???"]
     end
@@ -2143,7 +2141,7 @@
     style C fill:#e8f5e9,stroke:#388e3c
     style D fill:#e8f5e9,stroke:#388e3c
     style E fill:#e8f5e9,stroke:#388e3c
-    style F fill:#e8f5e9,stroke:#388e3c</code></pre>
+    style F fill:#e8f5e9,stroke:#388e3c</div>
 <p><strong>정확한 정의</strong>: 
 - <code>PULL_DOWN</code>: 버튼이 안 눌렸을 때 핀을 <strong>0(LOW)</strong>으로 고정
 - <code>PULL_UP</code>: 버튼이 안 눌렸을 때 핀을 <strong>1(HIGH)</strong>으로 고정</p>
@@ -2173,7 +2171,7 @@
 <li>Grove 케이블</li>
 </ul>
 <h4 id="_6">연결 방법<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
-<pre class="mermaid"><code>flowchart LR
+<div class="mermaid">flowchart LR
     subgraph 피코["🔌 Grove Shield"]
         D20["D20 포트"]
     end
@@ -2185,7 +2183,7 @@
     D20 &lt;--&gt;|"Grove 케이블"| BTN
 
     style D20 fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    style BTN fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px</code></pre>
+    style BTN fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px</div>
 <ol>
 <li>Grove 케이블의 한쪽을 <strong>버튼 모듈</strong>에 연결</li>
 <li>다른 쪽을 Grove Shield의 <strong>D20 포트</strong>에 연결</li>
@@ -2299,7 +2297,7 @@ D는 Digital의 약자야. 20번 GPIO 핀에 연결된 디지털 포트라는 �
 <h3 id="step-4-led">Step 4: 버튼으로 LED 제어하기<a class="headerlink" href="#step-4-led" title="Permanent link">&para;</a></h3>
 <p><strong>목표</strong>: 버튼을 누르는 동안 LED가 켜지고, 떼면 꺼지기</p>
 <h4 id="_7">추가 연결<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
-<pre class="mermaid"><code>flowchart TB
+<div class="mermaid">flowchart TB
     subgraph 피코["🔌 Grove Shield"]
         D20["D20 포트&lt;br/&gt;(버튼)"]
         D16["D16 포트&lt;br/&gt;(LED)"]
@@ -2316,7 +2314,7 @@ D는 Digital의 약자야. 20번 GPIO 핀에 연결된 디지털 포트라는 �
     style D20 fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
     style D16 fill:#fff9c4,stroke:#f9a825,stroke-width:2px
     style BTN fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    style LED fill:#fff9c4,stroke:#f9a825,stroke-width:2px</code></pre>
+    style LED fill:#fff9c4,stroke:#f9a825,stroke-width:2px</div>
 <ul>
 <li>Grove 버튼 → <strong>D20 포트</strong></li>
 <li>Grove LED → <strong>D16 포트</strong></li>
@@ -2363,7 +2361,7 @@ D는 Digital의 약자야. 20번 GPIO 핀에 연결된 디지털 포트라는 �
 <h3 id="step-5">Step 5: 토글 기능 만들기<a class="headerlink" href="#step-5" title="Permanent link">&para;</a></h3>
 <p><strong>목표</strong>: 버튼을 한 번 누르면 LED가 켜지고, 다시 누르면 꺼지기</p>
 <p><strong>핵심 아이디어</strong>:
-<pre class="mermaid"><code>flowchart TB
+<div class="mermaid">flowchart TB
     A["🔘 버튼 누름"] --&gt; B{"LED 상태?"}
     B --&gt;|"꺼져 있음"| C["💡 켜기"]
     B --&gt;|"켜져 있음"| D["⬛ 끄기"]
@@ -2376,7 +2374,7 @@ D는 Digital의 약자야. 20번 GPIO 핀에 연결된 디지털 포트라는 �
     style C fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
     style D fill:#ffebee,stroke:#c62828,stroke-width:2px
     style E fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    style F fill:#e0f2f1,stroke:#00695c,stroke-width:2px</code></pre></p>
+    style F fill:#e0f2f1,stroke:#00695c,stroke-width:2px</div></p>
 <p><strong>코드</strong>:
 <div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 버튼 토글로 LED를 제어하는 코드 ===</span>
 <span class="c1"># 버튼을 누를 때마다 LED가 켜졌다 꺼졌다 해요</span>
@@ -2468,7 +2466,7 @@ D는 Digital의 약자야. 20번 GPIO 핀에 연결된 디지털 포트라는 �
 <p><strong>목표</strong>: 버튼 채터링 문제를 이해하고 해결하기</p>
 <h4 id="_8">문제 상황<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
 <p>버튼을 <strong>한 번만</strong> 눌렀는데, LED가 여러 번 깜빡이는 경우가 있어. 왜 그럴까?</p>
-<pre class="mermaid"><code>flowchart TB
+<div class="mermaid">flowchart TB
     subgraph 이상적["🎯 이상적인 경우"]
         A1["버튼 누름"] --&gt; A2["1"]
         A2 --&gt; A3["버튼 뗌"]
@@ -2488,7 +2486,7 @@ D는 Digital의 약자야. 20번 GPIO 핀에 연결된 디지털 포트라는 �
     style B1 fill:#ffcdd2,stroke:#c62828
     style B2 fill:#ffcdd2,stroke:#c62828
     style B3 fill:#ffcdd2,stroke:#c62828
-    style B4 fill:#ffcdd2,stroke:#c62828</code></pre>
+    style B4 fill:#ffcdd2,stroke:#c62828</div>
 <p><strong>원인</strong>: 버튼 내부의 금속 접점이 닿을 때 <strong>바운싱(튕김)</strong> 현상이 발생해. 아주 짧은 시간(수 밀리초) 동안 접촉과 분리가 여러 번 반복돼.</p>
 <p><strong>해결 방법 (디바운싱)</strong>: 버튼 상태가 바뀐 후 <strong>잠깐 대기</strong>했다가 다시 확인하면 돼!</p>
 <p><strong>코드</strong>:
