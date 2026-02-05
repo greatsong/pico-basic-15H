@@ -16,6 +16,8 @@
         <link rel="prev" href="../chapter11/">
       
       
+        <link rel="next" href="../chapter13/">
+      
       
         
       
@@ -47,6 +49,8 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -243,6 +247,26 @@
   
   
   Part 3 - 네트워크 연결
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter15/" class="md-tabs__link">
+          
+  
+  
+  Part 4 - 마무리
 
         </a>
       </li>
@@ -1156,6 +1180,149 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    웹 API 맛보기 - 데이터 받아오기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IoT 시계 - 통합 프로젝트
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 - 마무리
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 - 마무리
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    회고와 다음 단계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1530,16 +1697,15 @@
 </li>
 </ol>
 <p><strong>쉽게 말하면</strong>: 인터넷에 있는 "공식 시계"에서 시간을 가져오는 방법이야!</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A[🔌 피코 2W] --&gt;|&quot;지금 몇 시야?&quot;| B[🌐 인터넷]
+<pre class="mermaid"><code>flowchart LR
+    A[🔌 피코 2W] --&gt;|"지금 몇 시야?"| B[🌐 인터넷]
     B --&gt; C[⏰ NTP 서버]
-    C --&gt;|&quot;UTC 14:30:25&quot;| B
+    C --&gt;|"UTC 14:30:25"| B
     B --&gt; A
 
     style A fill:#e3f2fd,stroke:#1976d2
     style B fill:#fff3e0,stroke:#f57c00
-    style C fill:#e8f5e9,stroke:#388e3c
-</code></pre></div>
+    style C fill:#e8f5e9,stroke:#388e3c</code></pre>
 <h3 id="2-utc">개념 2: UTC와 시간대<a class="headerlink" href="#2-utc" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
@@ -1556,16 +1722,15 @@
 </li>
 </ol>
 <p><strong>쉽게 말하면</strong>: NTP가 알려주는 시간에 9시간을 더하면 한국 시간이야!</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A[🌍 UTC&lt;br/&gt;05:00] --&gt;|&quot;+9시간&quot;| B[🇰🇷 한국&lt;br/&gt;14:00]
-    A --&gt;|&quot;+0시간&quot;| C[🇬🇧 영국&lt;br/&gt;05:00]
-    A --&gt;|&quot;-5시간&quot;| D[🇺🇸 뉴욕&lt;br/&gt;00:00]
+<pre class="mermaid"><code>flowchart LR
+    A[🌍 UTC&lt;br/&gt;05:00] --&gt;|"+9시간"| B[🇰🇷 한국&lt;br/&gt;14:00]
+    A --&gt;|"+0시간"| C[🇬🇧 영국&lt;br/&gt;05:00]
+    A --&gt;|"-5시간"| D[🇺🇸 뉴욕&lt;br/&gt;00:00]
 
     style A fill:#fff9c4,stroke:#f9a825
     style B fill:#e8f5e9,stroke:#388e3c
     style C fill:#e3f2fd,stroke:#1976d2
-    style D fill:#fce4ec,stroke:#c2185b
-</code></pre></div>
+    style D fill:#fce4ec,stroke:#c2185b</code></pre>
 <h3 id="3-rtc-real-time-clock">개념 3: RTC (Real Time Clock)<a class="headerlink" href="#3-rtc-real-time-clock" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
@@ -1579,7 +1744,7 @@
 </li>
 </ol>
 <p><strong>쉽게 말하면</strong>: 처음에 한 번만 시간을 맞추면, 피코가 알아서 시계처럼 돌아가!</p>
-<div class="highlight"><pre><span></span><code>sequenceDiagram
+<pre class="mermaid"><code>sequenceDiagram
     participant P as 🔌 피코
     participant N as ⏰ NTP 서버
     participant R as 🕐 내부 RTC
@@ -1591,8 +1756,7 @@
         R-&gt;&gt;R: 1초씩 증가
     end
     P-&gt;&gt;R: 지금 몇 시야?
-    R--&gt;&gt;P: 14:35:27
-</code></pre></div>
+    R--&gt;&gt;P: 14:35:27</code></pre>
 <h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <h3 id="step-1-wifi">Step 1: WiFi 연결 함수 준비<a class="headerlink" href="#step-1-wifi" title="Permanent link">&para;</a></h3>
 <p><strong>목표</strong>: 이전 장에서 배운 WiFi 연결 코드를 함수로 정리해서 재사용하기</p>
@@ -2262,14 +2426,13 @@ WiFi 이름과 비밀번호는 <strong>큰따옴표 안에</strong> 정확히 �
 - UTC를 한국 시간(UTC+9)으로 변환
 - OLED에 실시간 디지털 시계 표시</p>
 <p>다음 장에서는 <strong>웹 API</strong>를 배워볼 거야. 시간뿐만 아니라 <strong>날씨 정보</strong>도 인터넷에서 받아올 수 있어. 현재 기온, 날씨 상태, 심지어 내일 날씨까지! 시계에 날씨 정보를 추가하면 진짜 스마트 시계가 완성돼 🌤️</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
+<pre class="mermaid"><code>flowchart LR
     A[✅ 12장&lt;br/&gt;NTP 시계] --&gt; B[📖 13장&lt;br/&gt;웹 API]
     B --&gt; C[🎯 14장&lt;br/&gt;IoT 시계]
 
     style A fill:#c8e6c9,stroke:#388e3c
     style B fill:#fff3e0,stroke:#f57c00
-    style C fill:#e3f2fd,stroke:#1976d2
-</code></pre></div>
+    style C fill:#e3f2fd,stroke:#1976d2</code></pre>
 
 
 
@@ -2329,6 +2492,8 @@ WiFi 이름과 비밀번호는 <strong>큰따옴표 안에</strong> 정확히 �
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
       
     
   </body>

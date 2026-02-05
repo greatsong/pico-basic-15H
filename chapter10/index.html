@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -245,6 +247,26 @@
   
   
   Part 3 - 네트워크 연결
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter15/" class="md-tabs__link">
+          
+  
+  
+  Part 4 - 마무리
 
         </a>
       </li>
@@ -1169,6 +1191,149 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    웹 API 맛보기 - 데이터 받아오기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IoT 시계 - 통합 프로젝트
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 - 마무리
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 - 마무리
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    회고와 다음 단계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1555,19 +1720,19 @@
 </li>
 </ol>
 <p><strong>쉽게 말하면</strong>: I2C는 2개의 선만으로 여러 장치와 대화할 수 있는 효율적인 통신 방법이야!</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    subgraph PICO[&quot;🎛️ Pico 2W&quot;]
+<pre class="mermaid"><code>flowchart LR
+    subgraph PICO["🎛️ Pico 2W"]
         M[Master]
     end
 
-    subgraph BUS[&quot;🚌 I2C 버스 (2선)&quot;]
-        SDA[&quot;SDA (데이터)&quot;]
-        SCL[&quot;SCL (클럭)&quot;]
+    subgraph BUS["🚌 I2C 버스 (2선)"]
+        SDA["SDA (데이터)"]
+        SCL["SCL (클럭)"]
     end
 
-    subgraph DEVICES[&quot;📟 장치들&quot;]
-        OLED[&quot;OLED\n주소: 0x3C&quot;]
-        SENSOR[&quot;센서\n주소: 0x68&quot;]
+    subgraph DEVICES["📟 장치들"]
+        OLED["OLED\n주소: 0x3C"]
+        SENSOR["센서\n주소: 0x68"]
     end
 
     M --&gt; SDA
@@ -1579,8 +1744,7 @@
 
     style PICO fill:#e3f2fd,stroke:#1976d2
     style BUS fill:#fff3e0,stroke:#f57c00
-    style DEVICES fill:#e8f5e9,stroke:#388e3c
-</code></pre></div>
+    style DEVICES fill:#e8f5e9,stroke:#388e3c</code></pre>
 <h3 id="2-oled">개념 2: OLED 디스플레이<a class="headerlink" href="#2-oled" title="Permanent link">&para;</a></h3>
 <ol>
 <li><strong>비유로 시작</strong>: "OLED는 마치 128×64칸의 모눈종이와 같아요"</li>
@@ -1600,13 +1764,13 @@
 </li>
 </ol>
 <p><strong>쉽게 말하면</strong>: OLED는 128×64개의 작은 전구가 모여있는 화면이야!</p>
-<div class="highlight"><pre><span></span><code>flowchart TB
-    subgraph SCREEN[&quot;📺 OLED 화면 좌표계&quot;]
+<pre class="mermaid"><code>flowchart TB
+    subgraph SCREEN["📺 OLED 화면 좌표계"]
         direction TB
-        A[&quot;(0,0) ← 시작점&quot;] 
-        B[&quot;X축 →\n0 ~ 127&quot;]
-        C[&quot;Y축 ↓\n0 ~ 63&quot;]
-        D[&quot;(127,63) ← 끝점&quot;]
+        A["(0,0) ← 시작점"] 
+        B["X축 →\n0 ~ 127"]
+        C["Y축 ↓\n0 ~ 63"]
+        D["(127,63) ← 끝점"]
     end
 
     A --&gt; B
@@ -1614,8 +1778,7 @@
     C --&gt; D
     B --&gt; D
 
-    style SCREEN fill:#f3e5f5,stroke:#7b1fa2
-</code></pre></div>
+    style SCREEN fill:#f3e5f5,stroke:#7b1fa2</code></pre>
 <h3 id="3">개념 3: 프레임버퍼<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
 <ol>
 <li><strong>비유로 시작</strong>: "프레임버퍼는 마치 스케치북과 같아요"</li>
@@ -1643,38 +1806,36 @@
 2. 검색창에 <code>ssd1306</code> 입력
 3. <code>micropython-ssd1306</code> 선택 후 <strong>Install</strong> 클릭
 4. 설치 완료될 때까지 대기</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A[&quot;🔧 도구 메뉴&quot;] --&gt; B[&quot;📦 패키지 관리&quot;]
-    B --&gt; C[&quot;🔍 ssd1306 검색&quot;]
-    C --&gt; D[&quot;⬇️ Install 클릭&quot;]
-    D --&gt; E[&quot;✅ 설치 완료!&quot;]
+<pre class="mermaid"><code>flowchart LR
+    A["🔧 도구 메뉴"] --&gt; B["📦 패키지 관리"]
+    B --&gt; C["🔍 ssd1306 검색"]
+    C --&gt; D["⬇️ Install 클릭"]
+    D --&gt; E["✅ 설치 완료!"]
 
     style A fill:#e3f2fd,stroke:#1976d2
-    style E fill:#e8f5e9,stroke:#388e3c
-</code></pre></div>
+    style E fill:#e8f5e9,stroke:#388e3c</code></pre>
 <h3 id="step-1-oled">Step 1: OLED 연결하기<a class="headerlink" href="#step-1-oled" title="Permanent link">&para;</a></h3>
 <p><strong>목표</strong>: Grove OLED를 피코에 연결하고 초기화</p>
 <p><strong>회로 연결</strong>:
 Grove Shield의 <strong>I2C 포트</strong>에 OLED 연결</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    subgraph PICO[&quot;🎛️ Pico 2W + Grove Shield&quot;]
-        I2C[&quot;I2C 포트&quot;]
+<pre class="mermaid"><code>flowchart LR
+    subgraph PICO["🎛️ Pico 2W + Grove Shield"]
+        I2C["I2C 포트"]
     end
 
-    subgraph CABLE[&quot;🔌 Grove 케이블&quot;]
-        C[&quot;4핀 케이블&quot;]
+    subgraph CABLE["🔌 Grove 케이블"]
+        C["4핀 케이블"]
     end
 
-    subgraph OLED[&quot;📺 Grove OLED&quot;]
-        D[&quot;0.96인치 디스플레이&quot;]
+    subgraph OLED["📺 Grove OLED"]
+        D["0.96인치 디스플레이"]
     end
 
     I2C &lt;--&gt; C &lt;--&gt; D
 
     style PICO fill:#e3f2fd,stroke:#1976d2
     style CABLE fill:#fff3e0,stroke:#f57c00
-    style OLED fill:#e8f5e9,stroke:#388e3c
-</code></pre></div>
+    style OLED fill:#e8f5e9,stroke:#388e3c</code></pre>
 <p><strong>코드</strong>:
 <div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: OLED 초기화하고 Hello 표시하기 ===</span>
 <span class="c1"># 첫 번째 OLED 프로그램! 화면에 글자를 띄워보자</span>
@@ -1804,17 +1965,16 @@ OLED에 5개의 텍스트가 각기 다른 위치에 표시돼!</p>
 <div class="highlight"><pre><span></span><code>도형 그리기 완료!
 </code></pre></div>
 화면에 점 3개, 가로선, 세로선, 빈 사각형, 채운 사각형이 표시돼!</p>
-<div class="highlight"><pre><span></span><code>flowchart TB
-    subgraph METHODS[&quot;📐 OLED 그리기 메서드&quot;]
-        A[&quot;pixel(x, y, c)\n점 찍기&quot;]
-        B[&quot;hline(x, y, w, c)\n가로선&quot;]
-        C[&quot;vline(x, y, h, c)\n세로선&quot;]
-        D[&quot;rect(x, y, w, h, c)\n사각형 테두리&quot;]
-        E[&quot;fill_rect(x, y, w, h, c)\n채운 사각형&quot;]
+<pre class="mermaid"><code>flowchart TB
+    subgraph METHODS["📐 OLED 그리기 메서드"]
+        A["pixel(x, y, c)\n점 찍기"]
+        B["hline(x, y, w, c)\n가로선"]
+        C["vline(x, y, h, c)\n세로선"]
+        D["rect(x, y, w, h, c)\n사각형 테두리"]
+        E["fill_rect(x, y, w, h, c)\n채운 사각형"]
     end
 
-    style METHODS fill:#e8f5e9,stroke:#388e3c
-</code></pre></div>
+    style METHODS fill:#e8f5e9,stroke:#388e3c</code></pre>
 <h3 id="step-4">Step 4: 센서 데이터 표시하기<a class="headerlink" href="#step-4" title="Permanent link">&para;</a></h3>
 <p><strong>목표</strong>: 온습도 센서 값을 OLED에 실시간 표시</p>
 <p><strong>코드</strong>:
@@ -2176,6 +2336,8 @@ OLED에 온도, 습도, 습도 막대 그래프가 표시되고 2초마다 갱�
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
       
     
   </body>

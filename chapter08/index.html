@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -245,6 +247,26 @@
   
   
   Part 3 - 네트워크 연결
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter15/" class="md-tabs__link">
+          
+  
+  
+  Part 4 - 마무리
 
         </a>
       </li>
@@ -1325,6 +1347,149 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    웹 API 맛보기 - 데이터 받아오기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IoT 시계 - 통합 프로젝트
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 - 마무리
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 - 마무리
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    회고와 다음 단계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1904,7 +2069,7 @@
 </li>
 </ol>
 <p><strong>쉽게 말하면</strong>: 큰 걸 작은 조각으로 쪼개면 만들 수 있어!</p>
-<div class="highlight"><pre><span></span><code>flowchart TB
+<pre class="mermaid"><code>flowchart TB
     A[🎯 큰 목표] --&gt; B[📦 파트 1]
     A --&gt; C[📦 파트 2]
     A --&gt; D[📦 파트 3]
@@ -1922,8 +2087,7 @@
     style F fill:#c8e6c9,stroke:#388e3c
     style G fill:#c8e6c9,stroke:#388e3c
     style H fill:#c8e6c9,stroke:#388e3c
-    style I fill:#c8e6c9,stroke:#388e3c
-</code></pre></div>
+    style I fill:#c8e6c9,stroke:#388e3c</code></pre>
 <hr />
 <h2 id="_4">🎨 프로젝트 옵션 소개<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>세 가지 프로젝트 중 하나를 골라봐! (또는 자유 주제도 OK 👍)</p>
@@ -1955,7 +2119,7 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart LR
+<pre class="mermaid"><code>flowchart LR
     A[🌗 조도 센서] --&gt; C{⚙️ 밝기 판단}
     B[🔘 버튼] --&gt; D{⚙️ 모드 선택}
     C --&gt; E[💡 RGB LED]
@@ -1965,8 +2129,7 @@
     style B fill:#e3f2fd,stroke:#1976d2
     style C fill:#fce4ec,stroke:#c2185b
     style D fill:#fce4ec,stroke:#c2185b
-    style E fill:#e8f5e9,stroke:#388e3c
-</code></pre></div>
+    style E fill:#e8f5e9,stroke:#388e3c</code></pre>
 <hr />
 <h3 id="b">옵션 B: 반응형 알람 ⏰<a class="headerlink" href="#b" title="Permanent link">&para;</a></h3>
 <p><strong>컨셉</strong>: 온도가 특정 값을 넘으면 경고음과 LED로 알려주는 시스템</p>
@@ -1996,7 +2159,7 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code>flowchart LR
+<pre class="mermaid"><code>flowchart LR
     A[🌡️ DHT11] --&gt; B{⚙️ 온도 체크}
     B --&gt;|30도 이상| C[🔔 부저]
     B --&gt;|30도 이상| D[🔴 LED]
@@ -2006,8 +2169,7 @@
     style B fill:#fff3e0,stroke:#f57c00
     style C fill:#ffebee,stroke:#c62828
     style D fill:#ffebee,stroke:#c62828
-    style E fill:#e8f5e9,stroke:#388e3c
-</code></pre></div>
+    style E fill:#e8f5e9,stroke:#388e3c</code></pre>
 <hr />
 <h3 id="c">옵션 C: 자유 주제 🚀<a class="headerlink" href="#c" title="Permanent link">&para;</a></h3>
 <p><strong>컨셉</strong>: 네가 직접 상상하는 작품!</p>
@@ -2657,6 +2819,8 @@ Grove Shield 사용
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
       
     
   </body>

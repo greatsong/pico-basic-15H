@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -245,6 +247,26 @@
   
   
   Part 3 - 네트워크 연결
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter15/" class="md-tabs__link">
+          
+  
+  
+  Part 4 - 마무리
 
         </a>
       </li>
@@ -1219,6 +1241,149 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    웹 API 맛보기 - 데이터 받아오기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IoT 시계 - 통합 프로젝트
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 - 마무리
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 - 마무리
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    회고와 다음 단계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1655,7 +1820,7 @@
 <div class="highlight"><pre><span></span><code>디지털: 버튼        →  눌림(1) 또는 안눌림(0)
 아날로그: 볼륨 다이얼  →  0%, 30%, 75%, 100%... 무한한 값
 </code></pre></div></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
+<pre class="mermaid"><code>flowchart LR
     subgraph 디지털
         D1[0️⃣ OFF] --&gt; D2[1️⃣ ON]
     end
@@ -1667,8 +1832,7 @@
     style A1 fill:#e3f2fd,stroke:#1976d2
     style A2 fill:#bbdefb,stroke:#1976d2
     style A3 fill:#90caf9,stroke:#1976d2
-    style A4 fill:#64b5f6,stroke:#1976d2
-</code></pre></div>
+    style A4 fill:#64b5f6,stroke:#1976d2</code></pre>
 <p><strong>쉽게 말하면</strong>: 디지털은 "예/아니오", 아날로그는 "정도"를 표현해!</p>
 <hr />
 <h3 id="2-adc-analog-to-digital-converter">개념 2: ADC (Analog-to-Digital Converter)<a class="headerlink" href="#2-adc-analog-to-digital-converter" title="Permanent link">&para;</a></h3>
@@ -1682,16 +1846,15 @@ ADC는 연속적인 아날로그 전압을 디지털 숫자로 변환하는 장�
 1.65V       →     피코 ADC   →    32768 (중간값)
 3.3V        →                →    65535 (최대값)
 </code></pre></div></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
+<pre class="mermaid"><code>flowchart LR
     A[🌡️ 센서&lt;br/&gt;아날로그 전압] --&gt; B[🔄 ADC&lt;br/&gt;변환기] --&gt; C[💻 피코&lt;br/&gt;디지털 숫자]
     style A fill:#fff3e0,stroke:#f57c00
     style B fill:#e8f5e9,stroke:#388e3c
-    style C fill:#e3f2fd,stroke:#1976d2
-</code></pre></div>
+    style C fill:#e3f2fd,stroke:#1976d2</code></pre>
 <p><strong>쉽게 말하면</strong>: ADC는 센서의 "느낌"을 컴퓨터가 읽을 수 있는 "숫자"로 바꿔줘!</p>
 <hr />
 <h3 id="3">개념 3: 센서의 종류<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>flowchart TB
+<pre class="mermaid"><code>flowchart TB
     S[🎛️ 센서 종류] --&gt; D[디지털 센서]
     S --&gt; A[아날로그 센서]
 
@@ -1709,8 +1872,7 @@ ADC는 연속적인 아날로그 전압을 디지털 숫자로 변환하는 장�
     style D2 fill:#e8eaf6,stroke:#3f51b5
     style A1 fill:#fff8e1,stroke:#ffa000
     style A2 fill:#fff8e1,stroke:#ffa000
-    style A3 fill:#fff8e1,stroke:#ffa000
-</code></pre></div>
+    style A3 fill:#fff8e1,stroke:#ffa000</code></pre>
 <p><strong>오늘 사용할 센서</strong>:
 | 센서 | 종류 | 측정 대상 | 연결 포트 |
 |------|------|----------|----------|
@@ -1732,7 +1894,7 @@ ADC는 연속적인 아날로그 전압을 디지털 숫자로 변환하는 장�
 │    Grove 케이블을 A0 포트에 연결하면 끝!            │
 └─────────────────────────────────────────────────────┘
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>flowchart LR
+<pre class="mermaid"><code>flowchart LR
     subgraph Grove조도센서
         L[💡 조도 센서]
     end
@@ -1741,8 +1903,7 @@ ADC는 연속적인 아날로그 전압을 디지털 숫자로 변환하는 장�
     end
     L --&gt;|Grove 케이블| P
     style L fill:#fff9c4,stroke:#f9a825
-    style P fill:#e3f2fd,stroke:#1976d2
-</code></pre></div>
+    style P fill:#e3f2fd,stroke:#1976d2</code></pre>
 <p><strong>코드</strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 조도 센서 값 읽기 ===</span>
 <span class="c1"># 조도 센서로 현재 밝기를 측정해서 출력하는 코드야</span>
@@ -1849,13 +2010,12 @@ ADC는 연속적인 아날로그 전압을 디지털 숫자로 변환하는 장�
 <li>검색창에 <code>dht</code> 입력</li>
 <li><code>micropython-dht</code> 선택 → <strong>설치</strong></li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart LR
+<pre class="mermaid"><code>flowchart LR
     A[🔧 도구] --&gt; B[📦 패키지 관리] --&gt; C[🔍 dht 검색] --&gt; D[✅ 설치]
     style A fill:#e3f2fd,stroke:#1976d2
     style B fill:#e8f5e9,stroke:#388e3c
     style C fill:#fff3e0,stroke:#f57c00
-    style D fill:#c8e6c9,stroke:#2e7d32
-</code></pre></div>
+    style D fill:#c8e6c9,stroke:#2e7d32</code></pre>
 <p><strong>코드</strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: DHT11 온습도 센서 읽기 ===</span>
 <span class="c1"># 현재 온도와 습도를 측정해서 출력하는 코드야</span>
@@ -1911,7 +2071,7 @@ ADC는 연속적인 아날로그 전압을 디지털 숫자로 변환하는 장�
 <h3 id="step-4-led">Step 4: 센서 값으로 LED 자동 제어하기<a class="headerlink" href="#step-4-led" title="Permanent link">&para;</a></h3>
 <p><strong>목표</strong>: 어두우면 LED가 켜지는 자동 야간등을 만들어보자!</p>
 <p><strong>회로 연결</strong>:</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
+<pre class="mermaid"><code>flowchart LR
     subgraph 입력
         L[💡 조도센서&lt;br/&gt;A0]
     end
@@ -1924,8 +2084,7 @@ ADC는 연속적인 아날로그 전압을 디지털 숫자로 변환하는 장�
     L --&gt; P --&gt; LED
     style L fill:#fff9c4,stroke:#f9a825
     style P fill:#e3f2fd,stroke:#1976d2
-    style LED fill:#c8e6c9,stroke:#388e3c
-</code></pre></div>
+    style LED fill:#c8e6c9,stroke:#388e3c</code></pre>
 <div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────┐
 │                  연결 정리                          │
 │                                                     │
@@ -2364,6 +2523,8 @@ ADC는 연속적인 아날로그 전압을 디지털 숫자로 변환하는 장�
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
       
     
   </body>

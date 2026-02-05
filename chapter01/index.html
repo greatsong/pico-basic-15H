@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -245,6 +247,26 @@
   
   
   Part 3 - 네트워크 연결
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter15/" class="md-tabs__link">
+          
+  
+  
+  Part 4 - 마무리
 
         </a>
       </li>
@@ -1191,6 +1213,149 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    웹 API 맛보기 - 데이터 받아오기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IoT 시계 - 통합 프로젝트
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 - 마무리
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 - 마무리
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    회고와 다음 단계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1591,14 +1756,13 @@
 </li>
 </ol>
 <p><strong>쉽게 말하면</strong>: 피코 = 센서 읽고 + 생각하고 + 장치 제어하는 <strong>초소형 컴퓨터</strong></p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A[&quot;🌡️ 센서&lt;br/&gt;입력&quot;] --&gt; B[&quot;🧠 피코&lt;br/&gt;처리&quot;]
-    B --&gt; C[&quot;💡 LED/모터&lt;br/&gt;출력&quot;]
+<pre class="mermaid"><code>flowchart LR
+    A["🌡️ 센서&lt;br/&gt;입력"] --&gt; B["🧠 피코&lt;br/&gt;처리"]
+    B --&gt; C["💡 LED/모터&lt;br/&gt;출력"]
 
     style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
     style B fill:#fff3e0,stroke:#f57c00,stroke-width:2px
-    style C fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
-</code></pre></div>
+    style C fill:#e8f5e9,stroke:#388e3c,stroke-width:2px</code></pre>
 <hr />
 <h3 id="2-thonny-ide">개념 2: Thonny IDE<a class="headerlink" href="#2-thonny-ide" title="Permanent link">&para;</a></h3>
 <ol>
@@ -1641,15 +1805,15 @@
 </li>
 </ol>
 <p><strong>쉽게 말하면</strong>: BOOTSEL = 피코에 <strong>처음 언어를 가르칠 때</strong> 누르는 버튼</p>
-<div class="highlight"><pre><span></span><code>flowchart TB
+<pre class="mermaid"><code>flowchart TB
     subgraph 처음_한_번만
-        A[&quot;🔘 BOOTSEL 누른 채&quot;] --&gt; B[&quot;🔌 USB 연결&quot;]
-        B --&gt; C[&quot;📁 RPI-RP2 드라이브 나타남&quot;]
-        C --&gt; D[&quot;📥 펌웨어 파일 복사&quot;]
+        A["🔘 BOOTSEL 누른 채"] --&gt; B["🔌 USB 연결"]
+        B --&gt; C["📁 RPI-RP2 드라이브 나타남"]
+        C --&gt; D["📥 펌웨어 파일 복사"]
     end
 
     subgraph 그_다음부터
-        E[&quot;🔌 그냥 USB 연결&quot;] --&gt; F[&quot;✅ Thonny가 인식&quot;]
+        E["🔌 그냥 USB 연결"] --&gt; F["✅ Thonny가 인식"]
     end
 
     style A fill:#ffebee,stroke:#c62828,stroke-width:2px
@@ -1657,8 +1821,7 @@
     style C fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
     style D fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
     style E fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    style F fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
-</code></pre></div>
+    style F fill:#e8f5e9,stroke:#388e3c,stroke-width:2px</code></pre>
 <hr />
 <h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <h3 id="step-1-thonny">Step 1: Thonny 설치하기<a class="headerlink" href="#step-1-thonny" title="Permanent link">&para;</a></h3>
@@ -1669,16 +1832,15 @@
 <li>다운로드한 파일 실행</li>
 <li><strong>Next → Next → Install → Finish</strong> (기본 설정 그대로!)</li>
 </ol>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    A[&quot;🌐 thonny.org&lt;br/&gt;접속&quot;] --&gt; B[&quot;⬇️ 다운로드&lt;br/&gt;클릭&quot;]
-    B --&gt; C[&quot;📦 설치 파일&lt;br/&gt;실행&quot;]
-    C --&gt; D[&quot;✅ 설치 완료!&quot;]
+<pre class="mermaid"><code>flowchart LR
+    A["🌐 thonny.org&lt;br/&gt;접속"] --&gt; B["⬇️ 다운로드&lt;br/&gt;클릭"]
+    B --&gt; C["📦 설치 파일&lt;br/&gt;실행"]
+    C --&gt; D["✅ 설치 완료!"]
 
     style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
     style B fill:#fff3e0,stroke:#f57c00,stroke-width:2px
     style C fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    style D fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
-</code></pre></div>
+    style D fill:#e8f5e9,stroke:#388e3c,stroke-width:2px</code></pre>
 <p><strong>여기서 잠깐! 🤔</strong></p>
 <p>설치할 때 "Add to PATH" 같은 옵션이 나와도 그냥 기본값으로 진행해. 복잡한 설정은 필요 없어!</p>
 <hr />
@@ -1692,17 +1854,16 @@
 <li>연결 후 BOOTSEL 버튼에서 손을 뗌</li>
 <li>컴퓨터에 <strong>RPI-RP2</strong>라는 USB 드라이브가 나타남</li>
 </ol>
-<div class="highlight"><pre><span></span><code>sequenceDiagram
+<pre class="mermaid"><code>sequenceDiagram
     participant 너 as 👤 너
     participant 피코 as 🔌 피코
     participant PC as 💻 컴퓨터
 
     너-&gt;&gt;피코: BOOTSEL 버튼 꾹 누르기
     너-&gt;&gt;피코: USB 케이블 연결
-    피코-&gt;&gt;PC: &quot;나 준비됐어!&quot;
+    피코-&gt;&gt;PC: "나 준비됐어!"
     PC-&gt;&gt;PC: RPI-RP2 드라이브 표시
-    너-&gt;&gt;피코: 손 떼기
-</code></pre></div>
+    너-&gt;&gt;피코: 손 떼기</code></pre>
 <ol>
 <li>Thonny 실행</li>
 <li>메뉴에서 <strong>도구(Tools) → 옵션(Options)</strong> 클릭</li>
@@ -2082,6 +2243,8 @@
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
       
     
   </body>

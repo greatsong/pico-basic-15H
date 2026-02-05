@@ -1,0 +1,2261 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="라즈베리파이 피코 2W와 MicroPython을 활용한 15시간 피지컬 컴퓨팅 입문 과정으로, 복잡한 개념을 친근한 비유로 쉽게 배웁니다.">
+      
+      
+        <meta name="author" content="Created with Data-AI-Book Generator">
+      
+      
+      
+        <link rel="prev" href="../chapter14/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>회고와 다음 단계 - 피코와 친해지기 - 피지컬 컴퓨팅 입문</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#15" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-header__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            피코와 친해지기 - 피지컬 컴퓨팅 입문
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              회고와 다음 단계
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter01/" class="md-tabs__link">
+          
+  
+  
+  Part 1 - 기초 다지기
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter07/" class="md-tabs__link">
+          
+  
+  
+  Part 2 - 프로젝트 도전
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter10/" class="md-tabs__link">
+          
+  
+  
+  Part 3 - 네트워크 연결
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Part 4 - 마무리
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-nav__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    피코와 친해지기 - 피지컬 컴퓨팅 입문
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 - 기초 다지기
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 - 기초 다지기
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    피코 만나기 - 첫 만남과 환경 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LED의 세계 - 빛으로 말하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    버튼과 대화 - 입력 받기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    센서 입문 - 세상을 느끼다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    출력의 마법 - 세상에 표현하다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조건과 반복 - 자동화의 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 - 프로젝트 도전
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 - 프로젝트 도전
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    함수로 정리 - 코드의 레고 블록
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 설계와 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 완성과 발표
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 - 네트워크 연결
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 - 네트워크 연결
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OLED 디스플레이 - 화면에 표시하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi 연결 - 인터넷 세계로
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시간 동기화 - 정확한 시계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    웹 API 맛보기 - 데이터 받아오기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IoT 시계 - 통합 프로젝트
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 - 마무리
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 - 마무리
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    회고와 다음 단계
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    회고와 다음 단계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: 학습 회고란?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: 포트폴리오란?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🗺️ 15차시 여정 한눈에 보기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: 배운 내용 체크하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: 배운 내용 체크하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        하드웨어 기초
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        출력 제어
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        입력 처리
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        프로그래밍
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        디스플레이와 네트워크
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 나의 포트폴리오 작성하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. [두 번째 코드 제목]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📈 성장 기록
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 다음 목표
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 다음 단계: 30시간 과정 미리보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 다음 단계: 30시간 과정 미리보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#30_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        30시간 과정에서 배울 것들
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ 스스로 점검하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 이 과정에서 배운 가장 중요한 개념 3가지는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 다른 사람에게 "피지컬 컴퓨팅이 뭐야?"라고 물으면 뭐라고 대답할 건가요?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 이 기술로 만들고 싶은 것이 있다면?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎊 수료를 축하합니다!
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💬 마지막으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 이어서 배우기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 이어서 배우기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        추천 학습 경로
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        유용한 리소스
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: 학습 회고란?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: 포트폴리오란?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🗺️ 15차시 여정 한눈에 보기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: 배운 내용 체크하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: 배운 내용 체크하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        하드웨어 기초
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        출력 제어
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        입력 처리
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        프로그래밍
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        디스플레이와 네트워크
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 나의 포트폴리오 작성하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. [두 번째 코드 제목]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📈 성장 기록
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 다음 목표
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 다음 단계: 30시간 과정 미리보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 다음 단계: 30시간 과정 미리보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#30_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        30시간 과정에서 배울 것들
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ 스스로 점검하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 이 과정에서 배운 가장 중요한 개념 3가지는?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 다른 사람에게 "피지컬 컴퓨팅이 뭐야?"라고 물으면 뭐라고 대답할 건가요?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 이 기술로 만들고 싶은 것이 있다면?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎊 수료를 축하합니다!
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💬 마지막으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 이어서 배우기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 이어서 배우기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        추천 학습 경로
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        유용한 리소스
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="15">15차시: 회고와 다음 단계 🎓<a class="headerlink" href="#15" title="Permanent link">&para;</a></h1>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>차시</td>
+<td>15/15</td>
+</tr>
+<tr>
+<td>주제</td>
+<td>회고와 다음 단계 - 15시간의 여정을 돌아보며</td>
+</tr>
+<tr>
+<td>시간</td>
+<td>50분</td>
+</tr>
+<tr>
+<td>형태</td>
+<td>개인 활동 + 공유</td>
+</tr>
+<tr>
+<td>준비물</td>
+<td>PC, 지금까지 만든 코드 파일들, 메모장</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_1">🎯 이 장에서 배우는 것<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[ ] 15차시 동안 배운 핵심 개념들을 정리할 수 있다</li>
+<li>[ ] 나만의 학습 포트폴리오를 작성할 수 있다</li>
+<li>[ ] 성장 일지를 통해 스스로의 발전을 확인할 수 있다</li>
+<li>[ ] 다음 학습 방향을 설정할 수 있다</li>
+</ul>
+<hr />
+<h2 id="_2">💡 왜 이걸 배우나요?<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><strong>"배움은 정리할 때 완성됩니다"</strong></p>
+<p>15시간 동안 정말 많은 것을 배웠어요. Hello World부터 IoT 시계까지! 
+하지만 배운 것을 정리하지 않으면, 시간이 지나면서 흐릿해지기 마련이에요.</p>
+<p>오늘은 특별한 날이에요:
+- 🔍 <strong>돌아보기</strong>: 무엇을 배웠는지 정리
+- 📝 <strong>기록하기</strong>: 나만의 포트폴리오 완성
+- 🚀 <strong>내다보기</strong>: 앞으로 어디로 갈지 계획</p>
+<p>이 과정을 통해 <strong>"나는 이만큼 성장했구나!"</strong>를 직접 확인하게 될 거예요.</p>
+<hr />
+<h2 id="_3">📚 핵심 개념<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="1">개념 1: 학습 회고란?<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>비유로 시작</strong>: "회고는 마치 등산 후 정상에서 내려다보는 것과 같아요"</li>
+<li>
+<p>올라올 때는 힘들어서 못 봤던 풍경을 한눈에 볼 수 있죠</p>
+</li>
+<li>
+<p><strong>정확한 정의</strong>: "회고(回顧)는 지나온 과정을 되돌아보며 의미를 찾는 활동입니다"</p>
+</li>
+<li>
+<p>무엇을 했는지, 무엇이 어려웠는지, 무엇을 배웠는지 정리</p>
+</li>
+<li>
+<p><strong>예시로 확인</strong>: "예를 들어, '버튼이 눌러도 반응이 없어서 고민했는데, 풀업/풀다운 개념을 배우고 해결했다'는 것이 회고예요"</p>
+</li>
+</ol>
+<p><strong>쉽게 말하면</strong>: 배운 것을 정리하고, 성장을 확인하는 시간이에요!</p>
+<h3 id="2">개념 2: 포트폴리오란?<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>비유로 시작</strong>: "포트폴리오는 마치 여행 앨범 같아요"</li>
+<li>
+<p>어디를 갔는지, 무엇을 봤는지, 어떤 경험을 했는지 담긴 기록</p>
+</li>
+<li>
+<p><strong>정확한 정의</strong>: "포트폴리오는 자신의 작품과 성장 과정을 정리한 문서입니다"</p>
+</li>
+<li>
+<p>개발자들은 GitHub, 블로그 등으로 포트폴리오를 만들어요</p>
+</li>
+<li>
+<p><strong>예시로 확인</strong>: "예를 들어, 'IoT 시계 프로젝트 - WiFi로 시간을 받아와 OLED에 표시'라고 정리하면 포트폴리오의 한 항목이 되죠"</p>
+</li>
+</ol>
+<p><strong>쉽게 말하면</strong>: 내가 만든 작품들의 모음집이에요!</p>
+<hr />
+<h2 id="15_1">🗺️ 15차시 여정 한눈에 보기<a class="headerlink" href="#15_1" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TB
+    subgraph Part1["📦 Part 1: 기초 다지기"]
+        W1["1️⃣ 피코 만나기&lt;br&gt;Hello World"]
+        W2["2️⃣ LED의 세계&lt;br&gt;깜빡이기"]
+        W3["3️⃣ 버튼과 대화&lt;br&gt;입력 받기"]
+        W4["4️⃣ 센서 입문&lt;br&gt;온습도/조도"]
+        W5["5️⃣ 출력의 마법&lt;br&gt;RGB/부저/서보"]
+        W6["6️⃣ 조건과 반복&lt;br&gt;자동화"]
+    end
+
+    subgraph Part2["🔧 Part 2: 프로젝트"]
+        W7["7️⃣ 함수로 정리&lt;br&gt;코드 구조화"]
+        W8["8️⃣ 미니 프로젝트 1&lt;br&gt;설계"]
+        W9["9️⃣ 미니 프로젝트 2&lt;br&gt;완성"]
+    end
+
+    subgraph Part3["🌐 Part 3: 네트워크"]
+        W10["🔟 OLED 디스플레이&lt;br&gt;화면 표시"]
+        W11["1️⃣1️⃣ WiFi 연결&lt;br&gt;인터넷"]
+        W12["1️⃣2️⃣ 시간 동기화&lt;br&gt;NTP"]
+        W13["1️⃣3️⃣ 웹 API&lt;br&gt;날씨 정보"]
+        W14["1️⃣4️⃣ IoT 시계&lt;br&gt;통합"]
+    end
+
+    subgraph Part4["🎓 Part 4: 마무리"]
+        W15["1️⃣5️⃣ 회고&lt;br&gt;지금 여기!"]
+    end
+
+    Part1 --&gt; Part2 --&gt; Part3 --&gt; Part4
+
+    style Part1 fill:#e3f2fd,stroke:#1976d2
+    style Part2 fill:#fff3e0,stroke:#f57c00
+    style Part3 fill:#e8f5e9,stroke:#388e3c
+    style Part4 fill:#fce4ec,stroke:#c2185b</code></pre>
+<hr />
+<h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="step-1">Step 1: 배운 내용 체크하기<a class="headerlink" href="#step-1" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 15차시 동안 배운 것들을 확인합니다.</p>
+<p>아래 체크리스트에서 <strong>자신있게 "안다!"고 할 수 있는 항목</strong>에 체크해보세요.</p>
+<h4 id="_5">하드웨어 기초<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<ul>
+<li>[ ] 라즈베리파이 피코가 무엇인지 설명할 수 있다</li>
+<li>[ ] GPIO 핀의 역할을 안다</li>
+<li>[ ] Grove 케이블로 센서를 연결할 수 있다</li>
+</ul>
+<h4 id="_6">출력 제어<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<ul>
+<li>[ ] LED를 켜고 끌 수 있다</li>
+<li>[ ] PWM으로 LED 밝기를 조절할 수 있다</li>
+<li>[ ] RGB LED로 다양한 색을 만들 수 있다</li>
+<li>[ ] 부저로 소리를 낼 수 있다</li>
+<li>[ ] 서보모터 각도를 제어할 수 있다</li>
+</ul>
+<h4 id="_7">입력 처리<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<ul>
+<li>[ ] 버튼 입력을 읽을 수 있다</li>
+<li>[ ] 조도 센서 값을 읽을 수 있다</li>
+<li>[ ] 온습도 센서 값을 읽을 수 있다</li>
+<li>[ ] 아날로그와 디지털의 차이를 안다</li>
+</ul>
+<h4 id="_8">프로그래밍<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
+<ul>
+<li>[ ] if/elif/else 조건문을 사용할 수 있다</li>
+<li>[ ] while 반복문을 사용할 수 있다</li>
+<li>[ ] 함수를 만들고 호출할 수 있다</li>
+</ul>
+<h4 id="_9">디스플레이와 네트워크<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
+<ul>
+<li>[ ] OLED에 텍스트를 표시할 수 있다</li>
+<li>[ ] I2C 통신이 무엇인지 안다</li>
+<li>[ ] WiFi에 연결할 수 있다</li>
+<li>[ ] NTP로 시간을 받아올 수 있다</li>
+<li>[ ] 웹 API에서 데이터를 가져올 수 있다</li>
+</ul>
+<p><strong>여기서 잠깐! 🤔</strong></p>
+<p>체크한 개수를 세어보세요:
+- <strong>15개 이상</strong>: 🌟 훌륭해요! 기초가 탄탄합니다
+- <strong>10-14개</strong>: 👍 잘하고 있어요! 복습하면 완벽
+- <strong>10개 미만</strong>: 💪 괜찮아요! 부족한 부분만 다시 보면 돼요</p>
+<hr />
+<h3 id="step-2">Step 2: 나의 포트폴리오 작성하기<a class="headerlink" href="#step-2" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: 지금까지 만든 것들을 정리합니다.</p>
+<p>아래 템플릿을 복사해서 자신만의 포트폴리오를 작성해보세요.</p>
+<div class="highlight"><pre><span></span><code><span class="gh"># 🎨 나의 피지컬 컴퓨팅 포트폴리오</span>
+
+<span class="gu">## 👤 기본 정보</span>
+<span class="k">-</span><span class="w"> </span>이름: [이름]
+<span class="k">-</span><span class="w"> </span>작성일: 2024년 ○월 ○일
+<span class="k">-</span><span class="w"> </span>학습 기간: 15차시 (약 12.5시간)
+
+---
+
+<span class="gu">## 🏆 대표 프로젝트</span>
+
+<span class="gu">### 프로젝트 1: [프로젝트 이름]</span>
+<span class="k">-</span><span class="w"> </span><span class="gs">**설명**</span>: [한 줄로 설명]
+<span class="k">-</span><span class="w"> </span><span class="gs">**사용 부품**</span>: [예: 피코, LED, 버튼]
+<span class="k">-</span><span class="w"> </span><span class="gs">**핵심 기능**</span>: [예: 버튼을 누르면 LED가 켜짐]
+<span class="k">-</span><span class="w"> </span><span class="gs">**배운 점**</span>: [예: 디바운싱의 중요성]
+
+<span class="gu">### 프로젝트 2: IoT 시계</span>
+<span class="k">-</span><span class="w"> </span><span class="gs">**설명**</span>: 인터넷에서 시간과 날씨를 받아와 표시
+<span class="k">-</span><span class="w"> </span><span class="gs">**사용 부품**</span>: 피코 2W, OLED, (센서)
+<span class="k">-</span><span class="w"> </span><span class="gs">**핵심 기능**</span>: NTP 시간 동기화, 날씨 API 호출
+<span class="k">-</span><span class="w"> </span><span class="gs">**배운 점**</span>: [직접 작성]
+
+---
+
+<span class="gu">## 💻 작성한 주요 코드</span>
+
+<span class="gu">### 1. LED 깜빡이기</span>
+```python
+from machine import Pin
+import time
+
+led = Pin(&quot;LED&quot;, Pin.OUT)
+while True:
+    led.toggle()
+    time.sleep(0.5)
+</code></pre></div>
+<h3 id="2_1">2. [두 번째 코드 제목]<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h3>
+<p>[코드 붙여넣기]</p>
+<hr />
+<h2 id="_10">📈 성장 기록<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<ul>
+<li>처음 모르던 것: [예: GPIO가 뭔지 몰랐음]</li>
+<li>지금 할 수 있는 것: [예: 센서로 데이터 읽기]</li>
+<li>가장 뿌듯했던 순간: [예: IoT 시계가 처음 작동했을 때]</li>
+</ul>
+<hr />
+<h2 id="_11">🎯 다음 목표<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[ ] [예: 30시간 과정 도전하기]</li>
+<li>[ ] [예: 나만의 IoT 프로젝트 만들기]
+<div class="highlight"><pre><span></span><code>---
+
+### Step 3: 성장 일지 작성하기
+
+**목표**: 나의 성장을 기록합니다.
+
+```markdown
+# 📖 나의 성장 일지
+
+## 시작할 때의 나
+- 피지컬 컴퓨팅 경험: [없음 / 조금 있음 / 있음]
+- Python 실력: [초보 / 중급 / 고급]
+- 기대했던 것: [자유롭게 작성]
+- 걱정했던 것: [자유롭게 작성]
+
+## 지금의 나
+- 자신있는 것 3가지:
+  1. [예: LED 제어]
+  2. [예: 센서 값 읽기]
+  3. [예: OLED에 표시하기]
+
+- 더 배우고 싶은 것 3가지:
+  1. [예: 더 복잡한 회로]
+  2. [예: 모터 제어]
+  3. [예: 스마트홈 만들기]
+
+## 기억에 남는 순간들
+
+### 🎉 가장 뿌듯했던 순간
+[언제, 무엇을, 왜 뿌듯했는지]
+
+### 😅 가장 어려웠던 순간
+[언제, 무엇이, 어떻게 해결했는지]
+
+### 💡 &quot;아하!&quot; 순간
+[어떤 개념이 갑자기 이해됐는지]
+
+## 미래의 나에게
+[6개월 후의 나에게 하고 싶은 말]
+</code></pre></div></li>
+</ul>
+<hr />
+<h2 id="30">🚀 다음 단계: 30시간 과정 미리보기<a class="headerlink" href="#30" title="Permanent link">&para;</a></h2>
+<p>15시간 과정을 마쳤다면, 다음 단계인 <strong>30시간 과정</strong>이 기다리고 있어요!</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph Done["✅ 완료: 15시간"]
+        A["기초&lt;br&gt;LED, 버튼, 센서"]
+        B["네트워크&lt;br&gt;WiFi, API"]
+    end
+
+    subgraph Next["🔜 다음: 30시간"]
+        C["🧠 TinyML 입문&lt;br&gt;머신러닝 기초"]
+        D["🎤 음성 인식&lt;br&gt;소리로 제어"]
+        E["👋 제스처 인식&lt;br&gt;동작으로 제어"]
+        F["🏠 스마트홈&lt;br&gt;통합 프로젝트"]
+    end
+
+    Done --&gt; Next
+
+    style Done fill:#e8f5e9,stroke:#388e3c
+    style Next fill:#e3f2fd,stroke:#1976d2</code></pre>
+<h3 id="30_1">30시간 과정에서 배울 것들<a class="headerlink" href="#30_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>주제</th>
+<th>내용</th>
+<th>흥미로운 점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TinyML</td>
+<td>마이크로컨트롤러에서 머신러닝</td>
+<td>피코가 학습한다!</td>
+</tr>
+<tr>
+<td>음성 인식</td>
+<td>소리로 기기 제어</td>
+<td>"불 켜줘"가 실제로!</td>
+</tr>
+<tr>
+<td>제스처 인식</td>
+<td>손동작 감지</td>
+<td>손만 흔들어도 작동</td>
+</tr>
+<tr>
+<td>스마트홈</td>
+<td>통합 IoT 시스템</td>
+<td>나만의 스마트 기기</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_12">✅ 스스로 점검하기<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<h3 id="1-3">1. 이 과정에서 배운 가장 중요한 개념 3가지는?<a class="headerlink" href="#1-3" title="Permanent link">&para;</a></h3>
+<h3 id="2_2">2. 다른 사람에게 "피지컬 컴퓨팅이 뭐야?"라고 물으면 뭐라고 대답할 건가요?<a class="headerlink" href="#2_2" title="Permanent link">&para;</a></h3>
+<h3 id="3">3. 이 기술로 만들고 싶은 것이 있다면?<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<details>
+<summary>예시 답변 보기</summary>
+
+1. **중요한 개념 3가지** (예시)
+   - GPIO: 피코와 외부 장치를 연결하는 통로
+   - 센서→처리→출력: 피지컬 컴퓨팅의 기본 구조
+   - 네트워크 연결: 인터넷과 연결된 IoT 기기 만들기
+
+2. **피지컬 컴퓨팅 설명** (예시)
+   "소프트웨어와 하드웨어를 결합해서, 코드로 실제 세상의 물건(LED, 모터, 센서 등)을 제어하는 거야. 프로그램이 화면 안에만 있는 게 아니라 진짜 세상에서 작동하는 거지!"
+
+3. **만들고 싶은 것** (예시)
+   - 자동 물주기 화분
+   - 공부 시간 측정기
+   - 방 온도 자동 조절기
+
+</details>
+
+<hr />
+<h2 id="_13">🎊 수료를 축하합니다!<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>╔════════════════════════════════════════════════════════╗
+║                                                         ║
+║   🎓 피지컬 컴퓨팅 입문 과정 수료                     ║
+║                                                         ║
+║   이름: _____________________                          ║
+║                                                         ║
+║   기간: 15차시 (12.5시간)                              ║
+║                                                         ║
+║   배운 것:                                             ║
+║   ✓ 라즈베리파이 피코 기초                            ║
+║   ✓ 센서와 출력 장치 제어                             ║
+║   ✓ MicroPython 프로그래밍                            ║
+║   ✓ IoT 기초 (WiFi, API)                              ║
+║                                                         ║
+║   &quot;Hello World부터 IoT 시계까지,                      ║
+║    당신은 해냈습니다!&quot; 🚀                              ║
+║                                                         ║
+╚════════════════════════════════════════════════════════╝
+</code></pre></div>
+<hr />
+<h2 id="_14">💬 마지막으로<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<p>15차시 동안 함께해서 정말 즐거웠어요! 🎉</p>
+<p>처음 Thonny를 열고 "Hello World"를 출력하던 때를 기억하나요?
+그때는 LED 하나 켜는 것도 신기했는데,
+이제는 인터넷에서 날씨를 받아와 화면에 표시하는 IoT 시계를 만들 수 있게 됐어요.</p>
+<p><strong>이게 바로 성장입니다!</strong> 📈</p>
+<p>앞으로도 계속 만들고, 실험하고, 실패하고, 배워가세요.
+피지컬 컴퓨팅의 세계는 무궁무진하니까요.</p>
+<blockquote>
+<p>💡 <strong>기억하세요</strong>: 모든 전문가도 처음엔 초보자였어요.
+중요한 건 포기하지 않고 계속 도전하는 거예요!</p>
+</blockquote>
+<hr />
+<h2 id="_15">🔗 이어서 배우기<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h2>
+<h3 id="_16">추천 학습 경로<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart TD
+    A["🎓 15시간 완료!&lt;br&gt;지금 여기"] --&gt; B{"다음 단계 선택"}
+
+    B --&gt; C["📚 30시간 과정&lt;br&gt;TinyML + 심화"]
+    B --&gt; D["🔧 개인 프로젝트&lt;br&gt;아이디어 실현"]
+    B --&gt; E["🌐 온라인 학습&lt;br&gt;더 깊이 파기"]
+
+    C --&gt; F["🏆 60시간 과정&lt;br&gt;프로젝트 마스터"]
+    D --&gt; F
+    E --&gt; F
+
+    style A fill:#fce4ec,stroke:#c2185b
+    style B fill:#fff3e0,stroke:#f57c00
+    style C fill:#e3f2fd,stroke:#1976d2
+    style D fill:#e8f5e9,stroke:#388e3c
+    style E fill:#f3e5f5,stroke:#7b1fa2
+    style F fill:#fff9c4,stroke:#f9a825</code></pre>
+<h3 id="_17">유용한 리소스<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>리소스</th>
+<th>내용</th>
+<th>링크</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raspberry Pi 공식</td>
+<td>피코 문서</td>
+<td>raspberrypi.com</td>
+</tr>
+<tr>
+<td>MicroPython 문서</td>
+<td>라이브러리 레퍼런스</td>
+<td>micropython.org</td>
+</tr>
+<tr>
+<td>YouTube</td>
+<td>피지컬 컴퓨팅 튜토리얼</td>
+<td>검색: "Pico 프로젝트"</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>수고하셨습니다! 🎉</strong></p>
+<p>여러분의 피지컬 컴퓨팅 여정은 이제 막 시작되었어요.
+만든 것들을 친구들에게 자랑하고, 새로운 아이디어를 계속 시도해보세요.</p>
+<p><strong>다음에 30시간 과정에서 만나요!</strong> 👋</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>

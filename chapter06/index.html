@@ -50,6 +50,8 @@
       
     
     
+      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -245,6 +247,26 @@
   
   
   Part 3 - 네트워크 연결
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter15/" class="md-tabs__link">
+          
+  
+  
+  Part 4 - 마무리
 
         </a>
       </li>
@@ -1175,6 +1197,149 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    웹 API 맛보기 - 데이터 받아오기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IoT 시계 - 통합 프로젝트
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 - 마무리
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 - 마무리
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    회고와 다음 단계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1566,7 +1731,7 @@
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;금액이 부족해요&quot;</span><span class="p">)</span>
 </code></pre></div></p>
 <p><strong>쉽게 말하면</strong>: 위에서부터 조건을 하나씩 확인하다가, 처음으로 <code>True</code>가 나오면 그 블록만 실행하고 끝!</p>
-<div class="highlight"><pre><span></span><code>flowchart TD
+<pre class="mermaid"><code>flowchart TD
     A[🪙 돈 확인] --&gt; B{1500원 이상?}
     B --&gt;|Yes| C[☕ 커피 구매]
     B --&gt;|No| D{1000원 이상?}
@@ -1582,8 +1747,7 @@
     style C fill:#e8f5e9,stroke:#388e3c
     style E fill:#e8f5e9,stroke:#388e3c
     style G fill:#e8f5e9,stroke:#388e3c
-    style H fill:#ffebee,stroke:#c62828
-</code></pre></div>
+    style H fill:#ffebee,stroke:#c62828</code></pre>
 <hr />
 <h3 id="2-while-">개념 2: while 무한루프 - 계속 감시하는 보초병<a class="headerlink" href="#2-while-" title="Permanent link">&para;</a></h3>
 <p><strong>비유로 시작</strong>: 경비원을 생각해봐. 건물 입구에서 24시간 계속 "이상 없나?" 확인하잖아. while 무한루프는 바로 이 경비원 같은 거야. 계속 반복하면서 뭔가 변화가 있는지 감시해.</p>
@@ -1615,7 +1779,7 @@
     <span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>  <span class="c1"># 출력: 1, 2, 4, 5</span>
 </code></pre></div></p>
 <p><strong>쉽게 말하면</strong>: <code>break</code>는 "그만!", <code>continue</code>는 "패스!"</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
+<pre class="mermaid"><code>flowchart LR
     A[🔄 루프 시작] --&gt; B[⚙️ 코드 실행]
     B --&gt; C{continue?}
     C --&gt;|Yes| A
@@ -1627,8 +1791,7 @@
     style B fill:#fff3e0,stroke:#f57c00
     style C fill:#f3e5f5,stroke:#7b1fa2
     style D fill:#f3e5f5,stroke:#7b1fa2
-    style E fill:#ffebee,stroke:#c62828
-</code></pre></div>
+    style E fill:#ffebee,stroke:#c62828</code></pre>
 <hr />
 <h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <h3 id="step-1">Step 1: 다중 조건으로 밝기 레벨 판단하기<a class="headerlink" href="#step-1" title="Permanent link">&para;</a></h3>
@@ -1638,21 +1801,20 @@
 - Grove Shield
 - Grove 조도 센서 (A0 포트 연결)</p>
 <p><strong>회로 연결</strong>:
-<div class="highlight"><pre><span></span><code>flowchart LR
-    subgraph Pico[&quot;🔌 Pico 2W + Grove Shield&quot;]
-        A0[&quot;A0 포트&quot;]
+<pre class="mermaid"><code>flowchart LR
+    subgraph Pico["🔌 Pico 2W + Grove Shield"]
+        A0["A0 포트"]
     end
-    subgraph Light[&quot;💡 조도 센서&quot;]
-        VCC[&quot;VCC&quot;]
-        GND[&quot;GND&quot;]
-        SIG[&quot;SIG&quot;]
+    subgraph Light["💡 조도 센서"]
+        VCC["VCC"]
+        GND["GND"]
+        SIG["SIG"]
     end
 
     A0 &lt;--&gt;|Grove 케이블| Light
 
     style Pico fill:#e3f2fd,stroke:#1976d2
-    style Light fill:#fff3e0,stroke:#f57c00
-</code></pre></div></p>
+    style Light fill:#fff3e0,stroke:#f57c00</code></pre></p>
 <p><strong>코드</strong>:
 <div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 조도 센서로 밝기 레벨 판단하기 ===</span>
 <span class="c1"># 조도 센서 값을 읽어서 5단계로 분류해 출력하는 코드</span>
@@ -1779,16 +1941,16 @@
 <p><strong>준비물 추가</strong>:
 - Grove LED (D18 포트 연결)</p>
 <p><strong>회로 연결</strong>:
-<div class="highlight"><pre><span></span><code>flowchart TB
-    subgraph Pico[&quot;🔌 Pico 2W + Grove Shield&quot;]
-        A0[&quot;A0 포트&quot;]
-        D18[&quot;D18 포트&quot;]
+<pre class="mermaid"><code>flowchart TB
+    subgraph Pico["🔌 Pico 2W + Grove Shield"]
+        A0["A0 포트"]
+        D18["D18 포트"]
     end
-    subgraph Sensors[&quot;📡 입력&quot;]
-        Light[&quot;💡 조도 센서&quot;]
+    subgraph Sensors["📡 입력"]
+        Light["💡 조도 센서"]
     end
-    subgraph Outputs[&quot;📤 출력&quot;]
-        LED[&quot;🔴 LED&quot;]
+    subgraph Outputs["📤 출력"]
+        LED["🔴 LED"]
     end
 
     A0 &lt;--&gt;|Grove 케이블| Light
@@ -1796,8 +1958,7 @@
 
     style Pico fill:#e3f2fd,stroke:#1976d2
     style Sensors fill:#fff3e0,stroke:#f57c00
-    style Outputs fill:#e8f5e9,stroke:#388e3c
-</code></pre></div></p>
+    style Outputs fill:#e8f5e9,stroke:#388e3c</code></pre></p>
 <p><strong>코드</strong>:
 <div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 자동 야간등 ===</span>
 <span class="c1"># 어두워지면 LED가 켜지고, 밝아지면 LED가 꺼지는 자동화 시스템</span>
@@ -1879,22 +2040,21 @@
 - 24도가 되면 끄고 (여유있게!)
 - 26도가 되면 켜기</p>
 <p>이 "여유 구간"이 히스테리시스야. 우리 야간등도 같은 원리!</p>
-<div class="highlight"><pre><span></span><code>flowchart LR
-    subgraph Range[&quot;밝기 값 범위&quot;]
+<pre class="mermaid"><code>flowchart LR
+    subgraph Range["밝기 값 범위"]
         direction TB
-        Dark[&quot;🌑 어두움&lt;br/&gt;&lt; 15000&quot;]
-        Buffer[&quot;⚡ 완충 구간&lt;br/&gt;15000 ~ 20000&quot;]
-        Bright[&quot;☀️ 밝음&lt;br/&gt;&gt; 20000&quot;]
+        Dark["🌑 어두움&lt;br/&gt;&lt; 15000"]
+        Buffer["⚡ 완충 구간&lt;br/&gt;15000 ~ 20000"]
+        Bright["☀️ 밝음&lt;br/&gt;&gt; 20000"]
     end
 
-    Dark --&gt;|&quot;LED 켜짐 유지&quot;| Buffer
-    Buffer --&gt;|&quot;상태 유지&lt;br/&gt;(변화 없음)&quot;| Buffer
-    Bright --&gt;|&quot;LED 꺼짐 유지&quot;| Buffer
+    Dark --&gt;|"LED 켜짐 유지"| Buffer
+    Buffer --&gt;|"상태 유지&lt;br/&gt;(변화 없음)"| Buffer
+    Bright --&gt;|"LED 꺼짐 유지"| Buffer
 
     style Dark fill:#1a237e,stroke:#0d47a1,color:#fff
     style Buffer fill:#fff3e0,stroke:#f57c00
-    style Bright fill:#fff9c4,stroke:#f9a825
-</code></pre></div>
+    style Bright fill:#fff9c4,stroke:#f9a825</code></pre>
 <hr />
 <h2 id="_5">📝 전체 코드<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># === 자동 야간등 완성 버전 ===</span>
@@ -2231,6 +2391,8 @@
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
       
     
   </body>

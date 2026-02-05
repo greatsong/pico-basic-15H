@@ -1,0 +1,2102 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="라즈베리파이 피코 2W와 MicroPython을 활용한 15시간 피지컬 컴퓨팅 입문 과정으로, 복잡한 개념을 친근한 비유로 쉽게 배웁니다.">
+      
+      
+        <meta name="author" content="Created with Data-AI-Book Generator">
+      
+      
+      
+        <link rel="prev" href="../chapter12/">
+      
+      
+        <link rel="next" href="../chapter14/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>웹 API 맛보기 - 데이터 받아오기 - 피코와 친해지기 - 피지컬 컴퓨팅 입문</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/mermaid@10/dist/mermaid.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#13-api-" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-header__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            피코와 친해지기 - 피지컬 컴퓨팅 입문
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              웹 API 맛보기 - 데이터 받아오기
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter01/" class="md-tabs__link">
+          
+  
+  
+  Part 1 - 기초 다지기
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter07/" class="md-tabs__link">
+          
+  
+  
+  Part 2 - 프로젝트 도전
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../chapter10/" class="md-tabs__link">
+          
+  
+  
+  Part 3 - 네트워크 연결
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../chapter15/" class="md-tabs__link">
+          
+  
+  
+  Part 4 - 마무리
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="피코와 친해지기 - 피지컬 컴퓨팅 입문" class="md-nav__button md-logo" aria-label="피코와 친해지기 - 피지컬 컴퓨팅 입문" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    피코와 친해지기 - 피지컬 컴퓨팅 입문
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 - 기초 다지기
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 - 기초 다지기
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    피코 만나기 - 첫 만남과 환경 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LED의 세계 - 빛으로 말하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    버튼과 대화 - 입력 받기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    센서 입문 - 세상을 느끼다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    출력의 마법 - 세상에 표현하다
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    조건과 반복 - 자동화의 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 - 프로젝트 도전
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 - 프로젝트 도전
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    함수로 정리 - 코드의 레고 블록
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 설계와 시작
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    미니 프로젝트 - 완성과 발표
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 - 네트워크 연결
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 - 네트워크 연결
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OLED 디스플레이 - 화면에 표시하기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WiFi 연결 - 인터넷 세계로
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시간 동기화 - 정확한 시계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    웹 API 맛보기 - 데이터 받아오기
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    웹 API 맛보기 - 데이터 받아오기
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-http" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: HTTP 요청과 응답
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-api-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: API와 API 키
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: JSON 데이터 형식
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-http" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: HTTP 요청 보내기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 날씨 API 호출하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: JSON 파싱하여 날씨 표시하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: API 키를 그대로 사용
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-responseclose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: response.close() 누락
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-json_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: JSON 키 이름 오타
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: 다른 도시 날씨 받아오기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: 날씨에 따른 이모지 표시
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-oled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: OLED에 날씨 표시하기 ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IoT 시계 - 통합 프로젝트
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 - 마무리
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 - 마무리
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    회고와 다음 단계
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 이 장에서 배우는 것
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 왜 이걸 배우나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 핵심 개념
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 핵심 개념">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-http" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 1: HTTP 요청과 응답
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-api-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 2: API와 API 키
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개념 3: JSON 데이터 형식
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔨 따라하기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔨 따라하기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-http" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: HTTP 요청 보내기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 날씨 API 호출하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: JSON 파싱하여 날씨 표시하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 전체 코드
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 자주 하는 실수
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚠️ 자주 하는 실수">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 1: API 키를 그대로 사용
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-responseclose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 2: response.close() 누락
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-json_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실수 3: JSON 키 이름 오타
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 스스로 점검하기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 더 해보기
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 더 해보기">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 1: 다른 도시 날씨 받아오기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 2: 날씨에 따른 이모지 표시
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-oled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        도전 3: OLED에 날씨 표시하기 ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 다음 장으로
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="13-api-">13장: 웹 API 맛보기 - 데이터 받아오기<a class="headerlink" href="#13-api-" title="Permanent link">&para;</a></h1>
+<h2 id="_1">🎯 이 장에서 배우는 것<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[ ] HTTP 요청의 기본 개념을 설명할 수 있다</li>
+<li>[ ] urequests로 API를 호출할 수 있다</li>
+<li>[ ] JSON 데이터를 파싱하여 활용할 수 있다</li>
+</ul>
+<hr />
+<h2 id="_2">💡 왜 이걸 배우나요?<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>스마트폰 날씨 앱은 어떻게 전 세계 날씨를 알까요? 직접 측정할까요? 아닙니다! <strong>인터넷에서 데이터를 받아오는 거예요</strong>.</p>
+<p>인터넷에는 날씨, 뉴스, 주가, 환율 등 수많은 데이터가 <strong>API(Application Programming Interface)</strong>라는 형태로 제공됩니다. API는 마치 <strong>데이터 자판기</strong>와 같아요. 요청을 보내면 원하는 데이터를 돌려줍니다.</p>
+<p>우리 피코도 WiFi에 연결했으니, 이제 전 세계의 데이터를 받아올 수 있어요! 오늘은 실제로 <strong>OpenWeatherMap에서 현재 날씨</strong>를 받아와 볼 거예요. 🌤️</p>
+<hr />
+<h2 id="_3">📚 핵심 개념<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="1-http">개념 1: HTTP 요청과 응답<a class="headerlink" href="#1-http" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>비유로 시작</strong>: "HTTP는 마치 <strong>식당 주문 시스템</strong>과 같아요. 손님(피코)이 주문서(요청)를 보내면, 주방(서버)이 음식(데이터)을 내어줍니다."</p>
+</li>
+<li>
+<p><strong>정확한 정의</strong>: HTTP(HyperText Transfer Protocol)는 웹에서 데이터를 주고받는 규칙입니다. 클라이언트가 <strong>요청(Request)</strong>을 보내면, 서버가 <strong>응답(Response)</strong>을 돌려줍니다.</p>
+</li>
+<li>
+<p><strong>예시로 확인</strong>:
+<div class="highlight"><pre><span></span><code>피코: &quot;서울 날씨 주세요!&quot; (요청)
+서버: &quot;현재 15도, 맑음입니다&quot; (응답)
+</code></pre></div></p>
+</li>
+</ol>
+<p><strong>쉽게 말하면</strong>: 질문하면 답을 주는 대화 방식이에요!</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant P as 🔌 피코
+    participant S as 🌐 날씨 서버
+    P-&gt;&gt;S: GET /weather?city=Seoul (요청)
+    S-&gt;&gt;P: {"temp": 15, "sky": "맑음"} (응답)</code></pre>
+<hr />
+<h3 id="2-api-api">개념 2: API와 API 키<a class="headerlink" href="#2-api-api" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>비유로 시작</strong>: "API는 <strong>데이터 자판기</strong>예요. 동전(API 키)을 넣고 버튼(요청)을 누르면 음료(데이터)가 나와요."</p>
+</li>
+<li>
+<p><strong>정확한 정의</strong>: API는 프로그램끼리 데이터를 주고받는 약속된 방법입니다. API 키는 "누가 요청했는지" 확인하는 신분증이에요.</p>
+</li>
+<li>
+<p><strong>예시로 확인</strong>: OpenWeatherMap은 무료로 날씨 데이터를 제공하지만, API 키가 있어야 사용할 수 있어요.</p>
+</li>
+</ol>
+<p><strong>쉽게 말하면</strong>: API는 데이터 창구, API 키는 입장권!</p>
+<hr />
+<h3 id="3-json">개념 3: JSON 데이터 형식<a class="headerlink" href="#3-json" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>비유로 시작</strong>: "JSON은 <strong>정리된 서랍장</strong>과 같아요. 각 서랍에 이름표가 붙어있고, 그 안에 물건(데이터)이 들어있죠."</p>
+</li>
+<li>
+<p><strong>정확한 정의</strong>: JSON(JavaScript Object Notation)은 데이터를 <code>{"키": "값"}</code> 형태로 저장하는 형식입니다. 사람도 읽기 쉽고, 컴퓨터도 처리하기 쉬워요.</p>
+</li>
+<li>
+<p><strong>예시로 확인</strong>:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;city&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Seoul&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;temp&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;weather&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;맑음&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+</li>
+</ol>
+<p><strong>쉽게 말하면</strong>: 이름표가 붙은 데이터 묶음이에요!</p>
+<hr />
+<h2 id="_4">🔨 따라하기<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="step-1-http">Step 1: HTTP 요청 보내기<a class="headerlink" href="#step-1-http" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: urequests 라이브러리로 웹 페이지 받아오기</p>
+<p>먼저 간단한 테스트 사이트에 요청을 보내봅시다.</p>
+<p><strong>코드</strong> (<code>step1_http_request.py</code>):
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: 웹 서버에 HTTP 요청 보내기 ===</span>
+<span class="c1"># 인터넷의 데이터를 받아오는 첫 걸음!</span>
+
+<span class="c1"># --- WHY: 왜 필요한지 ---</span>
+<span class="c1"># API를 사용하려면 먼저 HTTP 요청을 보낼 줄 알아야 해요</span>
+
+<span class="kn">import</span> <span class="nn">network</span>      <span class="c1"># WiFi 연결용</span>
+<span class="kn">import</span> <span class="nn">urequests</span>    <span class="c1"># HTTP 요청용</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># HOW: 어떻게 동작하는지</span>
+
+<span class="c1"># 1. WiFi 연결 (11차시에서 배운 내용)</span>
+<span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+<span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;your_wifi_name&quot;</span><span class="p">,</span> <span class="s2">&quot;your_wifi_password&quot;</span><span class="p">)</span>  <span class="c1"># 🔧 수정하세요!</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WiFi 연결 중...&quot;</span><span class="p">)</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WiFi 연결 완료!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;IP: </span><span class="si">{</span><span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 2. HTTP GET 요청 보내기</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://httpbin.org/ip&quot;</span>  <span class="c1"># 테스트용 사이트</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> 에 요청 중...&quot;</span><span class="p">)</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">urequests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>  <span class="c1"># GET 요청!</span>
+
+<span class="c1"># 3. 응답 확인</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;상태 코드: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># 200이면 성공</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;응답 내용: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">response</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>  <span class="c1"># 연결 닫기 (중요!)</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>WiFi 연결 완료!
+IP: 192.168.0.15
+
+http://httpbin.org/ip 에 요청 중...
+상태 코드: 200
+응답 내용: {
+  &quot;origin&quot;: &quot;123.45.67.89&quot;
+}
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong>
+- 상태 코드 <code>200</code>은 "성공"이라는 뜻이에요
+- <code>response.close()</code>를 꼭 호출해야 메모리 누수를 막아요!</p>
+<hr />
+<h3 id="step-2-api">Step 2: 날씨 API 호출하기<a class="headerlink" href="#step-2-api" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: OpenWeatherMap API로 실제 날씨 데이터 받아오기</p>
+<blockquote>
+<p>📌 <strong>사전 준비</strong>: <a href="https://openweathermap.org/api">openweathermap.org</a>에서 무료 계정을 만들고 API 키를 받으세요! (가입 후 이메일 인증 필요)</p>
+</blockquote>
+<p><strong>코드</strong> (<code>step2_weather_api.py</code>):
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: OpenWeatherMap 날씨 API 호출 ===</span>
+<span class="c1"># 실제 서울의 현재 날씨를 받아옵니다!</span>
+
+<span class="kn">import</span> <span class="nn">network</span>
+<span class="kn">import</span> <span class="nn">urequests</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># WiFi 연결 (간략화)</span>
+<span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+<span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;your_wifi_name&quot;</span><span class="p">,</span> <span class="s2">&quot;your_wifi_password&quot;</span><span class="p">)</span>  <span class="c1"># 🔧 수정!</span>
+
+<span class="k">while</span> <span class="ow">not</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WiFi 연결 완료!&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- 날씨 API 설정 ---</span>
+<span class="n">API_KEY</span> <span class="o">=</span> <span class="s2">&quot;your_api_key_here&quot;</span>  <span class="c1"># 🔧 여기에 API 키 입력!</span>
+<span class="n">CITY</span> <span class="o">=</span> <span class="s2">&quot;Seoul&quot;</span>
+
+<span class="c1"># API URL 만들기</span>
+<span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;http://api.openweathermap.org/data/2.5/weather?q=</span><span class="si">{</span><span class="n">CITY</span><span class="si">}</span><span class="s2">&amp;appid=</span><span class="si">{</span><span class="n">API_KEY</span><span class="si">}</span><span class="s2">&amp;units=metric&quot;</span>
+<span class="c1"># units=metric: 섭씨 온도로 받기</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">CITY</span><span class="si">}</span><span class="s2"> 날씨 요청 중...&quot;</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">urequests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ 성공!&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="mi">200</span><span class="p">])</span>  <span class="c1"># 처음 200자만 출력</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ 오류: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">response</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>WiFi 연결 완료!
+
+Seoul 날씨 요청 중...
+✅ 성공!
+{&quot;coord&quot;:{&quot;lon&quot;:126.9778,&quot;lat&quot;:37.5683},&quot;weather&quot;:[{&quot;id&quot;:800,&quot;main&quot;:&quot;Clear&quot;,&quot;description&quot;:&quot;clear sky&quot;}],&quot;main&quot;:{&quot;temp&quot;:15.2,&quot;feels_like&quot;:14.1}...
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong>
+받아온 데이터가 복잡해 보이죠? 이게 바로 <strong>JSON</strong>이에요! 다음 단계에서 필요한 정보만 뽑아볼게요.</p>
+<hr />
+<h3 id="step-3-json">Step 3: JSON 파싱하여 날씨 표시하기<a class="headerlink" href="#step-3-json" title="Permanent link">&para;</a></h3>
+<p><strong>목표</strong>: JSON에서 온도와 날씨 정보 추출하기</p>
+<p><strong>코드</strong> (<code>step3_json_parse.py</code>):
+<div class="highlight"><pre><span></span><code><span class="c1"># === WHAT: JSON 데이터 파싱하기 ===</span>
+<span class="c1"># 복잡한 JSON에서 원하는 정보만 쏙쏙 뽑아요!</span>
+
+<span class="kn">import</span> <span class="nn">network</span>
+<span class="kn">import</span> <span class="nn">urequests</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># WiFi 연결</span>
+<span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+<span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;your_wifi_name&quot;</span><span class="p">,</span> <span class="s2">&quot;your_wifi_password&quot;</span><span class="p">)</span>  <span class="c1"># 🔧 수정!</span>
+
+<span class="k">while</span> <span class="ow">not</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WiFi 연결 완료!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 날씨 API 호출</span>
+<span class="n">API_KEY</span> <span class="o">=</span> <span class="s2">&quot;your_api_key_here&quot;</span>  <span class="c1"># 🔧 수정!</span>
+<span class="n">CITY</span> <span class="o">=</span> <span class="s2">&quot;Seoul&quot;</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;http://api.openweathermap.org/data/2.5/weather?q=</span><span class="si">{</span><span class="n">CITY</span><span class="si">}</span><span class="s2">&amp;appid=</span><span class="si">{</span><span class="n">API_KEY</span><span class="si">}</span><span class="s2">&amp;units=metric&quot;</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">urequests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+    <span class="c1"># --- JSON 파싱하기 ---</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>  <span class="c1"># 문자열 → 딕셔너리 변환!</span>
+
+    <span class="c1"># 원하는 정보 추출</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span>           <span class="c1"># 현재 온도</span>
+    <span class="n">feels_like</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;feels_like&quot;</span><span class="p">]</span>  <span class="c1"># 체감 온도</span>
+    <span class="n">humidity</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;humidity&quot;</span><span class="p">]</span>    <span class="c1"># 습도</span>
+    <span class="n">weather</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;weather&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;main&quot;</span><span class="p">]</span>   <span class="c1"># 날씨 상태</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;weather&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;description&quot;</span><span class="p">]</span>  <span class="c1"># 상세 설명</span>
+
+    <span class="c1"># 예쁘게 출력</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🌍 </span><span class="si">{</span><span class="n">CITY</span><span class="si">}</span><span class="s2"> 현재 날씨&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🌡️ 온도: </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🤔 체감: </span><span class="si">{</span><span class="n">feels_like</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💧 습도: </span><span class="si">{</span><span class="n">humidity</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;☁️ 날씨: </span><span class="si">{</span><span class="n">weather</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📝 설명: </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;오류 발생: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">response</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></p>
+<p><strong>실행 결과</strong>:
+<div class="highlight"><pre><span></span><code>WiFi 연결 완료!
+
+==============================
+🌍 Seoul 현재 날씨
+==============================
+🌡️ 온도: 15.2°C
+🤔 체감: 14.1°C
+💧 습도: 62%
+☁️ 날씨: Clear
+📝 설명: clear sky
+==============================
+</code></pre></div></p>
+<p><strong>여기서 잠깐! 🤔</strong>
+- <code>response.json()</code>이 마법처럼 JSON을 파이썬 딕셔너리로 바꿔줘요
+- <code>data["main"]["temp"]</code>는 "main 서랍 안의 temp 값"을 의미해요</p>
+<pre class="mermaid"><code>flowchart TD
+    A["📥 JSON 응답"] --&gt; B["🔄 response.json()"]
+    B --&gt; C["📦 Python 딕셔너리"]
+    C --&gt; D["🌡️ data['main']['temp']"]
+    C --&gt; E["☁️ data['weather'][0]['main']"]
+    style A fill:#e3f2fd,stroke:#1976d2
+    style B fill:#fff3e0,stroke:#f57c00
+    style C fill:#e8f5e9,stroke:#388e3c
+    style D fill:#fce4ec,stroke:#c2185b
+    style E fill:#fce4ec,stroke:#c2185b</code></pre>
+<hr />
+<h2 id="_5">📝 전체 코드<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># === 서울 날씨 알리미 완성판 ===</span>
+<span class="c1"># WiFi 연결 → API 호출 → JSON 파싱 → 출력</span>
+
+<span class="kn">import</span> <span class="nn">network</span>
+<span class="kn">import</span> <span class="nn">urequests</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># ====== 설정 (여기만 수정하세요!) ======</span>
+<span class="n">WIFI_SSID</span> <span class="o">=</span> <span class="s2">&quot;your_wifi_name&quot;</span>      <span class="c1"># 🔧 WiFi 이름</span>
+<span class="n">WIFI_PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;your_password&quot;</span>    <span class="c1"># 🔧 WiFi 비밀번호</span>
+<span class="n">API_KEY</span> <span class="o">=</span> <span class="s2">&quot;your_api_key&quot;</span>          <span class="c1"># 🔧 OpenWeatherMap API 키</span>
+<span class="n">CITY</span> <span class="o">=</span> <span class="s2">&quot;Seoul&quot;</span>                     <span class="c1"># 도시 이름 (영어)</span>
+<span class="c1"># ======================================</span>
+
+<span class="k">def</span> <span class="nf">connect_wifi</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;WiFi에 연결합니다&quot;&quot;&quot;</span>
+    <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">WIFI_SSID</span><span class="p">,</span> <span class="n">WIFI_PASSWORD</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WiFi 연결 중&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">()</span> <span class="ow">and</span> <span class="n">timeout</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">timeout</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ WiFi 연결 성공!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">❌ WiFi 연결 실패&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span> <span class="nf">get_weather</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;날씨 정보를 가져옵니다&quot;&quot;&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;http://api.openweathermap.org/data/2.5/weather?q=</span><span class="si">{</span><span class="n">CITY</span><span class="si">}</span><span class="s2">&amp;appid=</span><span class="si">{</span><span class="n">API_KEY</span><span class="si">}</span><span class="s2">&amp;units=metric&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">urequests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="n">weather_info</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;temp&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;feels_like&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;feels_like&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;humidity&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;weather&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;weather&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;main&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;weather&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;description&quot;</span><span class="p">]</span>
+            <span class="p">}</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">weather_info</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;오류: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">display_weather</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;날씨 정보를 예쁘게 출력합니다&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🌍 </span><span class="si">{</span><span class="n">CITY</span><span class="si">}</span><span class="s2"> 현재 날씨&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🌡️ 온도: </span><span class="si">{</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🤔 체감: </span><span class="si">{</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;feels_like&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">°C&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💧 습도: </span><span class="si">{</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;humidity&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;☁️ 날씨: </span><span class="si">{</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;weather&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📝 설명: </span><span class="si">{</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">30</span><span class="p">)</span>
+
+<span class="c1"># 메인 실행</span>
+<span class="k">if</span> <span class="n">connect_wifi</span><span class="p">():</span>
+    <span class="n">weather</span> <span class="o">=</span> <span class="n">get_weather</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">weather</span><span class="p">:</span>
+        <span class="n">display_weather</span><span class="p">(</span><span class="n">weather</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;날씨 정보를 가져오지 못했습니다.&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="_6">⚠️ 자주 하는 실수<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="1-api">실수 1: API 키를 그대로 사용<a class="headerlink" href="#1-api" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: <code>{"cod": 401, "message": "Invalid API key"}</code></p>
+<p><strong>원인</strong>: API 키를 발급받지 않았거나, 복사할 때 공백이 포함됨</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드</span>
+<span class="n">API_KEY</span> <span class="o">=</span> <span class="s2">&quot;your_api_key_here&quot;</span>  <span class="c1"># 예시 그대로 사용</span>
+
+<span class="c1"># 올바른 코드</span>
+<span class="n">API_KEY</span> <span class="o">=</span> <span class="s2">&quot;a1b2c3d4e5f6...&quot;</span>  <span class="c1"># 본인의 실제 API 키!</span>
+</code></pre></div></p>
+<hr />
+<h3 id="2-responseclose">실수 2: response.close() 누락<a class="headerlink" href="#2-responseclose" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: 여러 번 실행하면 <code>OSError: [Errno 12] ENOMEM</code> (메모리 부족)</p>
+<p><strong>원인</strong>: 연결을 닫지 않아 메모리 누수 발생</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">urequests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="c1"># close() 없이 끝남</span>
+
+<span class="c1"># 올바른 코드</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">urequests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="n">response</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>  <span class="c1"># 반드시 닫기!</span>
+</code></pre></div></p>
+<hr />
+<h3 id="3-json_1">실수 3: JSON 키 이름 오타<a class="headerlink" href="#3-json_1" title="Permanent link">&para;</a></h3>
+<p><strong>증상</strong>: <code>KeyError: 'temprature'</code></p>
+<p><strong>원인</strong>: JSON 키 이름을 잘못 입력 (temp를 temprature로)</p>
+<p><strong>해결</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># 잘못된 코드</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;temprature&quot;</span><span class="p">]</span>  <span class="c1"># 오타!</span>
+
+<span class="c1"># 올바른 코드</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span>  <span class="c1"># 정확한 키 이름</span>
+
+<span class="c1"># 💡 팁: 먼저 전체 데이터를 출력해서 키 이름 확인!</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div></p>
+<hr />
+<h2 id="_7">✅ 스스로 점검하기<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>HTTP GET 요청</strong>에서 "GET"의 의미는 무엇인가요?</p>
+</li>
+<li>
+<p>다음 JSON에서 도시 이름을 추출하는 코드는?
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;city&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Seoul&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;country&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;KR&quot;</span><span class="p">}}</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><code>response.close()</code>를 꼭 호출해야 하는 이유는?</p>
+</li>
+</ol>
+<details>
+<summary>정답 확인</summary>
+
+1. **GET**은 "데이터를 가져오다"라는 의미예요. 서버에서 정보를 **읽어오는** 요청입니다. (POST는 데이터를 **보내는** 요청)
+
+2. ```python
+   data = response.json()
+   city = data["location"]["city"]  # "Seoul"
+   ```
+
+3. 피코는 메모리가 제한적이에요. `close()`를 호출하지 않으면 연결이 계속 열려있어 **메모리 누수**가 발생하고, 결국 프로그램이 멈춥니다!
+
+</details>
+
+<hr />
+<h2 id="_8">🚀 더 해보기<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<h3 id="1">도전 1: 다른 도시 날씨 받아오기<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p><code>CITY = "Seoul"</code>을 다른 도시로 바꿔보세요!
+- Tokyo, London, New York, Paris 등</p>
+<hr />
+<h3 id="2">도전 2: 날씨에 따른 이모지 표시<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p>날씨 상태에 맞는 이모지를 출력하세요:
+<div class="highlight"><pre><span></span><code><span class="n">weather</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;weather&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;main&quot;</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="n">weather</span> <span class="o">==</span> <span class="s2">&quot;Clear&quot;</span><span class="p">:</span>
+    <span class="n">emoji</span> <span class="o">=</span> <span class="s2">&quot;☀️&quot;</span>
+<span class="k">elif</span> <span class="n">weather</span> <span class="o">==</span> <span class="s2">&quot;Clouds&quot;</span><span class="p">:</span>
+    <span class="n">emoji</span> <span class="o">=</span> <span class="s2">&quot;☁️&quot;</span>
+<span class="k">elif</span> <span class="n">weather</span> <span class="o">==</span> <span class="s2">&quot;Rain&quot;</span><span class="p">:</span>
+    <span class="n">emoji</span> <span class="o">=</span> <span class="s2">&quot;🌧️&quot;</span>
+<span class="c1"># ... 더 추가해보세요!</span>
+</code></pre></div></p>
+<hr />
+<h3 id="3-oled">도전 3: OLED에 날씨 표시하기 ⭐<a class="headerlink" href="#3-oled" title="Permanent link">&para;</a></h3>
+<p>10차시에서 배운 OLED를 활용해서 날씨를 화면에 표시해보세요!</p>
+<p>힌트:
+<div class="highlight"><pre><span></span><code><span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Seoul&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Temp: </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">C&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weather: </span><span class="si">{</span><span class="n">weather</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></p>
+<hr />
+<h2 id="_9">🔗 다음 장으로<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>오늘 배운 것:
+- ✅ HTTP 요청으로 인터넷 데이터 받아오기
+- ✅ API 키로 날씨 서비스 사용하기
+- ✅ JSON 파싱으로 원하는 정보 추출하기</p>
+<p>🎉 이제 우리 피코가 <strong>인터넷의 정보를 활용</strong>할 수 있게 됐어요!</p>
+<p>다음 장에서는 <strong>12차시의 시계</strong>와 <strong>오늘의 날씨 API</strong>를 합쳐서 <strong>IoT 날씨 시계</strong>를 완성합니다. 시간과 날씨가 함께 표시되는 스마트 기기를 만들어봐요! ⏰🌤️</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>
